@@ -11,6 +11,8 @@ public class Cryptogram {
     private String phrase;
     private String cryptogramAlphabet;
     private boolean numberMapping;
+    private int[] gameMapping;
+    private double[] letterFrequency;
 
     public void getFrequencies() {
 
@@ -60,6 +62,30 @@ public class Cryptogram {
         phrase = cryptoPhrases.get(new Random().nextInt(numberOfCryptoPhrases));
     }
 
+    private void generateNumberMapping() {
+        Random random = new Random();
+        ArrayList<Integer> alphabetIndex = new ArrayList<>();
+        for(int i=0;i<26;i++)
+            alphabetIndex.add(i);
+
+        int randomNumber;
+        int i = 0;
+        while(i < 25) {
+            randomNumber = random.nextInt(25-i);
+
+            while(alphabetIndex.get(randomNumber)==i) {
+                randomNumber = random.nextInt(25 - i);
+            }
+
+            gameMapping[i] = alphabetIndex.remove(randomNumber);
+            i++;
+        }
+        if(alphabetIndex.get(25)==25)
+            generateNumberMapping();
+        else {
+            gameMapping[25] = alphabetIndex.remove(25);
+        }
+    }
 }
 
 class LetterCryptogram extends Cryptogram {
