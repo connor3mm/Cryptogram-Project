@@ -9,10 +9,42 @@ import java.util.Random;
 
 public class Cryptogram {
 
+    public String getPhrase() {
+        return phrase;
+    }
+
+    public void setPhrase(String phrase) {
+        this.phrase = phrase;
+    }
+
+    public String getCryptogramAlphabet() {
+        return cryptogramAlphabet;
+    }
+
+    public void setCryptogramAlphabet(String cryptogramAlphabet) {
+        this.cryptogramAlphabet = cryptogramAlphabet;
+    }
+
+    public boolean isNumberMapping() {
+        return numberMapping;
+    }
+
+    public void setNumberMapping(boolean numberMapping) {
+        this.numberMapping = numberMapping;
+    }
+
+    public double[] getLetterFrequency() {
+        return letterFrequency;
+    }
+
+    public void setLetterFrequency(double[] letterFrequency) {
+        this.letterFrequency = letterFrequency;
+    }
+
     private String phrase;
     private String cryptogramAlphabet;
     private boolean numberMapping;
-    public ArrayList<Integer> gameMapping = new ArrayList<>();
+    public int[] gameMapping = new int[26];;
     private double[] letterFrequency;
 
     public void getFrequencies() {
@@ -24,7 +56,6 @@ public class Cryptogram {
 
     public Cryptogram(int cryptoType) {
         System.out.println("New create is being created...");
-        setMapping(cryptoType);
         setRandomCryptoPhrase();
         createCryptoMapping();
         System.out.println("Successfully created a new game...");
@@ -41,7 +72,7 @@ public class Cryptogram {
         }
     }
 
-    private ArrayList<String> getCryptoPhrases() {
+    public ArrayList<String> getCryptoPhrases() {
         ArrayList<String> cryptoPhrases = new ArrayList<>();
 
         File cryptoFileName;
@@ -73,7 +104,7 @@ public class Cryptogram {
         phrase = cryptoPhrases.get(new Random().nextInt(numberOfCryptoPhrases));
     }
 
-    private void createCryptoMapping() {
+    public void createCryptoMapping() {
         Random random = new Random();
         ArrayList<Integer> alphabetIndex = new ArrayList<>();
         for(int i=0;i<26;i++)
@@ -85,79 +116,16 @@ public class Cryptogram {
             randomNumber = random.nextInt(26-i);
 
             while(alphabetIndex.get(randomNumber)==i) {
-                randomNumber = random.nextInt(26 - i);
-            }
+                randomNumber = random.nextInt(26 - i);            }
 
-            gameMapping.add(i, alphabetIndex.remove(randomNumber));
+            gameMapping[i] = alphabetIndex.remove(randomNumber);
             i++;
         }
         if(alphabetIndex.get(0)==25)
             createCryptoMapping();
         else {
-            gameMapping.add(0,alphabetIndex.remove(0));
+            gameMapping[25] = alphabetIndex.remove(0);
         }
     }
 }
 
-class LetterCryptogram extends Cryptogram {
-
-    private String cryptogramAlphabet;
-
-    public LetterCryptogram(String phrase) {
-        String newPhrase = "";
-        char[] ch = new char[phrase.length()];
-        for (int i = 0; i < phrase.length(); i++) {
-            ch[i] = phrase.charAt(i);
-        }
-
-        for (char c : ch) {
-            if(c == 32) {
-                newPhrase = newPhrase + " ";
-            }
-            else
-            {
-                newPhrase = newPhrase + (char)(gameMapping.get(c-97)+97) + "    ";
-            }
-            System.out.println(newPhrase);
-        }
-    }
-
-    public void Cryptogram() {
-
-    }
-
-    public void getPlainLetter(char cryptoLetter) {
-
-    }
-
-
-}
-
-class numberCryptogram extends Cryptogram {
-
-    private String cryptogramAlphabet;
-
-    public numberCryptogram(String phrase) {
-        String newPhrase = "";
-        char[] ch = new char[phrase.length()];
-        for (int i = 0; i < phrase.length(); i++) {
-            ch[i] = phrase.charAt(i);
-        }
-
-        for (char c : ch) {
-            if(c == 32) {
-                newPhrase = newPhrase + " ";
-            }
-        }
-    }
-
-    public void Cryptogram() {
-
-    }
-
-    public void getPlainLetter(int cryptoLetter) {
-
-    }
-
-
-}

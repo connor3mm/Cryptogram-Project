@@ -1,9 +1,5 @@
 package cryptogram;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
@@ -15,9 +11,10 @@ public class Game {
 
 
     public Game(Player p, int cryptType){
-        //generateCryptogram(cryptType);
+        this.cryptType = cryptType;
         this.currentPlayer = p;
         this.cryptType = cryptType;
+        generateCryptogram();
     }
 
     public Game(Player p){
@@ -28,6 +25,7 @@ public class Game {
         int rand = random.nextInt(2);
 
         this.cryptType = rand;
+        generateCryptogram();
     }
 
 
@@ -44,7 +42,13 @@ public class Game {
     }
 
     public void generateCryptogram(){
-        currentGame = new Cryptogram(cryptType);
+        if(cryptType == 1) {
+            currentGame = new NumberCryptogram();
+        }
+        else
+        {
+            currentGame = new LetterCryptogram();
+        }
     }
 
     public void enterLetter() {
