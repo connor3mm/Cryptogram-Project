@@ -32,12 +32,12 @@ public class Player {
 
 
     public void incrementCryptogramCompleted(){
-
+        cryptogramsCompleted = ++cryptogramsCompleted;
     }
 
 
     public void incrementCryptogramPlayed(){
-
+        cryptogramsPlayed = ++cryptogramsPlayed;
     }
 
     public int getAccuracy() {
