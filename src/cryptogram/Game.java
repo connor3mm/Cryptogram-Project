@@ -1,33 +1,33 @@
 package cryptogram;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Game {
 
     //variables could be wrong
     private Player currentPlayer;
-    private String cryptType;
     private Cryptogram currentGame;
+    private int cryptType;
 
 
-    public void Game(Player p, String cryptType) {
-
-        currentPlayer = p;
+    public void Game(Player p, int cryptType){
+        currentGame = new Cryptogram();
+        this.currentPlayer = p;
         this.cryptType = cryptType;
     }
 
-    public void Game(Player p) {
-        Random rNum = new Random();
-        boolean value = rNum.nextBoolean();
+    public void Game(Player p){
+        currentGame = new Cryptogram();
+        this.currentPlayer = p;
 
-        currentPlayer = p;
-        if(value == true){
-            currentGame = new LetterCryptogram();
+        Random random = new Random();
+        int rand = random.nextInt(2);
 
-        }else{
-            currentGame = new numberCryptogram();
-        }
-
+        this.cryptType = rand;
     }
 
 
@@ -43,8 +43,8 @@ public class Game {
 
     }
 
-    public void generateCryptogram() {
-
+    public void generateCryptogram(){
+        currentGame.Cryptogram(cryptType);
     }
 
     public void enterLetter() {
