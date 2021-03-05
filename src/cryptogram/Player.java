@@ -8,6 +8,15 @@ public class Player {
     private int cryptogramsPlayed;
     private int cryptogramsCompleted;
 
+    public Player(String name){
+        username = name;
+        accuracy = 0;
+        totalGuesses = 0;
+        cryptogramsPlayed = 0;
+        cryptogramsCompleted = 0;
+    }
+
+
     public String getUsername() {
         return username;
     }
@@ -45,13 +54,7 @@ public class Player {
     }
 
 
-    public Player(String name){
-        username = name;
-        accuracy = 0;
-        totalGuesses = 0;
-        cryptogramsPlayed = 0;
-        cryptogramsCompleted = 0;
-    }
+
 
 
 
