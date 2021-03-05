@@ -81,7 +81,6 @@ class LetterCryptogram extends Cryptogram {
 
 }
 
-
 class numberCryptogram extends Cryptogram {
 
     private String cryptogramAlphabet;

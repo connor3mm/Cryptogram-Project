@@ -10,6 +10,7 @@ public class Game {
 
     //variables could be wrong
     private Player currentPlayer;
+    private String cryptType;
     private Cryptogram currentGame;
     private int cryptType;
 
@@ -29,15 +30,15 @@ public class Game {
     }
 
 
-    public void getHint(){
+    public void getHint() {
 
     }
 
-    public void loadPlayer(){
+    public void loadPlayer() {
 
     }
 
-    public void playGame(){
+    public void playGame() {
 
     }
 
@@ -46,28 +47,29 @@ public class Game {
         currentGame.Cryptogram(cryptType);
     }
 
-    public void enterLetter(){
+    public void enterLetter() {
 
 
     }
 
-    public void undoLetter(){
+    public void undoLetter() {
 
     }
 
 
-    public void viewFrequencies(){
-
-    }
-    public void saveGame(){
+    public void viewFrequencies() {
 
     }
 
-    public void loadGame(){
+    public void saveGame() {
 
     }
 
-    public void showSolution(){
+    public void loadGame() {
+
+    }
+
+    public void showSolution() {
 
     }
 
