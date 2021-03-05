@@ -9,27 +9,27 @@ public class Players {
     private List<String> allPlayers = new ArrayList<String>();
     private File playersFile;
 
-public void addPlayer(File playersFile){
+public void addPlayer(Player p){
 
 }
 
-public void savePlayers(File playersFile){
+public void savePlayers(){
 
 }
 
-public void findPlayer(File playersFile){
+public void findPlayer(Player p){
 
 }
 
-public void getAllPlayersAccuracies(List allPlayers){
+public void getAllPlayersAccuracies(){
 
 }
 
-public void getAllPlayersCryptogramsPlayed(List allPlayers){
+public void getAllPlayersCryptogramsPlayed(){
 
 }
 
-public void getAllPlayersCompletedCryptos(List allPlayers){
+public void getAllPlayersCompletedCryptos(){
 
 }
 
