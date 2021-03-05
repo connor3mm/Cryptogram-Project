@@ -14,13 +14,13 @@ public class Game {
     private int cryptType;
 
 
-    public void Game(Player p, int cryptType){
-        currentGame = new Cryptogram();
+    public Game(Player p, int cryptType){
+        //generateCryptogram(cryptType);
         this.currentPlayer = p;
         this.cryptType = cryptType;
     }
 
-    public void Game(Player p){
+    public Game(Player p){
         currentGame = new Cryptogram();
         this.currentPlayer = p;
 
@@ -44,7 +44,7 @@ public class Game {
     }
 
     public void generateCryptogram(){
-        currentGame.Cryptogram(cryptType);
+        currentGame = new Cryptogram(cryptType);
     }
 
     public void enterLetter() {
