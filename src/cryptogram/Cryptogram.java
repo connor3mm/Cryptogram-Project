@@ -21,7 +21,7 @@ public class Cryptogram {
     }
 
     private void setMapping(int cryptoType) {
-        if(cryptoType == 1){
+        if (cryptoType == 1) {
             this.numberMapping = true;
         } else {
             this.numberMapping = false;
@@ -41,7 +41,7 @@ public class Cryptogram {
             phrase = fileReader.readLine();
 
             //While a phrase exists, process it
-            while(phrase != null) {
+            while (phrase != null) {
                 cryptoPhrases.add(phrase);
                 phrase = fileReader.readLine();
             }

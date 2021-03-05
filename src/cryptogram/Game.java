@@ -10,17 +10,18 @@ public class Game {
 
     //variables could be wrong
     private Player currentPlayer;
-    private String cryptType;
     private Cryptogram currentGame;
     private int cryptType;
 
 
     public void Game(Player p, int cryptType){
+        currentGame = new Cryptogram();
         this.currentPlayer = p;
         this.cryptType = cryptType;
     }
 
     public void Game(Player p){
+        currentGame = new Cryptogram();
         this.currentPlayer = p;
 
         Random random = new Random();
@@ -43,7 +44,6 @@ public class Game {
     }
 
     public void generateCryptogram(){
-        currentGame = new Cryptogram();
         currentGame.Cryptogram(cryptType);
     }
 
