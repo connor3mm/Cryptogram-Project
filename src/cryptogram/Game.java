@@ -1,21 +1,33 @@
 package cryptogram;
 
+import java.util.Random;
+
 public class Game {
 
     //variables could be wrong
     private Player currentPlayer;
-    private String currentGame;
+    private String cryptType;
+    private Cryptogram currentGame;
 
 
     public void Game(Player p, String cryptType) {
 
         currentPlayer = p;
-        currentGame = cryptType;
+        this.cryptType = cryptType;
     }
 
     public void Game(Player p) {
+        Random rNum = new Random();
+        boolean value = rNum.nextBoolean();
+
         currentPlayer = p;
-        currentGame = null;
+        if(value == true){
+            currentGame = new LetterCryptogram();
+
+        }else{
+            currentGame = new numberCryptogram();
+        }
+
     }
 
 
