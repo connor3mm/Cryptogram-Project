@@ -48,8 +48,10 @@ public class Game {
     }
 
     public void enterLetter() {
-        currentGame.getPlainLetter('e', 'h');
-        currentGame.getPlainLetter('l', 'h');
+        currentGame.getPlainLetter('s'); //asked for an input 'h'
+        currentGame.getPlainLetter('h'); //asked for input 'g'
+        currentGame.getPlainLetter('g'); //asked for input 'x'
+        currentGame.getPlainLetter('a');
     }
 
     public void undoLetter() {

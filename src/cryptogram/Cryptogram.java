@@ -129,6 +129,6 @@ public class Cryptogram {
         }
     }
 
-    public void getPlainLetter(char cryptoLetter, char answerLetter) {}
+    public void getPlainLetter(char letter) {}
 }
 
