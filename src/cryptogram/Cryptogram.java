@@ -8,6 +8,14 @@ import java.util.Random;
 
 public class Cryptogram {
 
+    //Variables
+    private String phrase;
+    private String cryptogramAlphabet;
+    private boolean numberMapping;
+    public int[] gameMapping = new int[26];
+    private double[] letterFrequency;
+    public int[] playerMapping = new int [26];
+
     //Getters and setters
     public String getPhrase() {
         return phrase;
@@ -41,13 +49,6 @@ public class Cryptogram {
         this.letterFrequency = letterFrequency;
     }
 
-    //Variables
-    private String phrase;
-    private String cryptogramAlphabet;
-    private boolean numberMapping;
-    public int[] gameMapping = new int[26];
-    private double[] letterFrequency;
-
     //Cryptogram Constructor
     public Cryptogram() {
         System.out.println("New create is being created...");
@@ -55,6 +56,7 @@ public class Cryptogram {
         createCryptoMapping();
         System.out.println("Successfully created a new game...");
         System.out.println(getPhrase());
+
         for (int i = 0; i < gameMapping.length; i++) {
             System.out.println("index - " + i + " " + gameMapping[i]);
         }
@@ -99,9 +101,14 @@ public class Cryptogram {
     //Maps a number of the alphabet(in order) to random number
     public void createCryptoMapping() {
         Random random = new Random();
+        
         ArrayList<Integer> alphabetIndex = new ArrayList<>();
         for (int i = 0; i < 26; i++)
             alphabetIndex.add(i);
+
+        for (int i = 0; i < 26; i++) {
+            playerMapping[i] = -1;
+        }
 
         int randomNumber;
         int i = 0;
@@ -121,5 +128,7 @@ public class Cryptogram {
             gameMapping[25] = alphabetIndex.remove(0);
         }
     }
+
+    public void getPlainLetter(char cryptoLetter, char answerLetter) {}
 }
 

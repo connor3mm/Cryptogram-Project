@@ -13,7 +13,6 @@ public class Game {
     public Game(Player p, int cryptType) {
         this.currentPlayer = p;
         this.cryptType = cryptType;
-
     }
     //Constructor with one perimeter
     public Game(Player p) {
@@ -28,11 +27,11 @@ public class Game {
     //Generating number or letter cryptogram
     public void generateCryptogram() {
         if (cryptType == 1) {
-
             currentGame = new NumberCryptogram();
         } else {
             currentGame = new LetterCryptogram();
         }
+        enterLetter();
     }
 
 
@@ -49,8 +48,8 @@ public class Game {
     }
 
     public void enterLetter() {
-
-
+        currentGame.getPlainLetter('e', 'h');
+        currentGame.getPlainLetter('l', 'h');
     }
 
     public void undoLetter() {
