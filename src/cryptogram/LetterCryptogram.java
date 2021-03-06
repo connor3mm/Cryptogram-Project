@@ -1,17 +1,16 @@
 package cryptogram;
 
-public class LetterCryptogram extends Cryptogram {
+class LetterCryptogram extends Cryptogram {
 
+    //variables
     private String cryptogramAlphabet;
 
+    //constructor
     public LetterCryptogram() {
-        System.out.println("New create is being created...");
-        setRandomCryptoPhrase();
-        createCryptoMapping();
         mapLetters();
-        System.out.println("Successfully created a new game...");
     }
 
+    //maps the game mapping numbers to each letter it represents in the phrase
     public void mapLetters() {
         String newPhrase = "";
         for (int i = 0; i < getPhrase().length(); i++) {
@@ -20,16 +19,12 @@ public class LetterCryptogram extends Cryptogram {
             if (currentLetter == 32) {
                 newPhrase = newPhrase + " ";
             } else {
-                newPhrase = newPhrase + (char)(gameMapping[currentLetter-97]+97) + "    ";
+                newPhrase = newPhrase + (char) (gameMapping[currentLetter - 97] + 97) + "    ";
             }
         }
-        System.out.println(getPhrase());
         System.out.println(newPhrase);
     }
 
-    public void Cryptogram() {
-
-    }
 
     public void getPlainLetter(char cryptoLetter) {
 

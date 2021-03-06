@@ -3,12 +3,12 @@ package cryptogram;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Cryptogram {
 
+    //Getters and setters
     public String getPhrase() {
         return phrase;
     }
@@ -41,37 +41,26 @@ public class Cryptogram {
         this.letterFrequency = letterFrequency;
     }
 
+    //Variables
     private String phrase;
     private String cryptogramAlphabet;
     private boolean numberMapping;
-    public int[] gameMapping = new int[26];;
+    public int[] gameMapping = new int[26];
     private double[] letterFrequency;
 
-    public void getFrequencies() {
-
-    }
-
+    //Cryptogram Constructor
     public Cryptogram() {
-    }
-
-    public Cryptogram(int cryptoType) {
         System.out.println("New create is being created...");
         setRandomCryptoPhrase();
         createCryptoMapping();
         System.out.println("Successfully created a new game...");
-        //for (int i = 0; i < gameMapping.size(); i++) {
-         //   System.out.println("index - " + i + " " + (char)gameMapping.get(i));
-        //}
-    }
-
-    private void setMapping(int cryptoType) {
-        if (cryptoType == 1) {
-            this.numberMapping = true;
-        } else {
-            this.numberMapping = false;
+        System.out.println(getPhrase());
+        for (int i = 0; i < gameMapping.length; i++) {
+            System.out.println("index - " + i + " " + gameMapping[i]);
         }
     }
 
+    //Generates cryptogram phrases and puts into an Arraylist
     public ArrayList<String> getCryptoPhrases() {
         ArrayList<String> cryptoPhrases = new ArrayList<>();
 
@@ -97,6 +86,8 @@ public class Cryptogram {
         return cryptoPhrases;
     }
 
+
+    //Sets 1 out of 15 crypto phrases
     public void setRandomCryptoPhrase() {
         ArrayList<String> cryptoPhrases = getCryptoPhrases();
         int numberOfCryptoPhrases = cryptoPhrases.size();
@@ -104,24 +95,27 @@ public class Cryptogram {
         phrase = cryptoPhrases.get(new Random().nextInt(numberOfCryptoPhrases));
     }
 
+
+    //Maps a number of the alphabet(in order) to random number
     public void createCryptoMapping() {
         Random random = new Random();
         ArrayList<Integer> alphabetIndex = new ArrayList<>();
-        for(int i=0;i<26;i++)
+        for (int i = 0; i < 26; i++)
             alphabetIndex.add(i);
 
         int randomNumber;
         int i = 0;
-        while(i < 25) {
-            randomNumber = random.nextInt(26-i);
+        while (i < 25) {
+            randomNumber = random.nextInt(26 - i);
 
-            while(alphabetIndex.get(randomNumber)==i) {
-                randomNumber = random.nextInt(26 - i);            }
+            while (alphabetIndex.get(randomNumber) == i) {
+                randomNumber = random.nextInt(26 - i);
+            }
 
             gameMapping[i] = alphabetIndex.remove(randomNumber);
             i++;
         }
-        if(alphabetIndex.get(0)==25)
+        if (alphabetIndex.get(0) == 25)
             createCryptoMapping();
         else {
             gameMapping[25] = alphabetIndex.remove(0);

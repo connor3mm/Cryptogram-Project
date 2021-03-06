@@ -4,28 +4,35 @@ import java.util.Random;
 
 public class Game {
 
-    //variables could be wrong
+    //variables
     private Player currentPlayer;
     private Cryptogram currentGame;
     private int cryptType;
 
-
-    public Game(Player p, int cryptType){
-        this.cryptType = cryptType;
+    //Constructors x2
+    public Game(Player p, int cryptType) {
         this.currentPlayer = p;
         this.cryptType = cryptType;
-        generateCryptogram();
-    }
 
-    public Game(Player p){
-        currentGame = new Cryptogram();
+    }
+    //Constructor with one perimeter
+    public Game(Player p) {
         this.currentPlayer = p;
 
         Random random = new Random();
         int rand = random.nextInt(2);
 
         this.cryptType = rand;
-        generateCryptogram();
+    }
+
+    //Generating number or letter cryptogram
+    public void generateCryptogram() {
+        if (cryptType == 1) {
+
+            currentGame = new NumberCryptogram();
+        } else {
+            currentGame = new LetterCryptogram();
+        }
     }
 
 
@@ -39,16 +46,6 @@ public class Game {
 
     public void playGame() {
 
-    }
-
-    public void generateCryptogram(){
-        if(cryptType == 1) {
-            currentGame = new NumberCryptogram();
-        }
-        else
-        {
-            currentGame = new LetterCryptogram();
-        }
     }
 
     public void enterLetter() {
@@ -76,6 +73,5 @@ public class Game {
     public void showSolution() {
 
     }
-
-
 }
+
