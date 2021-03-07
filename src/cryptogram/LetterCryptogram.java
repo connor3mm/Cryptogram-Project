@@ -28,37 +28,70 @@ class LetterCryptogram extends Cryptogram {
     }
 
 
-    public void getPlainLetter(char letter) {
-        Scanner scan = new Scanner(System.in);
+    public void getPlainLetter(char cryptoLetter, char answerLetter) {
+        int cryptoLetterAscii = cryptoLetter - 97;
+        int answerLetterAscii = answerLetter - 97;
+        boolean isComplete = false;
 
-        if(checkIfMapped(letter)) {
-            System.out.println("The letter is already mapped, do you want to overwrite? (y/n)");
-            scan = new Scanner(System.in);
+        if(playerMapping[cryptoLetterAscii] !=  -1) { //Only triggered if the mapping already exists
+            System.out.println("This letter has been mapped. Would you like to overwrite? (y/n)");
 
-            String userInput = scan.next();
-            char answer = userInput.charAt(0);
+            Scanner scan = new Scanner(System.in);
+            String userString = scan.next();
+            char answer = userString.charAt(0);
+            scan.close();
 
-            if (answer == 'n') {
+            if(answer == 'y') {
+                for(int i=0; i < gameMapping.length; i++) {
+                    if(gameMapping[i] == cryptoLetterAscii) {
+                        playerMapping[answerLetterAscii] = cryptoLetterAscii;
+                    }
+                }
+
+                for (int i = 0; i < playerMapping.length; i++) {
+                    System.out.println("index - " + i + " " + playerMapping[i]);
+                }
+
+                isComplete = checkIfGameCompleted();
+            } else {
+                return;
+            }
+        } else if(playerMapping[answerLetterAscii] !=  -1) {
+            System.out.println("This letter has been mapped. Would you like to overwrite? (y/n)");
+
+            Scanner scan = new Scanner(System.in);
+            String userString = scan.next();
+            char answer = userString.charAt(0);
+            scan.close();
+
+            if(answer == 'y') {
+                for(int i=0; i < gameMapping.length; i++) {
+                    if(gameMapping[i] == cryptoLetterAscii) {
+                        playerMapping[answerLetterAscii] = cryptoLetterAscii;
+                    }
+                }
+
+                for (int i = 0; i < playerMapping.length; i++) {
+                    System.out.println("index - " + i + " " + playerMapping[i]);
+                }
+
+                isComplete = checkIfGameCompleted();
+            } else {
                 return;
             }
         }
-        System.out.println("Which letter would you like to map '" + letter + "' to?");
-        String userInput2 = scan.next();
-        char letterToReplace = userInput2.charAt(0);
-        enterLetter(letter, letterToReplace);
-    }
-
-    public boolean enterLetter(char letterInput, char guessInput) {
-        int letterInputAscii = letterInput - 97;
-        int guessInputAscii = guessInput - 97;
 
         for(int i = 0; i < gameMapping.length; i++) {
-            if(gameMapping[i] == letterInputAscii) {
-                playerMapping[i] = guessInputAscii;
-                return i == guessInputAscii;
+            if(gameMapping[i] == cryptoLetterAscii) {
+                playerMapping[i] = answerLetterAscii;
             }
         }
-        return false;
+
+        for (int i = 0; i < playerMapping.length; i++) {
+            System.out.println("index - " + i + " " + playerMapping[i]);
+        }
+
+        isComplete = checkIfGameCompleted();
     }
 
     public boolean checkIfMapped(char letter) {
