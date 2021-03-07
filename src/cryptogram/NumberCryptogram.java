@@ -1,5 +1,7 @@
 package cryptogram;
 
+import java.util.Scanner;
+
 class NumberCryptogram extends Cryptogram {
     //variables
     private String cryptogramAlphabet;
@@ -29,7 +31,7 @@ class NumberCryptogram extends Cryptogram {
     }
 
 
-    public void getPlainLetter(int cryptoLetter) {
+    public void getPlainLetter(int letter) {
 
 
 
