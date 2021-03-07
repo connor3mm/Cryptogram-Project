@@ -110,5 +110,32 @@ class LetterCryptogram extends Cryptogram {
         return true;
     }
 
-    public void lol(){};
+    public boolean validUndoCheck(char Letter) {
+        int letterAsciiValue = Letter - 97;
+
+        for (int i = 0; i < playerMapping.length; i++) {
+            if (playerMapping[i] == letterAsciiValue) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void undoGivenLetter(char Letter) {
+        int letterAsciiValue = Letter - 97;
+        boolean worked = false;
+
+        for (int i = 0; i < playerMapping.length; i++) {
+            if (playerMapping[i] == letterAsciiValue && validUndoCheck(Letter)) {
+                playerMapping[i] = -1;
+                worked = true;
+            }
+        }
+        if(worked == false){
+            System.out.println("Not a valid undo request");
+        }
+    }
 }
+
+
+
