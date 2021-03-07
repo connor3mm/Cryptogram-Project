@@ -16,6 +16,17 @@ public class Cryptogram {
     private double[] letterFrequency;
     public int[] playerMapping = new int [26];
 
+
+    public int[] getGameMapping() {
+        return gameMapping;
+    }
+
+    public int[] getPlayerMapping() {
+        return playerMapping;
+    }
+
+
+
     //Getters and setters
     public String getPhrase() {
         return phrase;
@@ -101,7 +112,7 @@ public class Cryptogram {
     //Maps a number of the alphabet(in order) to random number
     public void createCryptoMapping() {
         Random random = new Random();
-        
+
         ArrayList<Integer> alphabetIndex = new ArrayList<>();
         for (int i = 0; i < 26; i++)
             alphabetIndex.add(i);
