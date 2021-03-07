@@ -109,4 +109,6 @@ class LetterCryptogram extends Cryptogram {
         }
         return true;
     }
+
+    public void lol(){};
 }
