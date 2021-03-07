@@ -9,12 +9,18 @@ public class Game {
     private Cryptogram currentGame;
     private int cryptType;
 
-    //Constructors x2
+    /**
+     * Constructors
+     * @param p - Player
+     * @param cryptType - letter or number
+     */
+    //Constructors x2 parameter
     public Game(Player p, int cryptType) {
         this.currentPlayer = p;
         this.cryptType = cryptType;
     }
-    //Constructor with one perimeter
+
+    //Constructor with one parameter
     public Game(Player p) {
         this.currentPlayer = p;
 
@@ -27,14 +33,18 @@ public class Game {
     //Generating number or letter cryptogram
     public void generateCryptogram() {
         if (cryptType == 1) {
+            gamesPlayedInc();
             currentGame = new NumberCryptogram();
         } else {
+            gamesPlayedInc();
             currentGame = new LetterCryptogram();
         }
-        enterLetter();
-        undoLetter();
     }
 
+    public void gamesPlayedInc(){
+        int games = currentPlayer.getCryptogramsPlayed();
+        currentPlayer.setCryptogramsPlayed(games+1);
+    }
 
     public void getHint() {
 
@@ -56,7 +66,7 @@ public class Game {
     }
 
     public void undoLetter() {
-        currentGame.undoGivenLetter('l');
+
     }
 
 

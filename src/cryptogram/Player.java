@@ -8,6 +8,34 @@ public class Player {
     private int cryptogramsPlayed;
     private int cryptogramsCompleted;
 
+    public void setAccuracy(int accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    public void setTotalGuesses(int totalGuesses) {
+        this.totalGuesses = totalGuesses;
+    }
+
+    public void setCryptogramsPlayed(int cryptogramsPlayed) {
+        this.cryptogramsPlayed = cryptogramsPlayed;
+    }
+
+    public void setCryptogramsCompleted(int cryptogramsCompleted) {
+        this.cryptogramsCompleted = cryptogramsCompleted;
+    }
+
+    public int getTotalGuesses() {
+        return totalGuesses;
+    }
+
+    public int getCryptogramsPlayed() {
+        return cryptogramsPlayed;
+    }
+
+    public int getCryptogramsCompleted() {
+        return cryptogramsCompleted;
+    }
+
     public Player(String name){
         username = name;
         accuracy = 0;
@@ -26,7 +54,11 @@ public class Player {
     }
 
 
-    public void updateAccuracy(){
+    public void updateAccuracy(boolean check){
+        if(check){
+            accuracy++;
+        }
+            totalGuesses++;
 
     }
 
