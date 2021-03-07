@@ -31,7 +31,7 @@ class LetterCryptogram extends Cryptogram {
     public void getPlainLetter(char letter) {
         Scanner scan = new Scanner(System.in);
 
-        if(checkIfMapped(letter)) {
+        if(checkValueIsAlreadyMapped(letter)) {
             System.out.println("The letter is already mapped, do you want to overwrite? (y/n)");
             scan = new Scanner(System.in);
 
@@ -45,7 +45,12 @@ class LetterCryptogram extends Cryptogram {
         System.out.println("Which letter would you like to map '" + letter + "' to?");
         String userInput2 = scan.next();
         char letterToReplace = userInput2.charAt(0);
-        enterLetter(letter, letterToReplace);
+        if(guessIsValid(letterToReplace)) {
+            enterLetter(letter, letterToReplace);
+        } else
+        {
+            System.out.println("Invalid guess. This value is already mapped.");
+        }
     }
 
     public boolean enterLetter(char letterInput, char guessInput) {
@@ -61,13 +66,37 @@ class LetterCryptogram extends Cryptogram {
         return false;
     }
 
-    public boolean checkIfMapped(char letter) {
+    public boolean checkIfGuessMapped(char letter) { //public boolean checkGuessAlreadyMapped(char guess)
         int letterAsciiValue = letter - 97;
 
         for(int i = 0; i < playerMapping.length; i++) {
             if(playerMapping[i]==letterAsciiValue) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean checkValueIsAlreadyMapped(char input) {
+        int letterToCheck = input - 97;
+
+        for(int i = 0; i < gameMapping.length; i++) {
+            if(gameMapping[i] == letterToCheck) {
+                if(playerMapping[i] == -1)
+                    return false;
+                else
+                    return true;
+            }
+        }
+        return true;
+    }
+
+    private boolean guessIsValid(char guess) {
+        if(guess >= 97 && guess <= 122) {
+            if(checkIfGuessMapped(guess))
+                return false;
+            else
+                return true;
         }
         return false;
     }
