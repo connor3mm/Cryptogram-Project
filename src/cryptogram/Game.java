@@ -39,7 +39,6 @@ public class Game {
             gamesPlayedInc();
             currentGame = new LetterCryptogram();
         }
-        enterLetter();
     }
 
     public void gamesPlayedInc(){

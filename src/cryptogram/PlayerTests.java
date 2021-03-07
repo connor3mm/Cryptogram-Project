@@ -72,5 +72,10 @@ public class PlayerTests {
         game.generateCryptogram();
         assertEquals(2, p.getCryptogramsPlayed());
     }
+
+
+
+
+
 }
 

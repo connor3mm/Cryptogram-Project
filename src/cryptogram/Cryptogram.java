@@ -16,7 +16,10 @@ public class Cryptogram {
     private double[] letterFrequency;
     public int[] playerMapping = new int [26];
 
-
+    /**
+     * Getters and setters
+     * @return
+     */
     public int[] getGameMapping() {
         return gameMapping;
     }
@@ -26,8 +29,6 @@ public class Cryptogram {
     }
 
 
-
-    //Getters and setters
     public String getPhrase() {
         return phrase;
     }
@@ -60,7 +61,9 @@ public class Cryptogram {
         this.letterFrequency = letterFrequency;
     }
 
-    //Cryptogram Constructor
+    /**
+     * Cryptogram Constructor
+     */
     public Cryptogram() {
         System.out.println("New create is being created...");
         setRandomCryptoPhrase();
@@ -73,7 +76,9 @@ public class Cryptogram {
         }
     }
 
-    //Generates cryptogram phrases and puts into an Arraylist
+    /**
+     * Generates cryptogram phrases and puts into an Arraylist
+     */
     public ArrayList<String> getCryptoPhrases() {
         ArrayList<String> cryptoPhrases = new ArrayList<>();
 

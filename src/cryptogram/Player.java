@@ -55,10 +55,11 @@ public class Player {
 
 
     public void updateAccuracy(boolean check){
-        totalGuesses++;
         if(check){
             accuracy++;
         }
+            totalGuesses++;
+
     }
 
 

@@ -66,7 +66,8 @@ public class CryptoTesting {
             Player p = new Player("John");
             Game game = new Game(p, 0);
             Cryptogram cgame = new Cryptogram();
-            cgame.getPlainLetter('s');
-            cgame.getPlainLetter('h');
+            cgame.setPhrase("a");
+            cgame.getPlainLetter('y');
+
         }
     }
