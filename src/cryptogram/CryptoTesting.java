@@ -70,4 +70,16 @@ public class CryptoTesting {
             cgame.getPlainLetter('y');
 
         }
+
+
+        @Test
+        public void testP() {
+            Player p = new Player("John");
+            Game game = new Game(p, 0);
+            Cryptogram cgame = new Cryptogram();
+
+
+        }
+
+
     }
