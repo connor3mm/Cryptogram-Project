@@ -31,7 +31,7 @@ class LetterCryptogram extends Cryptogram {
     public void getPlainLetter(char letter) {
         Scanner scan = new Scanner(System.in);
 
-        if(checkValueIsAlreadyMapped(letter)) {
+        if(checkIfGuessMapped(letter)) {
             System.out.println("The letter is already mapped, do you want to overwrite? (y/n)");
             scan = new Scanner(System.in);
 
@@ -66,7 +66,7 @@ class LetterCryptogram extends Cryptogram {
         return false;
     }
 
-    public boolean checkIfGuessMapped(char letter) { //public boolean checkGuessAlreadyMapped(char guess)
+    public boolean checkIfGuessMapped(char letter) {
         int letterAsciiValue = letter - 97;
 
         for(int i = 0; i < playerMapping.length; i++) {
