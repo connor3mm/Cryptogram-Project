@@ -1,5 +1,6 @@
 package cryptogram;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 class LetterCryptogram extends Cryptogram {
@@ -31,7 +32,7 @@ class LetterCryptogram extends Cryptogram {
     public void getPlainLetter(char letter) {
         Scanner scan = new Scanner(System.in);
 
-        if(checkIfMapped(letter)) {
+        if (checkIfMapped(letter)) {
             System.out.println("The letter is already mapped, do you want to overwrite? (y/n)");
             scan = new Scanner(System.in);
 
@@ -52,8 +53,8 @@ class LetterCryptogram extends Cryptogram {
         int letterInputAscii = letterInput - 97;
         int guessInputAscii = guessInput - 97;
 
-        for(int i = 0; i < gameMapping.length; i++) {
-            if(gameMapping[i] == letterInputAscii) {
+        for (int i = 0; i < gameMapping.length; i++) {
+            if (gameMapping[i] == letterInputAscii) {
                 playerMapping[i] = guessInputAscii;
                 return i == guessInputAscii;
             }
@@ -64,20 +65,47 @@ class LetterCryptogram extends Cryptogram {
     public boolean checkIfMapped(char letter) {
         int letterAsciiValue = letter - 97;
 
-        for(int i = 0; i < playerMapping.length; i++) {
-            if(playerMapping[i]==letterAsciiValue) {
+        for (int i = 0; i < playerMapping.length; i++) {
+            if (playerMapping[i] == letterAsciiValue) {
                 return true;
             }
         }
         return false;
     }
-    
+
     public boolean checkIfGameCompleted() {
         for (int i = 0; i < playerMapping.length; i++) {
-            if(playerMapping[i] == -1) {
+            if (playerMapping[i] == -1) {
                 return false;
             }
         }
         return true;
     }
-}
+
+    public boolean validUndoCheck(char Letter) {
+        int letterAsciiValue = Letter - 97;
+
+        for (int i = 0; i < playerMapping.length; i++) {
+            if (playerMapping[i] == letterAsciiValue) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void undoGivenLetter(char Letter) {
+        int letterAsciiValue = Letter - 97;
+        boolean worked = false;
+
+            for (int i = 0; i < playerMapping.length; i++) {
+                if (playerMapping[i] == letterAsciiValue && validUndoCheck(Letter)) {
+                    playerMapping[i] = -1;
+                    worked = true;
+                }
+            }
+            if(worked == false){
+                System.out.println("Not a valid undo request");
+            }
+        }
+    }
+

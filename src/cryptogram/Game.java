@@ -32,6 +32,7 @@ public class Game {
             currentGame = new LetterCryptogram();
         }
         enterLetter();
+        undoLetter();
     }
 
 
@@ -55,7 +56,7 @@ public class Game {
     }
 
     public void undoLetter() {
-
+        currentGame.undoGivenLetter('l');
     }
 
 

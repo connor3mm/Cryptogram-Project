@@ -130,5 +130,7 @@ public class Cryptogram {
     }
 
     public void getPlainLetter(char letter) {}
+    public void undoGivenLetter(char letter) {}
 }
+
 
