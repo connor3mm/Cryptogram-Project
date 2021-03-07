@@ -7,5 +7,6 @@ public class Main {
         Player p = new Player("John");
         Game game = new Game(p, 0);
         game.generateCryptogram();
+        game.enterLetter();
     }
 }

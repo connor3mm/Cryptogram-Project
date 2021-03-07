@@ -33,5 +33,8 @@ class NumberCryptogram extends Cryptogram {
 
     public void getPlainLetter(int letter) {
 
+
+
+
     }
 }
