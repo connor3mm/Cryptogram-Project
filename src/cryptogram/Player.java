@@ -2,14 +2,31 @@ package cryptogram;
 
 public class Player {
 
+    /**
+     * Variables
+     */
     private String username;
-    private int accuracy;
+    private double accuracy;
+    private int correctGuesses;
     private int totalGuesses;
     private int cryptogramsPlayed;
     private int cryptogramsCompleted;
 
-    public void setAccuracy(int accuracy) {
+
+    /**
+     * getters setters
+     * @return
+     */
+    public int getCorrectGuesses() {
+        return correctGuesses;
+    }
+
+    public void setAccuracy(double accuracy) {
         this.accuracy = accuracy;
+    }
+
+    public void setCorrectGuesses(int correctGuesses) {
+        this.correctGuesses = correctGuesses;
     }
 
     public void setTotalGuesses(int totalGuesses) {
@@ -24,6 +41,18 @@ public class Player {
         this.cryptogramsCompleted = cryptogramsCompleted;
     }
 
+    public double getAccuracy() {
+        return accuracy;
+    }
+
+    public int getNumCryptogramsPlayed() {
+        return cryptogramsPlayed;
+    }
+
+    public int getNumCryptogramsCompleted() {
+        return cryptogramsCompleted;
+    }
+
     public int getTotalGuesses() {
         return totalGuesses;
     }
@@ -36,15 +65,6 @@ public class Player {
         return cryptogramsCompleted;
     }
 
-    public Player(String name){
-        username = name;
-        accuracy = 0;
-        totalGuesses = 0;
-        cryptogramsPlayed = 0;
-        cryptogramsCompleted = 0;
-    }
-
-
     public String getUsername() {
         return username;
     }
@@ -53,44 +73,45 @@ public class Player {
         this.username = username;
     }
 
+    /**
+     * Player Constructor
+     * @param name
+     */
+    public Player(String name) {
+        username = name;
+        accuracy = 0;
+        totalGuesses = 0;
+        cryptogramsPlayed = 0;
+        cryptogramsCompleted = 0;
+    }
 
-    public void updateAccuracy(boolean check){
-        if(check){
-            accuracy++;
+    /**
+     * Updates player stats
+     * @param check
+     */
+    public void updateAccuracy(boolean check) {
+        if (check) {
+            correctGuesses++;
         }
-            totalGuesses++;
+        totalGuesses++;
+        accuracy = Math.round(((double)correctGuesses/(double)totalGuesses) * 100);
 
     }
 
-
-    public void incrementCryptogramCompleted(){
+    /**
+     * Increments cryptos complete
+     */
+    public void incrementCryptogramCompleted() {
         cryptogramsCompleted = ++cryptogramsCompleted;
     }
 
 
-    public void incrementCryptogramPlayed(){
-        cryptogramsPlayed = ++cryptogramsPlayed;
+    /**
+     * Increments cryptosplayed
+     */
+    public void incrementCryptogramPlayed() {
+        cryptogramsPlayed = cryptogramsPlayed+1;
     }
-
-    public int getAccuracy() {
-        return accuracy;
-    }
-
-    public int getNumCryptogramsPlayed() {
-        return cryptogramsPlayed;
-    }
-
-
-    public int getNumCryptogramsCompleted() {
-        return cryptogramsCompleted;
-    }
-
-
-
-
-
-
-
 
 
 }

@@ -1,13 +1,17 @@
 package cryptogram;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
 
-    //variables
+    /**
+     * variables
+     */
     private Player currentPlayer;
     private Cryptogram currentGame;
     private int cryptType;
+
 
     /**
      * Constructors
@@ -30,7 +34,10 @@ public class Game {
         this.cryptType = rand;
     }
 
-    //Generating number or letter cryptogram
+
+    /**
+     *  Generating number or letter cryptogram
+     */
     public void generateCryptogram() {
         if (cryptType == 1) {
             gamesPlayedInc();
@@ -39,13 +46,49 @@ public class Game {
             gamesPlayedInc();
             currentGame = new LetterCryptogram();
         }
-        undoLetter();
     }
 
+    /**
+     * Incrementing total games played
+     */
     public void gamesPlayedInc(){
-        int games = currentPlayer.getCryptogramsPlayed();
-        currentPlayer.setCryptogramsPlayed(games+1);
+        currentPlayer.incrementCryptogramPlayed();
     }
+
+
+
+    public void enterLetter() {
+        boolean guess;
+        boolean completed;
+        Scanner scan = new Scanner(System.in);
+        if(currentGame.getClass().getName().equals(LetterCryptogram.class.getName())) {
+            System.out.println("Enter a letter to map: ");
+            String result = scan.next();
+            char charResult = result.charAt(0);
+            guess = currentGame.getPlainLetter(charResult);
+            currentPlayer.updateAccuracy(guess);
+            completed = currentGame.checkIfGameCompleted();
+            System.out.println("Completed ? " + completed);
+        } else
+        {
+            System.out.println("Enter a number to map (1-25): ");
+            int result = scan.nextInt();
+            guess = currentGame.getPlainNumber(result);
+            currentPlayer.updateAccuracy(guess);
+            completed = currentGame.checkIfGameCompleted();
+            System.out.println("Completed ? " + completed);
+        }
+
+    }
+
+    public void undoLetter() {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Enter a letter to undo: ");
+        String result = scan.next();
+        char charResult = result.charAt(0);
+        currentGame.undoGivenLetter(charResult);
+    }
+
 
     public void getHint() {
 
@@ -58,18 +101,6 @@ public class Game {
     public void playGame() {
 
     }
-
-    public void enterLetter() {
-        currentGame.getPlainLetter('s'); //asked for an input 'h'
-        currentGame.getPlainLetter('h'); //asked for input 'g'
-        currentGame.getPlainLetter('g'); //asked for input 'x'
-        currentGame.getPlainLetter('a');
-    }
-
-    public void undoLetter() {
-        currentGame.undoGivenLetter('l');
-    }
-
 
     public void viewFrequencies() {
 

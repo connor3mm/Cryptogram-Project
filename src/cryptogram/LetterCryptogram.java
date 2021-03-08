@@ -1,20 +1,28 @@
 package cryptogram;
 
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 class LetterCryptogram extends Cryptogram {
 
-    //variables
+    /**
+     * variables
+     */
     private String cryptogramAlphabet;
+    private String newPhrase;
 
-    //constructor
+    /**
+     * constructor
+     */
     public LetterCryptogram() {
         mapLetters();
     }
 
-    //maps the game mapping numbers to each letter it represents in the phrase
+    /**
+     * maps the game mapping numbers to each letter it represents in the phrase
+     */
     public void mapLetters() {
-        String newPhrase = "";
+        newPhrase = "";
         for (int i = 0; i < getPhrase().length(); i++) {
             char currentLetter = getPhrase().charAt(i);
 
@@ -26,39 +34,67 @@ class LetterCryptogram extends Cryptogram {
         }
         System.out.println(newPhrase);
     }
+/*
+    public void showMappedLetters() {
+        String userPhrase = "";
+        for (int i = 0; i < getPhrase().length(); i++) {
+           char letter = newPhrase.charAt(i);
+            if (letter == letterToReplace) {
+                userPhrase += letterToReplace;
+            }
+            else{
+                userPhrase+= " ";
+            }
+        }
 
+        System.out.println(userPhrase);
+        System.out.println(newPhrase);
+    }
+*/
 
-    public void getPlainLetter(char letter) {
+    /**
+     * @param letter
+     * @return true if letter is mapped, false if not
+     */
+    public boolean getPlainLetter(char letter) {
         Scanner scan = new Scanner(System.in);
 
-        if(checkIfGuessMapped(letter)) {
-            System.out.println("The letter is already mapped, do you want to overwrite? (y/n)");
+        if (checkValueIsAlreadyMapped(letter)) {
+            System.out.println("The letter '" + letter + "' is already mapped, do you want to overwrite? (y/n)");
             scan = new Scanner(System.in);
 
             String userInput = scan.next();
             char answer = userInput.charAt(0);
 
             if (answer == 'n') {
-                return;
+                return false;
             }
         }
-        System.out.println("Which letter would you like to map '" + letter + "' to?");
+        System.out.println("\nWhich letter would you like to map '" + letter + "' to?");
         String userInput2 = scan.next();
         char letterToReplace = userInput2.charAt(0);
-        if(guessIsValid(letterToReplace)) {
-            enterLetter(letter, letterToReplace);
-        } else
-        {
+
+        if (guessIsValid(letterToReplace)) {
+            return enterLetter(letter, letterToReplace);
+
+        } else {
             System.out.println("Invalid guess. This value is already mapped.");
+            return false;
         }
     }
 
+    /**
+     *Enters input to the mapping
+     * @param letterInput
+     * @param guessInput
+     * @return true if letter is mapped. false if not
+     */
     public boolean enterLetter(char letterInput, char guessInput) {
         int letterInputAscii = letterInput - 97;
         int guessInputAscii = guessInput - 97;
 
-        for(int i = 0; i < gameMapping.length; i++) {
-            if(gameMapping[i] == letterInputAscii) {
+        for (int i = 0; i < gameMapping.length; i++) {
+            if (gameMapping[i] == letterInputAscii) {
                 playerMapping[i] = guessInputAscii;
                 return i == guessInputAscii;
             }
@@ -66,23 +102,17 @@ class LetterCryptogram extends Cryptogram {
         return false;
     }
 
-    public boolean checkIfGuessMapped(char letter) {
-        int letterAsciiValue = letter - 97;
-
-        for(int i = 0; i < playerMapping.length; i++) {
-            if(playerMapping[i]==letterAsciiValue) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+    /**
+     * Checks if the input char is mapped
+     * @param input
+     * @return true if value is mapped, false if not
+     */
     public boolean checkValueIsAlreadyMapped(char input) {
-        int letterToCheck = input - 97;
+        int letterToBeChecked = input - 97;
 
-        for(int i = 0; i < gameMapping.length; i++) {
-            if(gameMapping[i] == letterToCheck) {
-                if(playerMapping[i] == -1)
+        for (int i = 0; i < gameMapping.length; i++) {
+            if (gameMapping[i] == letterToBeChecked) {
+                if (playerMapping[i] == -1)
                     return false;
                 else
                     return true;
@@ -90,52 +120,4 @@ class LetterCryptogram extends Cryptogram {
         }
         return true;
     }
-
-    private boolean guessIsValid(char guess) {
-        if(guess >= 97 && guess <= 122) {
-            if(checkIfGuessMapped(guess))
-                return false;
-            else
-                return true;
-        }
-        return false;
-    }
-    
-    public boolean checkIfGameCompleted() {
-        for (int i = 0; i < playerMapping.length; i++) {
-            if(playerMapping[i] == -1) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean validUndoCheck(char Letter) {
-        int letterAsciiValue = Letter - 97;
-
-        for (int i = 0; i < playerMapping.length; i++) {
-            if (playerMapping[i] == letterAsciiValue) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public void undoGivenLetter(char Letter) {
-        int letterAsciiValue = Letter - 97;
-        boolean worked = false;
-
-        for (int i = 0; i < playerMapping.length; i++) {
-            if (playerMapping[i] == letterAsciiValue && validUndoCheck(Letter)) {
-                playerMapping[i] = -1;
-                worked = true;
-            }
-        }
-        if(worked == false){
-            System.out.println("Not a valid undo request");
-        }
-    }
 }
-
-
-

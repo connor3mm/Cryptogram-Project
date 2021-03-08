@@ -8,16 +8,20 @@ import java.util.Random;
 
 public class Cryptogram {
 
-    //Variables
-    private String phrase;
+    /**
+     * Variables
+     */
+    private String cryptoPhrase;
     private String cryptogramAlphabet;
     private boolean numberMapping;
     public int[] gameMapping = new int[26];
-    private double[] letterFrequency;
-    public int[] playerMapping = new int [26];
+    private int[] letterFrequency;
+    public int[] playerMapping = new int[26];
+    public int numberOfLettersInPhrase;
 
     /**
      * Getters and setters
+     *
      * @return
      */
     public int[] getGameMapping() {
@@ -28,13 +32,20 @@ public class Cryptogram {
         return playerMapping;
     }
 
+    public boolean getPlainLetter(char letter) {
+        return true;
+    }
+
+    public boolean getPlainNumber(int number) {
+        return true;
+    }
 
     public String getPhrase() {
-        return phrase;
+        return cryptoPhrase;
     }
 
     public void setPhrase(String phrase) {
-        this.phrase = phrase;
+        this.cryptoPhrase = phrase;
     }
 
     public String getCryptogramAlphabet() {
@@ -53,28 +64,32 @@ public class Cryptogram {
         this.numberMapping = numberMapping;
     }
 
-    public double[] getLetterFrequency() {
+    public int[] getLetterFrequency() {
         return letterFrequency;
     }
 
-    public void setLetterFrequency(double[] letterFrequency) {
+    public void setLetterFrequency(int[] letterFrequency) {
         this.letterFrequency = letterFrequency;
     }
+
 
     /**
      * Cryptogram Constructor
      */
     public Cryptogram() {
-        System.out.println("New create is being created...");
+        System.out.println("New game is being created...");
         setRandomCryptoPhrase();
         createCryptoMapping();
-        System.out.println("Successfully created a new game...");
-        System.out.println(getPhrase());
+        setLetterFrequency();
+        getNumberOfLetters();
+        System.out.println("Successfully created a new game...\n");
+        System.out.println(getPhrase() + "\n");
 
         for (int i = 0; i < gameMapping.length; i++) {
             System.out.println("index - " + i + " " + gameMapping[i]);
         }
     }
+
 
     /**
      * Generates cryptogram phrases and puts into an Arraylist
@@ -84,17 +99,17 @@ public class Cryptogram {
 
         File cryptoFileName;
         BufferedReader fileReader;
-        String phrase;
+        String cryptoPhrase;
 
         try {
             cryptoFileName = new File("solvedCryptos.txt");
             fileReader = new BufferedReader(new FileReader(cryptoFileName));
-            phrase = fileReader.readLine();
+            cryptoPhrase = fileReader.readLine();
 
-            //While a phrase exists, process it
-            while (phrase != null) {
-                cryptoPhrases.add(phrase);
-                phrase = fileReader.readLine();
+            //while theres a phrase left, add to list
+            while (cryptoPhrase != null) {
+                cryptoPhrases.add(cryptoPhrase);
+                cryptoPhrase = fileReader.readLine();
             }
         } catch (Exception ex) {
             System.out.println("There was an error while trying to read from the file.");
@@ -105,16 +120,20 @@ public class Cryptogram {
     }
 
 
-    //Sets 1 out of 15 crypto phrases
+    /**
+     * Sets 1 out of 15 crypto phrases
+     */
     public void setRandomCryptoPhrase() {
         ArrayList<String> cryptoPhrases = getCryptoPhrases();
         int numberOfCryptoPhrases = cryptoPhrases.size();
 
-        phrase = cryptoPhrases.get(new Random().nextInt(numberOfCryptoPhrases));
+        cryptoPhrase = cryptoPhrases.get(new Random().nextInt(numberOfCryptoPhrases));
     }
 
 
-    //Maps a number of the alphabet(in order) to random number
+    /**
+     * Maps a number of the alphabet(in order) to random number
+     */
     public void createCryptoMapping() {
         Random random = new Random();
 
@@ -122,8 +141,8 @@ public class Cryptogram {
         for (int i = 0; i < 26; i++)
             alphabetIndex.add(i);
 
-        for (int i = 0; i < 26; i++) {
-            playerMapping[i] = -1;
+        for (int j = 0; j < 26; j++) {
+            playerMapping[j] = -1;
         }
 
         int randomNumber;
@@ -138,6 +157,7 @@ public class Cryptogram {
             gameMapping[i] = alphabetIndex.remove(randomNumber);
             i++;
         }
+
         if (alphabetIndex.get(0) == 25)
             createCryptoMapping();
         else {
@@ -145,8 +165,117 @@ public class Cryptogram {
         }
     }
 
-    public void getPlainLetter(char letter) {}
-    public void undoGivenLetter(char letter) {}
+
+    public boolean undoGivenLetter(char Letter) {
+        int letterAsciiValue = Letter - 97;
+        boolean worked = false;
+
+        for (int i = 0; i < playerMapping.length; i++) {
+            if (playerMapping[i] == letterAsciiValue && validUndoCheck(Letter)) {
+                playerMapping[i] = -1;
+
+                System.out.println("Letter has been successfully undone.");
+                return worked = true;
+            }
+        }
+        if (worked == false) {
+            System.out.println("Not a valid undo request");
+            return worked = false;
+        }
+        return false;
+    }
+
+    public boolean validUndoCheck(char Letter) {
+        int letterAsciiValue = Letter - 97;
+
+        int i = 0;
+        while (i < playerMapping.length) {
+            if (playerMapping[i] == letterAsciiValue) {
+                return true;
+            }
+            i++;
+        }
+        return false;
+    }
+
+
+    public boolean checkIfGameCompleted() {
+        int count = 0;
+        for (int i = 0; i < playerMapping.length; i++) {
+            if (playerMapping[i] > -1) {
+                count++;
+            }
+        }
+        if (count == numberOfLettersInPhrase) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Puts letter Frequency into array
+     */
+    private void setLetterFrequency() {
+        int CurrLetter;
+        int i = 0;
+        letterFrequency = new int[26];
+        for (int j = 0; j < cryptoPhrase.length(); j++) {
+            CurrLetter = cryptoPhrase.charAt(j);
+            if (CurrLetter >= 97 && CurrLetter <= 122) {
+                letterFrequency[CurrLetter - 97]++;
+                i++;
+            }
+        }
+    }
+
+    /**
+     * Calculates the letter frequency of letters
+     */
+    private void getNumberOfLetters() {
+        int count = 0;
+        for (int i = 0; i < letterFrequency.length; i++) {
+            if (letterFrequency[i] > 0) {
+                count++;
+            }
+        }
+        numberOfLettersInPhrase = count;
+    }
+
+    /**
+     * Checks if the guess has been mapped
+     *
+     * @param letter
+     * @return True if its mapped, false if not
+     */
+    public boolean checkIfGuessMapped(char letter) {
+        int letterAsciiValue = letter - 97;
+
+        for (int i = 0; i < playerMapping.length; i++) {
+            if (playerMapping[i] == letterAsciiValue) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Error checking on guess
+     * @param guess
+     * @return true if valid, false if not
+     */
+    public boolean guessIsValid(char guess) {
+        if (guess >= 97 && guess <= 122) {
+            if (checkIfGuessMapped(guess))
+                return false;
+            else
+                return true;
+        }
+        return false;
+    }
+
+    /*
+    public void showMappedLetters() {
+    }
+     */
+
 }
-
-

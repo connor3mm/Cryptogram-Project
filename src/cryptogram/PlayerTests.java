@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class PlayerTests {
 
@@ -14,7 +15,7 @@ public class PlayerTests {
      * Default constructor for test class SalesItemTest
      */
 
-    public void PlayerTests() {
+    public PlayerTests() {
 
     }
 
@@ -48,7 +49,7 @@ public class PlayerTests {
     public void testPlayerMade() {
         Player p = new Player("John");
         assertEquals("John", p.getUsername());
-        assertEquals(0, p.getAccuracy());
+        assertTrue( 0.0 == p.getAccuracy());
         assertEquals(0, p.getTotalGuesses());
         assertEquals(0, p.getCryptogramsPlayed());
         assertEquals(0, p.getCryptogramsCompleted());
@@ -73,9 +74,33 @@ public class PlayerTests {
         assertEquals(2, p.getCryptogramsPlayed());
     }
 
+    @Test
+    public void testUpdateAccuracy1() {
+        //Test for letter crypto
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        game.generateCryptogram();
+        p.setCorrectGuesses(49);
+        p.setTotalGuesses(99);
+        p.updateAccuracy(true);
+        System.out.println(p.getAccuracy());
+        assertTrue(50.0 == p.getAccuracy());
+    }
+
+    @Test
+    public void testUpdateAccuracy2() {
+        //Test for letter crypto
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        game.generateCryptogram();
+        p.setCorrectGuesses(50);
+        p.setTotalGuesses(49);
+        p.updateAccuracy(false);
+        System.out.println(p.getAccuracy());
+        assertTrue(100.0 == p.getAccuracy());
+    }
 
 
 
 
 }
-
