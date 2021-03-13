@@ -15,7 +15,8 @@ public class Game {
 
     /**
      * Constructors
-     * @param p - Player
+     *
+     * @param p         - Player
      * @param cryptType - letter or number
      */
     //Constructors x2 parameter
@@ -36,7 +37,7 @@ public class Game {
 
 
     /**
-     *  Generating number or letter cryptogram
+     * Generating number or letter cryptogram
      */
     public void generateCryptogram() {
         if (cryptType == 1) {
@@ -51,34 +52,40 @@ public class Game {
     /**
      * Incrementing total games played
      */
-    public void gamesPlayedInc(){
+    public void gamesPlayedInc() {
         currentPlayer.incrementCryptogramPlayed();
     }
-
 
 
     public void enterLetter() {
         boolean guess;
         boolean completed;
         Scanner scan = new Scanner(System.in);
-        if(currentGame.getClass().getName().equals(LetterCryptogram.class.getName())) {
+        if (currentGame.getClass().getName().equals(LetterCryptogram.class.getName())) {
             System.out.println("Enter a letter to map: ");
             String result = scan.next();
             char charResult = result.charAt(0);
             guess = currentGame.getPlainLetter(charResult);
             currentPlayer.updateAccuracy(guess);
             completed = currentGame.checkIfGameCompleted();
-            System.out.println("Completed ? " + completed);
-        } else
-        {
+            if (completed) {
+                System.out.println("Game has been Completed");
+            } else {
+                System.out.println("Game had not been completed");
+            }
+
+        } else {
             System.out.println("Enter a number to map (1-25): ");
             int result = scan.nextInt();
             guess = currentGame.getPlainNumber(result);
             currentPlayer.updateAccuracy(guess);
             completed = currentGame.checkIfGameCompleted();
-            System.out.println("Completed ? " + completed);
+            if (completed) {
+                System.out.println("Game has been Completed");
+            } else {
+                System.out.println("Game had not been completed");
+            }
         }
-
     }
 
     public void undoLetter() {

@@ -11,6 +11,11 @@ class LetterCryptogram extends Cryptogram {
     private String cryptogramAlphabet;
     private String newPhrase;
 
+
+    public String getNewPhrase() {
+        return newPhrase;
+    }
+
     /**
      * constructor
      */
@@ -75,6 +80,7 @@ class LetterCryptogram extends Cryptogram {
         char letterToReplace = userInput2.charAt(0);
 
         if (guessIsValid(letterToReplace)) {
+            System.out.println( "\n" + newPhrase + "\n");
             return enterLetter(letter, letterToReplace);
 
         } else {

@@ -53,9 +53,10 @@ public class PlayerTests {
         assertEquals(0, p.getTotalGuesses());
         assertEquals(0, p.getCryptogramsPlayed());
         assertEquals(0, p.getCryptogramsCompleted());
-
-
     }
+
+
+    //\\\\\\\\\\\\\\\\\\\\\\\\  Iteration 2  ////////////////////////////////////////
 
     /**
      * Test that when a crypto is generated, games played gets incremented
@@ -75,7 +76,7 @@ public class PlayerTests {
     }
 
     @Test
-    public void testUpdateAccuracy1() {
+    public void testUpdateAccuracyTrue() {
         //Test for letter crypto
         Player p = new Player("John");
         Game game = new Game(p, 0);
@@ -88,7 +89,7 @@ public class PlayerTests {
     }
 
     @Test
-    public void testUpdateAccuracy2() {
+    public void testUpdateAccuracyFalse() {
         //Test for letter crypto
         Player p = new Player("John");
         Game game = new Game(p, 0);
@@ -99,8 +100,5 @@ public class PlayerTests {
         System.out.println(p.getAccuracy());
         assertTrue(100.0 == p.getAccuracy());
     }
-
-
-
 
 }

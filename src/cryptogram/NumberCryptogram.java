@@ -7,6 +7,7 @@ class NumberCryptogram extends Cryptogram {
      * Variable
      */
     private String cryptogramAlphabet;
+    private String newPhrase;
 
     /**
      * Constructor

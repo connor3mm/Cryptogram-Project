@@ -67,7 +67,6 @@ public class CryptoTesting {
         Cryptogram cgame = new Cryptogram();
         cgame.setPhrase("a");
         assertTrue(cgame.getPlainLetter('y'));
-
     }
 
     @Test
@@ -105,14 +104,14 @@ public class CryptoTesting {
     }
 
     @Test
-    public void testCryptoType1(){
+    public void testCryptoTypeLetterCrypto(){
         Player p = new Player("John");
         Game game = new Game(p, 0);
         assertNotEquals(game, null);
     }
 
     @Test
-    public void testCryptoType2(){
+    public void testCryptoTypeNumberCrypto(){
         Player p = new Player("John");
         Game game = new Game(p, 1);
         assertNotEquals(game, null);
