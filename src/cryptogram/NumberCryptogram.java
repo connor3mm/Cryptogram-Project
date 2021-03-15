@@ -75,7 +75,7 @@ class NumberCryptogram extends Cryptogram {
      * @return true if letter is mapped. false if not
      */
     public boolean enterLetter(int numberInput, char guessInput) {
-        int letterInputAscii = numberInput - 1;
+        int letterInputAscii = numberInput;
         int guessInputAscii = guessInput - 97;
 
         for (int i = 0; i < gameMapping.length; i++) {
