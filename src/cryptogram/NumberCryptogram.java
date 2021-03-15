@@ -7,7 +7,7 @@ class NumberCryptogram extends Cryptogram {
      * Variable
      */
     private String cryptogramAlphabet;
-    private String newPhrase;
+    private String newPhrase = getNewPhrase();
 
     /**
      * Constructor
@@ -21,7 +21,6 @@ class NumberCryptogram extends Cryptogram {
      * maps the game mapping numbers to each letter it represents in the phrase
      */
     public void mapNumbers() {
-        String newPhrase = "";
         for (int i = 0; i < getPhrase().length(); i++) {
             char currentLetter = getPhrase().charAt(i);
 
@@ -35,6 +34,7 @@ class NumberCryptogram extends Cryptogram {
                 }
             }
         }
+        setNewPhrase(newPhrase);
         System.out.println(newPhrase);
     }
 

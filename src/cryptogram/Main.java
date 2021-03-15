@@ -61,7 +61,7 @@ public class Main {
                 }
                 //checks the input value is of a valid format
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "The value entered is not an option.");
+                System.out.println("The value entered is not an option.");
             }
 
             if (choice == 1) {

@@ -18,16 +18,22 @@ public class Cryptogram {
     private int[] letterFrequency;
     public int[] playerMapping = new int[26];
     public int numberOfLettersInPhrase;
+    private String newPhrase = "";
 
     /**
      * Getters and setters
      *
      * @return
      */
+    public String getNewPhrase() {
+        return newPhrase;
+    }
     public int[] getGameMapping() {
         return gameMapping;
     }
-
+    public void setNewPhrase(String newPhrase) {
+        this.newPhrase = newPhrase;
+    }
     public int[] getPlayerMapping() {
         return playerMapping;
     }
@@ -260,6 +266,7 @@ public class Cryptogram {
 
     /**
      * Error checking on guess
+     *
      * @param guess
      * @return true if valid, false if not
      */
@@ -273,9 +280,11 @@ public class Cryptogram {
         return false;
     }
 
-    /*
+
     public void showMappedLetters() {
+
+
     }
-     */
+
 
 }

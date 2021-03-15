@@ -9,12 +9,10 @@ class LetterCryptogram extends Cryptogram {
      * variables
      */
     private String cryptogramAlphabet;
-    private String newPhrase;
+    private String newPhrase = getNewPhrase();
 
 
-    public String getNewPhrase() {
-        return newPhrase;
-    }
+
 
     /**
      * constructor
@@ -27,7 +25,6 @@ class LetterCryptogram extends Cryptogram {
      * maps the game mapping numbers to each letter it represents in the phrase
      */
     public void mapLetters() {
-        newPhrase = "";
         for (int i = 0; i < getPhrase().length(); i++) {
             char currentLetter = getPhrase().charAt(i);
 
@@ -37,7 +34,9 @@ class LetterCryptogram extends Cryptogram {
                 newPhrase = newPhrase + (char) (gameMapping[currentLetter - 97] + 97) + "    ";
             }
         }
+        setNewPhrase(newPhrase);
         System.out.println(newPhrase);
+
     }
 /*
     public void showMappedLetters() {
@@ -63,7 +62,6 @@ class LetterCryptogram extends Cryptogram {
      */
     public boolean getPlainLetter(char letter) {
         Scanner scan = new Scanner(System.in);
-
         if (checkValueIsAlreadyMapped(letter)) {
             System.out.println("The letter '" + letter + "' is already mapped, do you want to overwrite? (y/n)");
             scan = new Scanner(System.in);
