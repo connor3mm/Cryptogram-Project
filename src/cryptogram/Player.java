@@ -102,7 +102,7 @@ public class Player {
      * Increments cryptos complete
      */
     public void incrementCryptogramCompleted() {
-        cryptogramsCompleted = ++cryptogramsCompleted;
+        cryptogramsCompleted = cryptogramsCompleted+1;
     }
 
 
