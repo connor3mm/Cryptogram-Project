@@ -87,12 +87,13 @@ public class Cryptogram {
      */
     public Cryptogram() {
         System.out.println("New game is being created...");
-        setRandomCryptoPhrase();
+        setPhrase("a");
         createCryptoMapping();
         setLetterFrequency();
         getNumberOfLetters();
         System.out.println("Successfully created a new game...\n");
         System.out.println(getPhrase() + "\n");
+
 
         for (int i = 0; i < gameMapping.length; i++) {
             System.out.println("index - " + i + " " + gameMapping[i]);
@@ -295,20 +296,18 @@ public class Cryptogram {
 
 
     public boolean gameSuccess() {
-        boolean win = false;
         int count = 0;
 
         for (int i = 0; i < gameMapping.length; i++) {
-            if (gameMapping[i] > -1 && i == gameMapping[i]) {
+            if (playerMapping[i] > -1 && i == playerMapping[i]) {
                 count++;
             }
         }
 
         if (count == numberOfLettersInPhrase) {
-            return win = true;
+            return true;
         }
 
-        return win;
+        return false;
     }
-
 }

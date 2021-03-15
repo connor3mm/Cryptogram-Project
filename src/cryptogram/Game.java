@@ -72,6 +72,7 @@ public class Game {
             win = currentGame.gameSuccess();
             if (completed && win) {
                 System.out.println("Game has been Completed and WON");
+                System.exit(1);
             } else if (completed && !win) {
                 System.out.println("Game has been Completed and NOT WON, try again");
             } else
@@ -84,11 +85,14 @@ public class Game {
             guess = currentGame.getPlainNumber(result);
             currentPlayer.updateAccuracy(guess);
             completed = currentGame.checkIfGameCompleted();
-            if (completed) {
-                System.out.println("Game has been Completed");
-            } else {
+            win = currentGame.gameSuccess();
+            if (completed && win) {
+                System.out.println("Game has been Completed and WON");
+                System.exit(1);
+            } else if (completed && !win) {
+                System.out.println("Game has been Completed and NOT WON, try again");
+            } else
                 System.out.println("Game had not been completed");
-            }
         }
     }
 
