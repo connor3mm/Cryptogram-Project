@@ -60,6 +60,7 @@ public class Game {
     public void enterLetter() {
         boolean guess;
         boolean completed;
+        boolean win;
         Scanner scan = new Scanner(System.in);
         if (currentGame.getClass().getName().equals(LetterCryptogram.class.getName())) {
             System.out.println("Enter a letter to map: ");
@@ -68,11 +69,14 @@ public class Game {
             guess = currentGame.getPlainLetter(charResult);
             currentPlayer.updateAccuracy(guess);
             completed = currentGame.checkIfGameCompleted();
-            if (completed) {
-                System.out.println("Game has been Completed");
-            } else {
+            win = currentGame.gameSuccess();
+            if (completed && win) {
+                System.out.println("Game has been Completed and WON");
+            } else if (completed && !win) {
+                System.out.println("Game has been Completed and NOT WON, try again");
+            } else
                 System.out.println("Game had not been completed");
-            }
+
 
         } else {
             System.out.println("Enter a number to map (1-25): ");

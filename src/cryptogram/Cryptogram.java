@@ -28,12 +28,15 @@ public class Cryptogram {
     public String getNewPhrase() {
         return newPhrase;
     }
+
     public int[] getGameMapping() {
         return gameMapping;
     }
+
     public void setNewPhrase(String newPhrase) {
         this.newPhrase = newPhrase;
     }
+
     public int[] getPlayerMapping() {
         return playerMapping;
     }
@@ -112,7 +115,7 @@ public class Cryptogram {
             fileReader = new BufferedReader(new FileReader(cryptoFileName));
             cryptoPhrase = fileReader.readLine();
 
-            if(cryptoPhrase == null) {
+            if (cryptoPhrase == null) {
                 throw new Exception("The file is empty.");
             }
 
@@ -290,5 +293,22 @@ public class Cryptogram {
 
     }
 
+
+    public boolean gameSuccess() {
+        boolean win = false;
+        int count = 0;
+
+        for (int i = 0; i < gameMapping.length; i++) {
+            if (gameMapping[i] > -1 && i == gameMapping[i]) {
+                count++;
+            }
+        }
+
+        if (count == numberOfLettersInPhrase) {
+            return win = true;
+        }
+
+        return win;
+    }
 
 }

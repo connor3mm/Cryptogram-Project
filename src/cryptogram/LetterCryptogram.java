@@ -12,8 +12,6 @@ class LetterCryptogram extends Cryptogram {
     private String newPhrase = getNewPhrase();
 
 
-
-
     /**
      * constructor
      */
@@ -78,7 +76,7 @@ class LetterCryptogram extends Cryptogram {
         char letterToReplace = userInput2.charAt(0);
 
         if (guessIsValid(letterToReplace)) {
-            System.out.println( "\n" + newPhrase + "\n");
+            System.out.println("\n" + newPhrase + "\n");
             return enterLetter(letter, letterToReplace);
 
         } else {
@@ -88,7 +86,8 @@ class LetterCryptogram extends Cryptogram {
     }
 
     /**
-     *Enters input to the mapping
+     * Enters input to the mapping
+     *
      * @param letterInput
      * @param guessInput
      * @return true if letter is mapped. false if not
@@ -108,6 +107,7 @@ class LetterCryptogram extends Cryptogram {
 
     /**
      * Checks if the input char is mapped
+     *
      * @param input
      * @return true if value is mapped, false if not
      */
