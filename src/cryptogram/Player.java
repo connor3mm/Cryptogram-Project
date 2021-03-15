@@ -113,12 +113,5 @@ public class Player {
         cryptogramsPlayed = cryptogramsPlayed+1;
     }
 
-    /**
-     * Updates the number of cryptograms completed
-     */
-    public void updateCryptosCompleted(){
-        if(Cryptogram.gameCompleted){
-            cryptogramsCompleted = cryptogramsCompleted + 1;
-        }
-    }
+
 }
