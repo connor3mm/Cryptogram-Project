@@ -19,7 +19,6 @@ public class Cryptogram {
     public int[] playerMapping = new int[26];
     public int numberOfLettersInPhrase;
     private String newPhrase = "";
-    public static boolean gameCompleted = false;
 
     /**
      * Getters and setters
@@ -218,7 +217,6 @@ public class Cryptogram {
             }
         }
         if (count == numberOfLettersInPhrase) {
-            gameCompleted = true;
             return true;
         }
         return false;
