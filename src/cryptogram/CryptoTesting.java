@@ -3,6 +3,7 @@ package cryptogram;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import static org.junit.Assert.*;
 
@@ -147,5 +148,10 @@ public class CryptoTesting {
         }
     }
 
+    @Test
+    public void emptyPhraseFile() {
+        Cryptogram cryptogram = new Cryptogram();
+        Assertions.assertThrows(Exception.class, cryptogram::getCryptoPhrases);
+    }
 }
 

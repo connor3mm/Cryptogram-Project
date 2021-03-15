@@ -113,6 +113,10 @@ public class Cryptogram {
             fileReader = new BufferedReader(new FileReader(cryptoFileName));
             cryptoPhrase = fileReader.readLine();
 
+            if(cryptoPhrase == null) {
+                throw new Exception("The file is empty.");
+            }
+
             //while theres a phrase left, add to list
             while (cryptoPhrase != null) {
                 cryptoPhrases.add(cryptoPhrase);
