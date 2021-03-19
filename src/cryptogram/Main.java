@@ -12,31 +12,65 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         String name = "";
         int choice = -1;
-        //gets the menu option entered while checking the entered value is both within parameters and a valid input.
         do {
             try {
-                //displays the menu
-                System.out.println(
-                        "Please choose from the following options.\n"
-                                + "Enter 0 for letter Cryptogram \n"
-                                + "Enter 1 for Number Cryptogram\n"
-                );
-                choice = scan.nextInt();
-                //checks the input value is a valid option
-                if (choice < 0 || choice > 1) {
-                    System.out.println("The value must be between 0-1.");
-                    choice = -1;
-                }
-                //checks the input value is of a valid format
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "The value entered is not an option.");
-            }
-
-            if (choice == 0) {
                 int detailsChoice;
+                int loadChoice;
                 System.out.println("Enter 0 if you have already created an account.");
                 System.out.println("Enter 1 if you would like to create an account.");
                 detailsChoice = scan.nextInt();
+                if(detailsChoice < 0 || detailsChoice > 1){
+                    System.out.println("The value must be between 0 and 1.");
+                }
+                if (detailsChoice == 0) {
+                    System.out.println("Please enter your username");
+                    name = scan.next();
+                    Player p = new Player(name);
+                    Players ps = new Players();
+                    if (ps.findPlayer(p)) {
+                        ps.loadPlayer();
+                        System.out.println("Successfully loaded players details.");
+                    } else {
+                        System.out.println("Username does not exist.");
+                        while(!ps.findPlayer(p)){
+                            System.out.println("Please enter your username");
+                            name = scan.next();
+                            Player p2 = new Player(name);
+                            Players ps2 = new Players();
+                            if (ps2.findPlayer(p2)) {
+                                ps2.loadPlayer();
+                                System.out.println("Successfully loaded players details.");
+                            }
+                            System.out.println("Username does not exist.");
+                        }
+                    }
+                    System.out.println("Enter 0 if you would like to load your cryptogram.");
+                    System.out.println("Enter 1 if you would like to start a new cryptogram.");
+                    loadChoice = scan.nextInt();
+                    if(loadChoice == 0){
+
+                    } else if (loadChoice == 1){
+                        //displays the menu
+                        System.out.println(
+                                "Please choose from the following options.\n"
+                                        + "Enter 0 for letter Cryptogram \n"
+                                        + "Enter 1 for Number Cryptogram\n"
+                        );
+                        choice = scan.nextInt();
+                        //checks the input value is a valid option
+                        if (choice < 0 || choice > 1) {
+                            System.out.println("The value must be between 0-1.");
+                            choice = -1;
+                        }
+                        if(choice == 0){
+                            game = new Game(p, 0);
+                            game.generateCryptogram();
+                        } else if(choice == 1){
+                            game = new Game(p, 1);
+                            game.generateCryptogram();
+                        }
+                    }
+                    }
                 if (detailsChoice == 1) {
                     System.out.println("Please enter your desired username.");
                     name = scan.next();
@@ -47,29 +81,29 @@ public class Main {
                         System.exit(0);
                     }
                     ps.addPlayer(p);
-                    game = new Game(p, 0);
-                    game.generateCryptogram();
-                } else if (detailsChoice == 0) {
-                    System.out.println("Please enter your username");
-                    name = scan.next();
-                    Player p = new Player(name);
-                    Players ps = new Players();
-                    if (ps.findPlayer(p)) {
-                        ps.loadPlayer();
-                        System.out.println("Successfully loaded players details.");
+                    //displays the menu
+                    System.out.println(
+                            "Please choose from the following options.\n"
+                                    + "Enter 0 for letter Cryptogram \n"
+                                    + "Enter 1 for Number Cryptogram\n"
+                    );
+                    choice = scan.nextInt();
+                    //checks the input value is a valid option
+                    if (choice < 0 || choice > 1) {
+                        System.out.println("The value must be between 0-1.");
+                        choice = -1;
                     }
-                    game = new Game(p, 0);
-                    game.generateCryptogram();
+                    if(choice == 0){
+                        game = new Game(p, 0);
+                        game.generateCryptogram();
+                    } else if(choice == 1){
+                        game = new Game(p, 1);
+                        game.generateCryptogram();
+                    }
                 }
-
-            } else if (choice == 1) {
-                name = scan.next();
-                Player p = new Player(name);
-                game = new Game(p, 1);
-                game.generateCryptogram();
-            }
-
-
+            } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "The value entered is not an option.");
+                }
         }
         while (choice == -1);
 
