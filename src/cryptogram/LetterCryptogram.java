@@ -40,30 +40,30 @@ class LetterCryptogram extends Cryptogram {
     public void showMappedLetters() {
         String userPhrase = "";
 
-        System.out.println(newPhrase.length());
         for (int i = 0; i < newPhrase.length(); i++) {
 
             char letter = newPhrase.charAt(i);
 
-            int j = 0;
-            while(letter == 32){
-                i++;
-                letter = newPhrase.charAt(i);
+
+            if (letter == 32) {
+                userPhrase += " ";
+                continue;
             }
 
-            int letterInputAscii = letter - 97;
+            int letterToBeChecked = letter - 97;
 
+            for (int j = 0; j < gameMapping.length; j++) {
+                if (gameMapping[j] == letterToBeChecked) {
 
-            if (gameMapping[j] == letterInputAscii)
-            if (playerMapping[letterInputAscii] > -1) {
-                userPhrase += (char) playerMapping[letterInputAscii] + 97 + " ";
+                    if (playerMapping[j] == -1) {
+                        userPhrase += " ";
+
+                    } else {
+                        userPhrase = userPhrase + (char) (playerMapping[j] + 97);
+                    }
+                }
             }
-            else{
-                userPhrase+= " ";
-            }
-            j++;
         }
-
         System.out.println(userPhrase);
     }
 
@@ -123,6 +123,7 @@ class LetterCryptogram extends Cryptogram {
 
     /**
      * Checks if the input char is mapped
+     *
      * @param input
      * @return true if value is mapped, false if not
      */
