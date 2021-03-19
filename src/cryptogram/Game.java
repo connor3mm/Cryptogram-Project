@@ -126,7 +126,7 @@ public class Game {
     }
 
     public void saveGame() {
-
+       currentGame.saveCryptogram(currentPlayer);
     }
 
     public void loadGame() {

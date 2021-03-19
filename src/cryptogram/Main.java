@@ -141,6 +141,7 @@ public class Main {
             } else if (choice == 3) {
                 Player p = new Player(name);
                 p.savePlayersDetails();
+                game.saveGame();
                 System.exit(0);
             }
         } while (choice == -1);

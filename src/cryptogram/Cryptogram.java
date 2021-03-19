@@ -1,9 +1,13 @@
 package cryptogram;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Cryptogram {
 
@@ -87,7 +91,6 @@ public class Cryptogram {
     public Cryptogram() {
         System.out.println("New game is being created...");
         setRandomCryptoPhrase();
-        setPhrase("abc");
         createCryptoMapping();
         setLetterFrequency();
         getNumberOfLetters();
@@ -98,6 +101,18 @@ public class Cryptogram {
         for (int i = 0; i < gameMapping.length; i++) {
             System.out.println("index - " + i + " " + gameMapping[i]);
         }
+    }
+
+    public Cryptogram(String cryptoPhrase, boolean numberMapping, int[] gameMapping, int[] letterFrequency, int[] playerMapping,
+                      int numberOfLettersInPhrase, String newPhrase)
+    {
+        this.cryptoPhrase = cryptoPhrase;
+        this.numberMapping = numberMapping;
+        this.gameMapping = gameMapping;
+        this.letterFrequency = letterFrequency;
+        this.playerMapping = playerMapping;
+        this.numberOfLettersInPhrase = numberOfLettersInPhrase;
+        this.newPhrase = newPhrase;
     }
 
 
@@ -312,37 +327,67 @@ public class Cryptogram {
     }
 
     public boolean saveCryptogram(Player player) {
-        boolean successfullySaved = false;
-
-        File fileToSaveCryptogramTo;
-        BufferedWriter fileWriter;
-
         try {
+            //Set up variables to be used
+            File fileToSaveCryptogramTo;
+            BufferedWriter fileWriter;
+            String pathsToCryptoString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms";
+            Path pathToCryptograms = Paths.get(pathsToCryptoString);
+
+            //Create the folder if it doesn't exist already
+            createFolderIfNotExist(pathToCryptograms);
+
             //Open the file to write. (Creates new one if required)
-            fileToSaveCryptogramTo = new File(player.getUsername() + ".txt");
-            fileWriter = new BufferedWriter(new FileWriter(fileToSaveCryptogramTo));
+            fileToSaveCryptogramTo = new File(pathToCryptograms + "\\" + player.getUsername() + ".txt");
+
+            if(playerHasCryptoSaved(fileToSaveCryptogramTo)){ //If the player has a file saved, ask to overwrite
+                Scanner scan = new Scanner(System.in);
+                System.out.println("You already have a cryptogram saved, do you want to overwrite? (y/n)");
+                String sUserAnswer = scan.next();
+                char answer = sUserAnswer.charAt(0);
+
+                if(answer == 'n') {
+                    return false;
+                }
+            }
 
             //Write cryptogram information to file
+            fileWriter = new BufferedWriter(new FileWriter(fileToSaveCryptogramTo));
             fileWriter.write(this.cryptoPhrase + "\n");
-            fileWriter.write(this.cryptogramAlphabet + "\n");
             fileWriter.write(this.numberMapping + "\n");
             fileWriter.write(Arrays.toString(this.gameMapping) + "\n");
             fileWriter.write(Arrays.toString(this.letterFrequency) + "\n");
             fileWriter.write(Arrays.toString(this.playerMapping) + "\n");
             fileWriter.write(this.numberOfLettersInPhrase + "\n");
-            fileWriter.write(this.newPhrase + "\n");
+            fileWriter.write(this.newPhrase);
 
             //All info is stored at this point, close the reader
             fileWriter.close();
 
             //File was saved successfully
-            successfullySaved = true;
+            System.out.println("Cryptogram saved successfully.");
+            return true;
         } catch (Exception ex) {
+            //Something went wrong :(
             System.out.println("There was an error while trying to write to the file.");
-            System.exit(-1);
+            System.out.println("Cryptogram was not saved successfully.");
         }
-
-        return successfullySaved;
+        return false;
     }
 
+    private void createFolderIfNotExist(Path pathToCryptograms) {
+        if(!Files.exists(pathToCryptograms)){
+            System.out.println("Folder to store cryptograms does not exists. Creating one...");
+            try {
+                Files.createDirectory(pathToCryptograms);
+                System.out.println("Folder successfully created.");
+            } catch (Exception e){
+                System.out.println("Error creating directory for cryptograms.");
+            }
+        }
+    }
+
+    private boolean playerHasCryptoSaved(File fileToSaveCryptogramTo) {
+        return Files.exists(fileToSaveCryptogramTo.toPath());
+    }
 }
