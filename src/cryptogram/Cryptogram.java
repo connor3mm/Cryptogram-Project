@@ -1,9 +1,8 @@
 package cryptogram;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Cryptogram {
@@ -125,6 +124,7 @@ public class Cryptogram {
                 cryptoPhrases.add(cryptoPhrase);
                 cryptoPhrase = fileReader.readLine();
             }
+            fileReader.close(); //Close reader when the file has been read
         } catch (Exception ex) {
             System.out.println("There was an error while trying to read from the file.");
             System.exit(-1);
@@ -310,4 +310,39 @@ public class Cryptogram {
 
         return false;
     }
+
+    public boolean saveCryptogram(Player player) {
+        boolean successfullySaved = false;
+
+        File fileToSaveCryptogramTo;
+        BufferedWriter fileWriter;
+
+        try {
+            //Open the file to write. (Creates new one if required)
+            fileToSaveCryptogramTo = new File(player.getUsername() + ".txt");
+            fileWriter = new BufferedWriter(new FileWriter(fileToSaveCryptogramTo));
+
+            //Write cryptogram information to file
+            fileWriter.write(this.cryptoPhrase + "\n");
+            fileWriter.write(this.cryptogramAlphabet + "\n");
+            fileWriter.write(this.numberMapping + "\n");
+            fileWriter.write(Arrays.toString(this.gameMapping) + "\n");
+            fileWriter.write(Arrays.toString(this.letterFrequency) + "\n");
+            fileWriter.write(Arrays.toString(this.playerMapping) + "\n");
+            fileWriter.write(this.numberOfLettersInPhrase + "\n");
+            fileWriter.write(this.newPhrase + "\n");
+
+            //All info is stored at this point, close the reader
+            fileWriter.close();
+
+            //File was saved successfully
+            successfullySaved = true;
+        } catch (Exception ex) {
+            System.out.println("There was an error while trying to write to the file.");
+            System.exit(-1);
+        }
+
+        return successfullySaved;
+    }
+
 }
