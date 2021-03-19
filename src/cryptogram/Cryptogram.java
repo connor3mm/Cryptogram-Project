@@ -335,7 +335,12 @@ public class Cryptogram {
             Path pathToCryptograms = Paths.get(pathsToCryptoString);
 
             //Create the folder if it doesn't exist already
-            createFolderIfNotExist(pathToCryptograms);
+            try {
+                createFolderIfNotExist(pathToCryptograms);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                return false;
+            }
 
             //Open the file to write. (Creates new one if required)
             fileToSaveCryptogramTo = new File(pathToCryptograms + "\\" + player.getUsername() + ".txt");
@@ -375,14 +380,14 @@ public class Cryptogram {
         return false;
     }
 
-    private void createFolderIfNotExist(Path pathToCryptograms) {
+    private void createFolderIfNotExist(Path pathToCryptograms) throws Exception {
         if(!Files.exists(pathToCryptograms)){
             System.out.println("Folder to store cryptograms does not exists. Creating one...");
             try {
                 Files.createDirectory(pathToCryptograms);
                 System.out.println("Folder successfully created.");
             } catch (Exception e){
-                System.out.println("Error creating directory for cryptograms.");
+                throw new Exception("Error creating directory for cryptograms.");
             }
         }
     }
