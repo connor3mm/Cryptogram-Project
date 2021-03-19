@@ -36,24 +36,38 @@ class LetterCryptogram extends Cryptogram {
         System.out.println(newPhrase);
 
     }
-/*
+
     public void showMappedLetters() {
         String userPhrase = "";
-        for (int i = 0; i < getPhrase().length(); i++) {
-           char letter = newPhrase.charAt(i);
-            if (letter == letterToReplace) {
-                userPhrase += letterToReplace;
+
+        System.out.println(newPhrase.length());
+        for (int i = 0; i < newPhrase.length(); i++) {
+
+            char letter = newPhrase.charAt(i);
+
+            int j = 0;
+            while(letter == 32){
+                i++;
+                letter = newPhrase.charAt(i);
+            }
+
+            int letterInputAscii = letter - 97;
+
+
+            if (gameMapping[j] == letterInputAscii)
+            if (playerMapping[letterInputAscii] > -1) {
+                userPhrase += (char) playerMapping[letterInputAscii] + 97 + " ";
             }
             else{
                 userPhrase+= " ";
             }
+            j++;
         }
 
         System.out.println(userPhrase);
-        System.out.println(newPhrase);
     }
 
-*/
+
     /**
      * @param letter
      * @return true if letter is mapped, false if not
@@ -85,6 +99,7 @@ class LetterCryptogram extends Cryptogram {
         }
     }
 
+
     /**
      * Enters input to the mapping
      *
@@ -104,6 +119,7 @@ class LetterCryptogram extends Cryptogram {
         }
         return false;
     }
+
 
     /**
      * Checks if the input char is mapped
