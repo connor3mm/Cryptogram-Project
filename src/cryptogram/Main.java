@@ -10,7 +10,7 @@ public class Main {
         Game game = null;
 
         Scanner scan = new Scanner(System.in);
-        String name;
+        String name = "";
         int choice = -1;
         //gets the menu option entered while checking the entered value is both within parameters and a valid input.
         do {
@@ -33,17 +33,34 @@ public class Main {
             }
 
             if (choice == 0) {
-                System.out.println("Please enter your desired username.");
-                name = scan.next();
-                Player p = new Player(name);
-                Players ps = new Players();
-                if(ps.findPlayer(p)){
-                    System.out.println("A player with this username has already been created.");
-                    System.exit(0);
+                int detailsChoice;
+                System.out.println("Enter 0 if you have already created an account.");
+                System.out.println("Enter 1 if you would like to create an account.");
+                detailsChoice = scan.nextInt();
+                if (detailsChoice == 1) {
+                    System.out.println("Please enter your desired username.");
+                    name = scan.next();
+                    Player p = new Player(name);
+                    Players ps = new Players();
+                    if (ps.findPlayer(p)) {
+                        System.out.println("A player with this username has already been created.");
+                        System.exit(0);
+                    }
+                    ps.addPlayer(p);
+                    game = new Game(p, 0);
+                    game.generateCryptogram();
+                } else if (detailsChoice == 0) {
+                    System.out.println("Please enter your username");
+                    name = scan.next();
+                    Player p = new Player(name);
+                    Players ps = new Players();
+                    if (ps.findPlayer(p)) {
+                        ps.loadPlayer();
+                        System.out.println("Successfully loaded players details.");
+                    }
+                    game = new Game(p, 0);
+                    game.generateCryptogram();
                 }
-                ps.addPlayer(p);
-                game = new Game(p, 0);
-                game.generateCryptogram();
 
             } else if (choice == 1) {
                 name = scan.next();
@@ -51,10 +68,13 @@ public class Main {
                 game = new Game(p, 1);
                 game.generateCryptogram();
             }
-        } while (choice == -1);
 
 
-        choice =-1;
+        }
+        while (choice == -1);
+
+
+        choice = -1;
         do {
             try {
                 //displays the menu
@@ -84,12 +104,12 @@ public class Main {
                 game.undoLetter();
                 choice = -1;
 
-            } else if (choice == 3){
-
+            } else if (choice == 3) {
+                Player p = new Player(name);
+                p.savePlayersDetails();
                 System.exit(0);
-
             }
         } while (choice == -1);
 
-    }
+        }
 }

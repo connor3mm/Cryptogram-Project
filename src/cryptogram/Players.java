@@ -17,7 +17,7 @@ public void addPlayer(Player p){
     allPlayers.add(p);
 }
 
-public void loadPlayers(){
+public void loadPlayer(){
 
 }
 
