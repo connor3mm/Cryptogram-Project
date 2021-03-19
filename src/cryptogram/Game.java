@@ -125,6 +125,10 @@ public class Game {
 
     }
 
+    public void savePlayer(){
+        currentPlayer.savePlayersDetails();
+    }
+
     public void saveGame() {
        currentGame.saveCryptogram(currentPlayer);
     }
