@@ -326,6 +326,24 @@ public class Cryptogram {
         return false;
     }
 
+    private boolean cryptogramFolderExists(Path pathToCryptograms) {
+        return Files.exists(pathToCryptograms);
+    }
+
+    private void createCryptogramFolder(Path pathToCryptograms) throws Exception {
+        System.out.println("Folder to store cryptograms does not exists. Creating one...");
+        try {
+            Files.createDirectory(pathToCryptograms);
+            System.out.println("Folder successfully created.");
+        } catch (Exception e){
+            throw new Exception("Error creating directory for cryptograms.");
+        }
+    }
+
+    private boolean playerHasCryptoSaved(File fileToSaveCryptogramTo) {
+        return Files.exists(fileToSaveCryptogramTo.toPath());
+    }
+
     public boolean saveCryptogram(Player player) {
         try {
             //Set up variables to be used
@@ -335,11 +353,13 @@ public class Cryptogram {
             Path pathToCryptograms = Paths.get(pathsToCryptoString);
 
             //Create the folder if it doesn't exist already
-            try {
-                createFolderIfNotExist(pathToCryptograms);
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                return false;
+            if(!cryptogramFolderExists(pathToCryptograms)){
+                try {
+                    createCryptogramFolder(pathToCryptograms);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
             }
 
             //Open the file to write. (Creates new one if required)
@@ -380,19 +400,75 @@ public class Cryptogram {
         return false;
     }
 
-    private void createFolderIfNotExist(Path pathToCryptograms) throws Exception {
-        if(!Files.exists(pathToCryptograms)){
-            System.out.println("Folder to store cryptograms does not exists. Creating one...");
-            try {
-                Files.createDirectory(pathToCryptograms);
-                System.out.println("Folder successfully created.");
-            } catch (Exception e){
-                throw new Exception("Error creating directory for cryptograms.");
+    public Cryptogram loadCryptogram(Player player) {
+        try {
+            //Set up variables to be used
+            File fileToReadCryptogramFrom;
+            BufferedReader fileReader;
+            String pathsToCryptoString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms";
+            Path pathToCryptograms = Paths.get(pathsToCryptoString);
+
+            //Check if the cryptogram folder exists
+            if(!cryptogramFolderExists(pathToCryptograms)){
+                System.out.println("Folder does not exist, no saved cryptograms.");
+                return null;
             }
+
+            //Folder exists, check if it contains files
+            String pathToUsersCryptogram = "";
+            File cryptogramDirectory = new File(pathsToCryptoString);
+            String[] fileNames = cryptogramDirectory.list();
+
+            if(fileNames.length == 0) {
+                System.out.println("Folder is empty, no saved cryptograms.");
+                return null;
+            }
+
+            //Folder contains files, check if user has a saved cryptogram
+            int hasCryptoSaved = 0;
+            for (String file : cryptogramDirectory.list()) {
+                if(file.contains(player.getUsername())){
+                    pathToUsersCryptogram = file;
+                    hasCryptoSaved++;
+                }
+            }
+
+            if(hasCryptoSaved == 0) {
+                System.out.println("You do not have a cryptogram saved.");
+                return null;
+            }
+
+            //User has a saved cryptogram, read the file
+            fileToReadCryptogramFrom = new File(pathToUsersCryptogram);
+            fileReader = new BufferedReader(new FileReader(fileToReadCryptogramFrom));
+            String cryptoPhrase = fileReader.readLine();
+            boolean numberMapping = Boolean.parseBoolean(fileReader.readLine());
+            int[] gameMapping = parseArrayFromFile(fileReader.readLine());
+            int[] letterFrequency = parseArrayFromFile(fileReader.readLine());
+            int[] playerMapping = parseArrayFromFile(fileReader.readLine());
+            int numberOfLettersInPhrase = Integer.parseInt(fileReader.readLine());
+            String newPhrase = fileReader.readLine();
+
+            //Create the object
+            Cryptogram loadedCryptogram = new Cryptogram(
+                    cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
+            );
+
+            return loadedCryptogram;
+        } catch(Exception ex) {
+            //Something went wrong :(
+            System.out.println("There was an error while trying to read from the file.");
+            System.out.println("Cryptogram was not loaded successfully.");
         }
+        return null;
     }
 
-    private boolean playerHasCryptoSaved(File fileToSaveCryptogramTo) {
-        return Files.exists(fileToSaveCryptogramTo.toPath());
+    private int[] parseArrayFromFile(String string) {
+        String[] strings = string.replace("[", "").replace("]", "").split(", ");
+        int result[] = new int[strings.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = Integer.parseInt(strings[i]);
+        }
+        return result;
     }
 }
