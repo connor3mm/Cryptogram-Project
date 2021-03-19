@@ -16,7 +16,20 @@ class LetterCryptogram extends Cryptogram {
      * constructor
      */
     public LetterCryptogram() {
+        this.numberMapping = false;
         mapLetters();
+    }
+
+    public LetterCryptogram(String cryptoPhrase, boolean numberMapping, int[] gameMapping, int[] letterFrequency, int[] playerMapping,
+                      int numberOfLettersInPhrase, String newPhrase)
+    {
+        this.cryptoPhrase = cryptoPhrase;
+        this.numberMapping = numberMapping;
+        this.gameMapping = gameMapping;
+        this.letterFrequency = letterFrequency;
+        this.playerMapping = playerMapping;
+        this.numberOfLettersInPhrase = numberOfLettersInPhrase;
+        this.newPhrase = newPhrase;
     }
 
     /**

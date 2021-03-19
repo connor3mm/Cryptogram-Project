@@ -13,9 +13,21 @@ class NumberCryptogram extends Cryptogram {
      * Constructor
      */
     public NumberCryptogram() {
+        this.numberMapping = true;
         mapNumbers();
     }
 
+    public NumberCryptogram(String cryptoPhrase, boolean numberMapping, int[] gameMapping, int[] letterFrequency, int[] playerMapping,
+                      int numberOfLettersInPhrase, String newPhrase)
+    {
+        this.cryptoPhrase = cryptoPhrase;
+        this.numberMapping = numberMapping;
+        this.gameMapping = gameMapping;
+        this.letterFrequency = letterFrequency;
+        this.playerMapping = playerMapping;
+        this.numberOfLettersInPhrase = numberOfLettersInPhrase;
+        this.newPhrase = newPhrase;
+    }
 
     /**
      * maps the game mapping numbers to each letter it represents in the phrase

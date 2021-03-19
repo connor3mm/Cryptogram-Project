@@ -58,7 +58,7 @@ public class Main {
                     System.out.println("Enter 1 if you would like to start a new cryptogram.");
                     loadChoice = scan.nextInt();
                     if (loadChoice == 0) {
-
+                        game.loadGame();
                     } else if (loadChoice == 1) {
                         //displays the menu
                         System.out.println(

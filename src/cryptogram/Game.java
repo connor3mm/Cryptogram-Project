@@ -134,7 +134,7 @@ public class Game {
     }
 
     public void loadGame() {
-
+        currentGame = currentGame.loadCryptogram(currentPlayer);
     }
 
     public void showSolution() {

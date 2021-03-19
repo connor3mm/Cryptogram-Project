@@ -14,11 +14,11 @@ public class Cryptogram {
     /**
      * Variables
      */
-    private String cryptoPhrase;
+    public String cryptoPhrase;
     private String cryptogramAlphabet;
-    private boolean numberMapping;
+    public boolean numberMapping;
     public int[] gameMapping = new int[26];
-    private int[] letterFrequency;
+    public int[] letterFrequency;
     public int[] playerMapping = new int[26];
     public int numberOfLettersInPhrase;
     private String newPhrase = "";
@@ -70,6 +70,30 @@ public class Cryptogram {
 
     public boolean isNumberMapping() {
         return numberMapping;
+    }
+
+    public String getCryptoPhrase() {
+        return cryptoPhrase;
+    }
+
+    public void setCryptoPhrase(String cryptoPhrase) {
+        this.cryptoPhrase = cryptoPhrase;
+    }
+
+    public void setGameMapping(int[] gameMapping) {
+        this.gameMapping = gameMapping;
+    }
+
+    public void setPlayerMapping(int[] playerMapping) {
+        this.playerMapping = playerMapping;
+    }
+
+    public int getNumberOfLettersInPhrase() {
+        return numberOfLettersInPhrase;
+    }
+
+    public void setNumberOfLettersInPhrase(int numberOfLettersInPhrase) {
+        this.numberOfLettersInPhrase = numberOfLettersInPhrase;
     }
 
     public void setNumberMapping(boolean numberMapping) {
@@ -449,10 +473,19 @@ public class Cryptogram {
             int numberOfLettersInPhrase = Integer.parseInt(fileReader.readLine());
             String newPhrase = fileReader.readLine();
 
-            //Create the object
-            Cryptogram loadedCryptogram = new Cryptogram(
-                    cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
-            );
+            //Create the object depending on its type
+            Cryptogram loadedCryptogram;
+            if(numberMapping){
+                loadedCryptogram = new NumberCryptogram(
+                        cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
+                );
+            }
+            else
+            {
+                loadedCryptogram = new LetterCryptogram(
+                        cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
+                );
+            }
 
             return loadedCryptogram;
         } catch(Exception ex) {
