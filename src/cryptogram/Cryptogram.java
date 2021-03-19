@@ -87,7 +87,7 @@ public class Cryptogram {
      */
     public Cryptogram() {
         System.out.println("New game is being created...");
-        setPhrase("a");
+        setRandomCryptoPhrase();
         createCryptoMapping();
         setLetterFrequency();
         getNumberOfLetters();
@@ -231,13 +231,12 @@ public class Cryptogram {
      */
     private void setLetterFrequency() {
         int CurrLetter;
-        int i = 0;
         letterFrequency = new int[26];
+
         for (int j = 0; j < cryptoPhrase.length(); j++) {
             CurrLetter = cryptoPhrase.charAt(j);
             if (CurrLetter >= 97 && CurrLetter <= 122) {
                 letterFrequency[CurrLetter - 97]++;
-                i++;
             }
         }
     }
