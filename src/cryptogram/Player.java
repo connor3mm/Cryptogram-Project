@@ -1,5 +1,8 @@
 package cryptogram;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class Player {
 
     /**
@@ -113,5 +116,21 @@ public class Player {
         cryptogramsPlayed = cryptogramsPlayed+1;
     }
 
+    public void savePlayersDetails(){
+       try {
+           PrintWriter out = new PrintWriter("PlayerDetails.txt");
+           out.println(username);
+           out.println((int) accuracy);
+           out.println(correctGuesses);
+           out.println(totalGuesses);
+           out.println(cryptogramsPlayed);
+           out.println(cryptogramsCompleted);
+           out.close();
+           System.out.println("Players details have been successfully saved to a file.");
+       } catch (IOException e) {
+           System.out.println("An error has occurred when trying to save players details to a file.");
+           e.printStackTrace();
+       }
+    }
 
 }
