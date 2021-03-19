@@ -52,8 +52,8 @@ class LetterCryptogram extends Cryptogram {
         System.out.println(userPhrase);
         System.out.println(newPhrase);
     }
-*/
 
+*/
     /**
      * @param letter
      * @return true if letter is mapped, false if not
@@ -107,7 +107,6 @@ class LetterCryptogram extends Cryptogram {
 
     /**
      * Checks if the input char is mapped
-     *
      * @param input
      * @return true if value is mapped, false if not
      */

@@ -72,6 +72,7 @@ public class Game {
             win = currentGame.gameSuccess();
             if (completed && win) {
                 System.out.println("Game has been Completed and WON");
+                currentPlayer.incrementCryptogramCompleted();
                 System.exit(1);
             } else if (completed && !win) {
                 System.out.println("Game has been Completed and NOT WON, try again");
@@ -88,6 +89,7 @@ public class Game {
             win = currentGame.gameSuccess();
             if (completed && win) {
                 System.out.println("Game has been Completed and WON");
+                currentPlayer.incrementCryptogramCompleted();
                 System.exit(1);
             } else if (completed && !win) {
                 System.out.println("Game has been Completed and NOT WON, try again");
