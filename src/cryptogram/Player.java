@@ -139,6 +139,7 @@ public class Player {
        try {
            //File variables to be used when saving.
            File fileToSaveDetailsTo;
+           BufferedWriter fileWriter;
            String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
            Path pathToDetails = Paths.get(pathsToDetailsString);
 
@@ -153,16 +154,18 @@ public class Player {
            }
 
            //Creates a new file to save details to, if one doesn't already exist.
-           fileToSaveDetailsTo = new File(pathsToDetailsString + "\\" + p.getUsername() + "Details.txt");
+           fileToSaveDetailsTo = new File(pathsToDetailsString + "\\" + p.getUsername() + ".txt");
 
            //Prints players details to the text file.
            PrintWriter out = new PrintWriter(fileToSaveDetailsTo);
-           out.println("Username - " + username);
-           out.println("Accuracy - " + (int) accuracy);
-           out.println("Correct Guesses - " + correctGuesses);
-           out.println("Total Guesses - " + totalGuesses);
-           out.println("Cryptograms Played - " + cryptogramsPlayed);
-           out.println("Cryptograms Completed - " + cryptogramsCompleted);
+           out.println(username);
+           out.println((int) accuracy);
+           out.println(correctGuesses);
+           out.println(totalGuesses);
+           out.println(cryptogramsPlayed);
+           out.print(cryptogramsCompleted);
+
+           //Information has been written at this point, writer can be closed.
            out.close();
 
            //Message to tell the user their details have been saved successfully.
@@ -176,5 +179,48 @@ public class Player {
        return false;
     }
 
+    public Player loadPlayersDetails(String username){
+        try {
+            //File variables to be used when saving.
+            File fileToSaveDetailsTo;
+            BufferedWriter fileWriter;
+            String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
+            Path pathToDetails = Paths.get(pathsToDetailsString);
+
+            //Creates the folder to save player details files if one doesn't already exist.
+            if(!detailsFolderExists(pathToDetails)){
+                try{
+                    createPlayersDetailsFolder(pathToDetails);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    return null;
+                }
+            }
+
+            //Creates a new file to save details to, if one doesn't already exist.
+            fileToSaveDetailsTo = new File(pathsToDetailsString + "\\" + p.getUsername() + ".txt");
+
+            //Prints players details to the text file.
+            PrintWriter out = new PrintWriter(fileToSaveDetailsTo);
+            out.println(username);
+            out.println((int) accuracy);
+            out.println(correctGuesses);
+            out.println(totalGuesses);
+            out.println(cryptogramsPlayed);
+            out.print(cryptogramsCompleted);
+
+            //Information has been written at this point, writer can be closed.
+            out.close();
+
+            //Message to tell the user their details have been saved successfully.
+            System.out.println("Players details have been successfully saved to a file.");
+            return true;
+        } catch (IOException e) {
+            //Error message to say that an error has occurred while printing to the file.
+            System.out.println("An error has occurred when trying to save players details to a file.");
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }
