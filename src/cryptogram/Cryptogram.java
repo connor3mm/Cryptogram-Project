@@ -473,6 +473,9 @@ public class Cryptogram {
             int numberOfLettersInPhrase = Integer.parseInt(fileReader.readLine());
             String newPhrase = fileReader.readLine();
 
+            //Information read at this point, close the reader
+            fileReader.close();
+
             //Create the object depending on its type
             Cryptogram loadedCryptogram;
             if(numberMapping){
