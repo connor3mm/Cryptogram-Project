@@ -21,7 +21,7 @@ public class Cryptogram {
     public int[] letterFrequency;
     public int[] playerMapping = new int[26];
     public int numberOfLettersInPhrase;
-    private String newPhrase = "";
+    public String newPhrase = "";
 
     /**
      * Getters and setters

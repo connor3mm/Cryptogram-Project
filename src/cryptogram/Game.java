@@ -9,7 +9,7 @@ public class Game {
      * variables
      */
     private Player currentPlayer;
-    private Cryptogram currentGame;
+    public Cryptogram currentGame;
     private int cryptType;
 
 

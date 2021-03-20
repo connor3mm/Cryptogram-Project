@@ -9,7 +9,7 @@ class LetterCryptogram extends Cryptogram {
      * variables
      */
     private String cryptogramAlphabet;
-    private String newPhrase = getNewPhrase();
+   // public String newPhrase = getNewPhrase();
 
 
     /**
