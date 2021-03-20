@@ -9,7 +9,7 @@ class LetterCryptogram extends Cryptogram {
      * variables
      */
     private String cryptogramAlphabet;
-   // public String newPhrase = getNewPhrase();
+    // public String newPhrase = getNewPhrase();
 
 
     /**
@@ -20,9 +20,18 @@ class LetterCryptogram extends Cryptogram {
         mapLetters();
     }
 
+    /**
+     * Constructor to map a crypto from a file
+     * @param cryptoPhrase
+     * @param numberMapping
+     * @param gameMapping
+     * @param letterFrequency
+     * @param playerMapping
+     * @param numberOfLettersInPhrase
+     * @param newPhrase
+     */
     public LetterCryptogram(String cryptoPhrase, boolean numberMapping, int[] gameMapping, int[] letterFrequency, int[] playerMapping,
-                      int numberOfLettersInPhrase, String newPhrase)
-    {
+                            int numberOfLettersInPhrase, String newPhrase) {
         this.cryptoPhrase = cryptoPhrase;
         this.numberMapping = numberMapping;
         this.gameMapping = gameMapping;
@@ -30,12 +39,8 @@ class LetterCryptogram extends Cryptogram {
         this.playerMapping = playerMapping;
         this.numberOfLettersInPhrase = numberOfLettersInPhrase;
         this.newPhrase = newPhrase;
-
-        System.out.println(getPhrase() + "\n");
-        for (int i = 0; i < gameMapping.length; i++) {
-            System.out.println("index - " + i + " " + gameMapping[i]);
-        }
     }
+
 
     /**
      * maps the game mapping numbers to each letter it represents in the phrase
@@ -51,10 +56,13 @@ class LetterCryptogram extends Cryptogram {
             }
         }
         setNewPhrase(newPhrase);
-        System.out.println(newPhrase);
 
     }
 
+
+    /**
+     * Gets users input phrase
+     */
     public void showMappedLetters() {
         String userPhrase = "";
 
@@ -113,6 +121,7 @@ class LetterCryptogram extends Cryptogram {
 
         } else {
             System.out.println("Invalid guess. This value is already mapped.");
+            System.out.println(newPhrase);
             return false;
         }
     }
@@ -120,7 +129,6 @@ class LetterCryptogram extends Cryptogram {
 
     /**
      * Enters input to the mapping
-     *
      * @param letterInput
      * @param guessInput
      * @return true if letter is mapped. false if not
@@ -141,7 +149,6 @@ class LetterCryptogram extends Cryptogram {
 
     /**
      * Checks if the input char is mapped
-     *
      * @param input
      * @return true if value is mapped, false if not
      */

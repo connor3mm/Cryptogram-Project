@@ -43,7 +43,6 @@ public class Main {
                     loadChoice = scan.nextInt();
                     if (loadChoice == 0) {
                         game = new Game(loadedPlayer, 0);
-                        game.generateCryptogram();
                         game.loadGame();
                         break; //Go to the game options
                     } else if (loadChoice == 1) {

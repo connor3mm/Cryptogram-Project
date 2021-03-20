@@ -148,6 +148,8 @@ public class CryptoTesting {
         }
     }
 
+
+    //Will fail if there the file has content
     @Test
     public void emptyPhraseFile() {
         Cryptogram cryptogram = new Cryptogram();

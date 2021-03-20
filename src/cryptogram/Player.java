@@ -22,6 +22,7 @@ public class Player {
 
     /**
      * getters setters
+     *
      * @return
      */
     public int getCorrectGuesses() {
@@ -80,8 +81,17 @@ public class Player {
         this.username = username;
     }
 
+
     /**
      * Player Constructor
+     */
+    public Player() {
+    }
+
+
+    /**
+     * Player Constructor
+     *
      * @param name
      */
     public Player(String name) {
@@ -92,9 +102,9 @@ public class Player {
         cryptogramsCompleted = 0;
     }
 
-    public Player(){}
-
-    //Constructor for loaded player
+    /**
+     * Constructor for loaded player
+     */
     public Player(String username, double accuracy, int correctGuesses, int totalGuesses, int cryptogramsPlayed, int cryptogramsCompleted) {
         this.username = username;
         this.accuracy = accuracy;
@@ -103,6 +113,31 @@ public class Player {
         this.cryptogramsPlayed = cryptogramsPlayed;
         this.cryptogramsCompleted = cryptogramsCompleted;
     }
+
+    //methods
+    /**
+     * Increments cryptos complete
+     */
+    public void incrementCryptogramCompleted() {
+        cryptogramsCompleted = cryptogramsCompleted + 1;
+    }
+
+
+    /**
+     * Increments cryptosplayed
+     */
+    public void incrementCryptogramPlayed() {
+        cryptogramsPlayed = cryptogramsPlayed + 1;
+    }
+
+
+    /**
+     * Checks if folder to hold players details already exists, if so returns true.
+     */
+    private boolean detailsFolderExists(Path pathToDetails) {
+        return Files.exists(pathToDetails);
+    }
+
 
     /**
      * Updates player stats
@@ -113,84 +148,76 @@ public class Player {
             correctGuesses++;
         }
         totalGuesses++;
-        accuracy = Math.round(((double)correctGuesses/(double)totalGuesses) * 100);
+        accuracy = Math.round(((double) correctGuesses / (double) totalGuesses) * 100);
 
-    }
-
-    /**
-     * Increments cryptos complete
-     */
-    public void incrementCryptogramCompleted() {
-        cryptogramsCompleted = cryptogramsCompleted+1;
     }
 
 
     /**
-     * Increments cryptosplayed
+     * Creates folder to hold players details.
      */
-    public void incrementCryptogramPlayed() {
-        cryptogramsPlayed = cryptogramsPlayed+1;
-    }
-
-    //Checks if folder to hold players details already exists, if so returns true.
-    private boolean detailsFolderExists(Path pathToDetails) { return Files.exists(pathToDetails);}
-
-    //Creates folder to hold players details.
     private void createPlayersDetailsFolder(Path pathToDetails) throws Exception {
         System.out.println("Folder to store player details does not exist. Creating one now...");
-        try{
+        try {
             Files.createDirectory(pathToDetails);
             System.out.println("Folder has been successfully created.");
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new Exception("Error when trying to create folder to store player details.");
         }
     }
 
-    //Saves the players details to a text file.
-    public boolean savePlayersDetails(Player p){
-       try {
-           //File variables to be used when saving.
-           File fileToSaveDetailsTo;
-           String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
-           Path pathToDetails = Paths.get(pathsToDetailsString);
 
-           //Creates the folder to save player details files if one doesn't already exist.
-           if(!detailsFolderExists(pathToDetails)){
-               try{
-                   createPlayersDetailsFolder(pathToDetails);
-               } catch (Exception e) {
-                   System.out.println(e.getMessage());
-                   return false;
-               }
-           }
+    /**
+     * Saves the players details to a text file.
+     */
+    public boolean savePlayersDetails(Player p) {
+        try {
+            //File variables to be used when saving.
+            File fileToSaveDetailsTo;
+            String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
+            Path pathToDetails = Paths.get(pathsToDetailsString);
 
-           //Creates a new file to save details to, if one doesn't already exist.
-           fileToSaveDetailsTo = new File(pathsToDetailsString + "\\" + p.getUsername() + ".txt");
+            //Creates the folder to save player details files if one doesn't already exist.
+            if (!detailsFolderExists(pathToDetails)) {
+                try {
+                    createPlayersDetailsFolder(pathToDetails);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+            }
 
-           //Prints players details to the text file.
-           PrintWriter out = new PrintWriter(fileToSaveDetailsTo);
-           out.println(username);
-           out.println((int) accuracy);
-           out.println(correctGuesses);
-           out.println(totalGuesses);
-           out.println(cryptogramsPlayed);
-           out.print(cryptogramsCompleted);
+            //Creates a new file to save details to, if one doesn't already exist.
+            fileToSaveDetailsTo = new File(pathsToDetailsString + "\\" + p.getUsername() + ".txt");
 
-           //Information has been written at this point, writer can be closed.
-           out.close();
+            //Prints players details to the text file.
+            PrintWriter out = new PrintWriter(fileToSaveDetailsTo);
+            out.println(username);
+            out.println((int) accuracy);
+            out.println(correctGuesses);
+            out.println(totalGuesses);
+            out.println(cryptogramsPlayed);
+            out.print(cryptogramsCompleted);
 
-           //Message to tell the user their details have been saved successfully.
-           System.out.println("Players details have been successfully saved to a file.");
-           return true;
-       } catch (IOException e) {
-           //Error message to say that an error has occurred while printing to the file.
-           System.out.println("An error has occurred when trying to save players details to a file.");
-           e.printStackTrace();
-       }
-       return false;
+            //Information has been written at this point, writer can be closed.
+            out.close();
+
+            //Message to tell the user their details have been saved successfully.
+            System.out.println("Players details have been successfully saved to a file.");
+            return true;
+        } catch (IOException e) {
+            //Error message to say that an error has occurred while printing to the file.
+            System.out.println("An error has occurred when trying to save players details to a file.");
+            e.printStackTrace();
+        }
+        return false;
     }
 
-    public Player loadPlayersDetails(String username){
+
+    /**
+     * Load player details from file
+     */
+    public Player loadPlayersDetails(String username) {
         try {
             //File variables to be used when saving.
             File fileToReadDetailsFrom;
@@ -199,7 +226,7 @@ public class Player {
             Path pathToDetails = Paths.get(pathsToDetailsString);
 
             //Check if the user details folder exists
-            if(!detailsFolderExists(pathToDetails)){
+            if (!detailsFolderExists(pathToDetails)) {
 //                System.out.println("Folder does not exist, no saved usernames.");
                 return null;
             }
@@ -210,7 +237,7 @@ public class Player {
             File cryptogramDirectory = new File(pathsToDetailsString);
             String[] fileNames = cryptogramDirectory.list();
 
-            if(fileNames.length == 0) { //Error, the file is empty
+            if (fileNames.length == 0) { //Error, the file is empty
 //                System.out.println("Folder is empty, no saved cryptograms.");
                 return null;
             }
@@ -218,13 +245,13 @@ public class Player {
             //The folder contains files, check if the user has a saved details file
             int hasDetailsSaved = 0;
             for (String file : cryptogramDirectory.list()) {
-                if(file.contains(username)){
+                if (file.contains(username)) {
                     pathToUsersDetails = pathToDetails + "\\" + file;
                     hasDetailsSaved++;
                 }
             }
 
-            if(hasDetailsSaved == 0) { //Error, they have no saved details
+            if (hasDetailsSaved == 0) { //Error, they have no saved details
 //                System.out.println("You do not have a saved details file.");
                 return null;
             }

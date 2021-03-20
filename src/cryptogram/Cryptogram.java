@@ -23,6 +23,7 @@ public class Cryptogram {
     public int numberOfLettersInPhrase;
     public String newPhrase = "";
 
+
     /**
      * Getters and setters
      *
@@ -121,6 +122,27 @@ public class Cryptogram {
         System.out.println("Successfully created a new game...\n");
     }
 
+    /**
+     * Blank constructor used for loading cryptos from file
+     *
+     * @param currentPlayer
+     */
+    public Cryptogram(Player currentPlayer) {
+
+    }
+
+
+    /**
+     * Used to set varibales from a file, potentially not needed
+     *
+     * @param cryptoPhrase
+     * @param numberMapping
+     * @param gameMapping
+     * @param letterFrequency
+     * @param playerMapping
+     * @param numberOfLettersInPhrase
+     * @param newPhrase
+     */
     public Cryptogram(String cryptoPhrase, boolean numberMapping, int[] gameMapping, int[] letterFrequency, int[] playerMapping,
                       int numberOfLettersInPhrase, String newPhrase) //COULD POSSIBLY BE REMOVED.
     {
@@ -215,6 +237,12 @@ public class Cryptogram {
     }
 
 
+    /**
+     * Undo a user input character
+     *
+     * @param Letter
+     * @return true if successful, false if not
+     */
     public boolean undoGivenLetter(char Letter) {
         int letterAsciiValue = Letter - 97;
         boolean worked = false;
@@ -234,6 +262,13 @@ public class Cryptogram {
         return false;
     }
 
+
+    /**
+     * Checks if the input letter exists for an undo
+     *
+     * @param Letter
+     * @return true if value can be undo, false if non existent
+     */
     public boolean validUndoCheck(char Letter) {
         int letterAsciiValue = Letter - 97;
 
@@ -248,6 +283,11 @@ public class Cryptogram {
     }
 
 
+    /**
+     * Checks if the game has been completed
+     *
+     * @return
+     */
     public boolean checkIfGameCompleted() {
         int count = 0;
         for (int i = 0; i < playerMapping.length; i++) {
@@ -260,6 +300,7 @@ public class Cryptogram {
         }
         return false;
     }
+
 
     /**
      * Puts letter Frequency into array
@@ -276,6 +317,7 @@ public class Cryptogram {
         }
     }
 
+
     /**
      * Calculates the letter frequency of letters
      */
@@ -288,6 +330,7 @@ public class Cryptogram {
         }
         numberOfLettersInPhrase = count;
     }
+
 
     /**
      * Checks if the guess has been mapped
@@ -305,6 +348,7 @@ public class Cryptogram {
         }
         return false;
     }
+
 
     /**
      * Error checking on guess
@@ -324,11 +368,14 @@ public class Cryptogram {
 
 
     public void showMappedLetters() {
-
-
     }
 
 
+    /**
+     * Checks if the game has been won
+     *
+     * @return true if won, false if not
+     */
     public boolean gameSuccess() {
         int count = 0;
 
@@ -341,29 +388,55 @@ public class Cryptogram {
         if (count == numberOfLettersInPhrase) {
             return true;
         }
-
         return false;
     }
 
+
+    /**
+     * Checks if crypto folder exists
+     *
+     * @param pathToCryptograms
+     * @return file path
+     */
     private boolean cryptogramFolderExists(Path pathToCryptograms) {
         return Files.exists(pathToCryptograms);
     }
 
+
+    /**
+     * Create a cryptogram folder to save files
+     *
+     * @param pathToCryptograms
+     * @throws Exception
+     */
     private void createCryptogramFolder(Path pathToCryptograms) throws Exception {
         System.out.println("Folder to store cryptograms does not exist. Creating one...");
         try {
             Files.createDirectory(pathToCryptograms);
             System.out.println("Folder successfully created.");
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new Exception("Error creating directory for cryptograms.");
         }
     }
 
+
+    /**
+     * Checks if player already had crypto
+     *
+     * @param fileToSaveCryptogramTo
+     * @return File path
+     */
     private boolean playerHasCryptoSaved(File fileToSaveCryptogramTo) {
         return Files.exists(fileToSaveCryptogramTo.toPath());
     }
 
 
+    /**
+     * Saves the players cryptogram
+     *
+     * @param player
+     * @return
+     */
     public boolean saveCryptogram(Player player) {
         try {
             //Set up variables to be used
@@ -374,7 +447,7 @@ public class Cryptogram {
             Path pathToCryptograms = Paths.get(pathsToCryptoString);
 
             //Create the folder if it doesn't exist already
-            if(!cryptogramFolderExists(pathToCryptograms)){
+            if (!cryptogramFolderExists(pathToCryptograms)) {
                 try {
                     createCryptogramFolder(pathToCryptograms);
                 } catch (Exception e) {
@@ -386,15 +459,15 @@ public class Cryptogram {
             //Open the file to write. (Creates new one if required)
             fileToSaveCryptogramTo = new File(pathToCryptograms + "\\" + player.getUsername() + ".txt");
 
-            if(playerHasCryptoSaved(fileToSaveCryptogramTo)){ //If the player has a file saved, ask to overwrite
+            if (playerHasCryptoSaved(fileToSaveCryptogramTo)) { //If the player has a file saved, ask to overwrite
                 fileReader = new BufferedReader(new FileReader(fileToSaveCryptogramTo));
-                if(!fileReader.readLine().equals(getPhrase())){
+                if (!fileReader.readLine().equals(getPhrase())) {
                     Scanner scan = new Scanner(System.in);
                     System.out.println("You already have a cryptogram saved, do you want to overwrite? (y/n)");
                     String sUserAnswer = scan.next();
                     char answer = sUserAnswer.charAt(0);
 
-                    if(answer == 'n') {
+                    if (answer == 'n') {
                         return false;
                     }
                 }
@@ -425,7 +498,12 @@ public class Cryptogram {
     }
 
 
-
+    /**
+     * Loading a players cryptogram from a file
+     *
+     * @param player
+     * @return
+     */
     public Cryptogram loadCryptogram(Player player) {
         try {
             //Set up variables to be used
@@ -435,7 +513,7 @@ public class Cryptogram {
             Path pathToCryptograms = Paths.get(pathsToCryptoString);
 
             //Check if the cryptogram folder exists
-            if(!cryptogramFolderExists(pathToCryptograms)){
+            if (!cryptogramFolderExists(pathToCryptograms)) {
                 System.out.println("Folder does not exist, no saved cryptograms.");
                 return null;
             }
@@ -445,7 +523,7 @@ public class Cryptogram {
             File cryptogramDirectory = new File(pathsToCryptoString);
             String[] fileNames = cryptogramDirectory.list();
 
-            if(fileNames.length == 0) { //Error, the file is empty
+            if (fileNames.length == 0) { //Error, the file is empty
                 System.out.println("Folder is empty, no saved cryptograms.");
                 return null;
             }
@@ -453,13 +531,13 @@ public class Cryptogram {
             //Folder contains files, check if user has a saved cryptogram
             int hasCryptoSaved = 0;
             for (String file : cryptogramDirectory.list()) {
-                if(file.contains(player.getUsername())){
+                if (file.contains(player.getUsername())) {
                     pathToUsersCryptogram = pathToCryptograms + "\\" + file;
                     hasCryptoSaved++;
                 }
             }
 
-            if(hasCryptoSaved == 0) { //Error, they have no saved cryptogram
+            if (hasCryptoSaved == 0) { //Error, they have no saved cryptogram
                 System.out.println("You do not have a cryptogram saved.");
                 return null;
             }
@@ -480,20 +558,18 @@ public class Cryptogram {
 
             //Create the object depending on its type
             Cryptogram loadedCryptogram;
-            if(numberMapping){ //If the cryptogram is number mapping
+            if (numberMapping) { //If the cryptogram is number mapping
                 loadedCryptogram = new NumberCryptogram(
                         cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
                 );
-            }
-            else
-            { //If the cryptogram is letter mapping
+            } else { //If the cryptogram is letter mapping
                 loadedCryptogram = new LetterCryptogram(
                         cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
                 );
             }
 
             return loadedCryptogram;
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             //Something went wrong :(
             System.out.println("There was an error while trying to read from the file.");
             System.out.println("Cryptogram was not loaded successfully.");
@@ -501,6 +577,12 @@ public class Cryptogram {
         return null;
     }
 
+
+    /**
+     * Parsing file
+     * @param string
+     * @return result of parse
+     */
     private int[] parseArrayFromFile(String string) {
         String[] strings = string.replace("[", "").replace("]", "").split(", ");
         int[] result = new int[strings.length];

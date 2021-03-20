@@ -7,7 +7,7 @@ class NumberCryptogram extends Cryptogram {
      * Variable
      */
     private String cryptogramAlphabet;
-    //public String newPhrase = getNewPhrase();
+
 
     /**
      * Constructor
@@ -17,9 +17,18 @@ class NumberCryptogram extends Cryptogram {
         mapNumbers();
     }
 
+    /**
+     * Constructor to map a crypto from a file
+     * @param cryptoPhrase
+     * @param numberMapping
+     * @param gameMapping
+     * @param letterFrequency
+     * @param playerMapping
+     * @param numberOfLettersInPhrase
+     * @param newPhrase
+     */
     public NumberCryptogram(String cryptoPhrase, boolean numberMapping, int[] gameMapping, int[] letterFrequency, int[] playerMapping,
-                      int numberOfLettersInPhrase, String newPhrase)
-    {
+                            int numberOfLettersInPhrase, String newPhrase) {
         this.cryptoPhrase = cryptoPhrase;
         this.numberMapping = numberMapping;
         this.gameMapping = gameMapping;
@@ -27,12 +36,8 @@ class NumberCryptogram extends Cryptogram {
         this.playerMapping = playerMapping;
         this.numberOfLettersInPhrase = numberOfLettersInPhrase;
         this.newPhrase = newPhrase;
-
-        System.out.println(getPhrase() + "\n");
-        for (int i = 0; i < gameMapping.length; i++) {
-            System.out.println("index - " + i + " " + gameMapping[i]);
-        }
     }
+
 
     /**
      * maps the game mapping numbers to each letter it represents in the phrase
@@ -56,7 +61,9 @@ class NumberCryptogram extends Cryptogram {
     }
 
 
-
+    /**
+     * Gets users input phrase
+     */
     public void showMappedLetters() {
         String userPhrase = "";
 
@@ -71,14 +78,14 @@ class NumberCryptogram extends Cryptogram {
 
             String numberString = "";
 
-            while(letter != 32){
-                numberString =  numberString + letter;
+            while (letter != 32) {
+                numberString = numberString + letter;
                 i++;
                 letter = newPhrase.charAt(i);
             }
 
 
-            int letterToBeChecked  = Integer.parseInt(numberString);
+            int letterToBeChecked = Integer.parseInt(numberString);
 
             for (int j = 0; j < gameMapping.length; j++) {
                 if (gameMapping[j] == letterToBeChecked) {
@@ -94,7 +101,6 @@ class NumberCryptogram extends Cryptogram {
         }
         System.out.println(userPhrase);
     }
-
 
 
     /**
@@ -125,12 +131,14 @@ class NumberCryptogram extends Cryptogram {
 
         } else {
             System.out.println("Invalid guess. This value is already mapped.");
+            System.out.println(newPhrase);
             return false;
         }
     }
 
+
     /**
-     *Enters input to the mapping
+     * Enters input to the mapping
      * @param numberInput
      * @param guessInput
      * @return true if letter is mapped. false if not
@@ -147,6 +155,7 @@ class NumberCryptogram extends Cryptogram {
         }
         return false;
     }
+
 
     /**
      * Checks if the input char is mapped
