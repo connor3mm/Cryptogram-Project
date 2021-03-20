@@ -425,6 +425,8 @@ public class Cryptogram {
         return false;
     }
 
+
+
     public Cryptogram loadCryptogram(Player player) {
         try {
             //Set up variables to be used

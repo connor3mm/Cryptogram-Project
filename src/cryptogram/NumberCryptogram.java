@@ -40,7 +40,7 @@ class NumberCryptogram extends Cryptogram {
                 newPhrase = newPhrase + " ";
             } else {
                 if (gameMapping[currentLetter - 97] > 8) {
-                    newPhrase = newPhrase + (gameMapping[currentLetter - 97]) + "   ";
+                    newPhrase = newPhrase + (gameMapping[currentLetter - 97]) + "  ";
                 } else {
                     newPhrase = newPhrase + " " + (gameMapping[currentLetter - 97]) + "   ";
                 }
@@ -49,6 +49,47 @@ class NumberCryptogram extends Cryptogram {
         setNewPhrase(newPhrase);
         System.out.println(newPhrase);
     }
+
+
+
+    public void showMappedLetters() {
+        String userPhrase = "";
+
+        for (int i = 0; i < newPhrase.length(); i++) {
+
+            char letter = newPhrase.charAt(i);
+
+            if (letter == 32) {
+                userPhrase += "  ";
+                continue;
+            }
+
+            String numberString = "";
+
+            while(letter != 32){
+                numberString =  numberString + letter;
+                i++;
+                letter = newPhrase.charAt(i);
+            }
+
+
+            int letterToBeChecked  = Integer.parseInt(numberString);
+
+            for (int j = 0; j < gameMapping.length; j++) {
+                if (gameMapping[j] == letterToBeChecked) {
+
+                    if (playerMapping[j] == -1) {
+                        userPhrase += " ";
+
+                    } else {
+                        userPhrase = userPhrase + ((char) (playerMapping[j] + 97) + " ");
+                    }
+                }
+            }
+        }
+        System.out.println(userPhrase);
+    }
+
 
 
     /**
@@ -72,8 +113,11 @@ class NumberCryptogram extends Cryptogram {
         System.out.println("Which letter would you like to map number '" + number + "' to?");
         String userInput2 = scan.next();
         char letterToReplace = userInput2.charAt(0);
+
         if (guessIsValid(letterToReplace)) {
+            System.out.println("\n" + newPhrase + "\n");
             return enterLetter(number, letterToReplace);
+
         } else {
             System.out.println("Invalid guess. This value is already mapped.");
             return false;
