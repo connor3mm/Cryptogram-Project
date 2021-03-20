@@ -92,6 +92,18 @@ public class Player {
         cryptogramsCompleted = 0;
     }
 
+    public Player(){}
+
+    //Constructor for loaded player
+    public Player(String username, double accuracy, int correctGuesses, int totalGuesses, int cryptogramsPlayed, int cryptogramsCompleted) {
+        this.username = username;
+        this.accuracy = accuracy;
+        this.correctGuesses = correctGuesses;
+        this.totalGuesses = totalGuesses;
+        this.cryptogramsPlayed = cryptogramsPlayed;
+        this.cryptogramsCompleted = cryptogramsCompleted;
+    }
+
     /**
      * Updates player stats
      * @param check
@@ -139,7 +151,6 @@ public class Player {
        try {
            //File variables to be used when saving.
            File fileToSaveDetailsTo;
-           BufferedWriter fileWriter;
            String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
            Path pathToDetails = Paths.get(pathsToDetailsString);
 
@@ -182,45 +193,65 @@ public class Player {
     public Player loadPlayersDetails(String username){
         try {
             //File variables to be used when saving.
-            File fileToSaveDetailsTo;
-            BufferedWriter fileWriter;
+            File fileToReadDetailsFrom;
+            BufferedReader fileReader;
             String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
             Path pathToDetails = Paths.get(pathsToDetailsString);
 
-            //Creates the folder to save player details files if one doesn't already exist.
+            //Check if the user details folder exists
             if(!detailsFolderExists(pathToDetails)){
-                try{
-                    createPlayersDetailsFolder(pathToDetails);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    return null;
+//                System.out.println("Folder does not exist, no saved usernames.");
+                return null;
+            }
+
+
+            //Folder exists, check if it contains files
+            String pathToUsersDetails = "";
+            File cryptogramDirectory = new File(pathsToDetailsString);
+            String[] fileNames = cryptogramDirectory.list();
+
+            if(fileNames.length == 0) { //Error, the file is empty
+//                System.out.println("Folder is empty, no saved cryptograms.");
+                return null;
+            }
+
+            //The folder contains files, check if the user has a saved details file
+            int hasDetailsSaved = 0;
+            for (String file : cryptogramDirectory.list()) {
+                if(file.contains(username)){
+                    pathToUsersDetails = pathToDetails + "\\" + file;
+                    hasDetailsSaved++;
                 }
             }
 
-            //Creates a new file to save details to, if one doesn't already exist.
-            fileToSaveDetailsTo = new File(pathsToDetailsString + "\\" + p.getUsername() + ".txt");
+            if(hasDetailsSaved == 0) { //Error, they have no saved details
+//                System.out.println("You do not have a saved details file.");
+                return null;
+            }
 
-            //Prints players details to the text file.
-            PrintWriter out = new PrintWriter(fileToSaveDetailsTo);
-            out.println(username);
-            out.println((int) accuracy);
-            out.println(correctGuesses);
-            out.println(totalGuesses);
-            out.println(cryptogramsPlayed);
-            out.print(cryptogramsCompleted);
 
-            //Information has been written at this point, writer can be closed.
-            out.close();
+            //User has a saved details file, read it.
+            fileToReadDetailsFrom = new File(pathToUsersDetails);
+            fileReader = new BufferedReader(new FileReader(fileToReadDetailsFrom));
+            String playerUsername = fileReader.readLine();
+            double accuracy = Double.parseDouble(fileReader.readLine());
+            int correctGuesses = Integer.parseInt(fileReader.readLine());
+            int totalGuesses = Integer.parseInt(fileReader.readLine());
+            int cryptogramsPlayed = Integer.parseInt(fileReader.readLine());
+            int cryptogramsCompleted = Integer.parseInt(fileReader.readLine());
 
-            //Message to tell the user their details have been saved successfully.
-            System.out.println("Players details have been successfully saved to a file.");
-            return true;
+            //Information has been written at this point, reader can be closed.
+            fileReader.close();
+
+            //Create player object
+            return new Player(
+                    playerUsername, accuracy, correctGuesses, totalGuesses, cryptogramsPlayed, cryptogramsCompleted
+            );
         } catch (IOException e) {
             //Error message to say that an error has occurred while printing to the file.
             System.out.println("An error has occurred when trying to save players details to a file.");
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
-
 }

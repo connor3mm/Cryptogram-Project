@@ -29,28 +29,12 @@ public class Main {
                 if (detailsChoice == 0) {
                     System.out.println("Please enter your username");
                     name = scan.next();
-                    Player p = new Player(name);
-                    Players ps = new Players();
-                    if (ps.findPlayer(p)) {
-                        ps.loadPlayer();
-                        System.out.println("Successfully loaded players details.");
+                    Player loadedPlayer = new Player();
+                    loadedPlayer = loadedPlayer.loadPlayersDetails(name);
 
-
-                    } else {
-                        System.out.println("Username does not exist.");
-
-                        while (!ps.findPlayer(p)) {
-                            System.out.println("Please enter your username");
-                            name = scan.next();
-                            Player p2 = new Player(name);
-                            Players ps2 = new Players();
-
-                            if (ps2.findPlayer(p2)) {
-                                ps2.loadPlayer();
-                                System.out.println("Successfully loaded players details.");
-                            }
-                            System.out.println("Username does not exist.");
-                        }
+                    if(loadedPlayer == null){
+                        System.out.println("This username does not exist. Create a new account.");
+                        continue;
                     }
 
 
@@ -58,7 +42,10 @@ public class Main {
                     System.out.println("Enter 1 if you would like to start a new cryptogram.");
                     loadChoice = scan.nextInt();
                     if (loadChoice == 0) {
+                        game = new Game(loadedPlayer, 0);
+                        game.generateCryptogram();//Create a temp game, will be overwritten.
                         game.loadGame();
+                        break; //Go to the game options
                     } else if (loadChoice == 1) {
                         //displays the menu
                         System.out.println(
@@ -75,11 +62,11 @@ public class Main {
                         }
 
                         if (choice == 0) {
-                            game = new Game(p, 0);
+                            game = new Game(loadedPlayer, 0);
                             game.generateCryptogram();
 
                         } else if (choice == 1) {
-                            game = new Game(p, 1);
+                            game = new Game(loadedPlayer, 1);
                             game.generateCryptogram();
                         }
                     }

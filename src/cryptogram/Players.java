@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 
 public class Players {
 
-    private List<Player> allPlayers = new ArrayList<Player>();
+    private List<Player> allPlayers = new ArrayList<>();
     private File playersFile;
 
 public void addPlayer(Player p){
