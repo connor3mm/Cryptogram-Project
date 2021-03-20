@@ -137,6 +137,7 @@ public class Cryptogram {
         this.playerMapping = playerMapping;
         this.numberOfLettersInPhrase = numberOfLettersInPhrase;
         this.newPhrase = newPhrase;
+        System.out.println(getPhrase() + "\n");
     }
 
 
