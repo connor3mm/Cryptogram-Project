@@ -128,7 +128,7 @@ public class Cryptogram {
     }
 
     public Cryptogram(String cryptoPhrase, boolean numberMapping, int[] gameMapping, int[] letterFrequency, int[] playerMapping,
-                      int numberOfLettersInPhrase, String newPhrase)
+                      int numberOfLettersInPhrase, String newPhrase) //COULD POSSIBLY BE REMOVED.
     {
         this.cryptoPhrase = cryptoPhrase;
         this.numberMapping = numberMapping;
@@ -411,7 +411,7 @@ public class Cryptogram {
             fileWriter.write(this.numberOfLettersInPhrase + "\n");
             fileWriter.write(this.newPhrase);
 
-            //All info is stored at this point, close the reader
+            //All info is stored at this point, close the writer
             fileWriter.close();
 
             //File was saved successfully
@@ -446,7 +446,7 @@ public class Cryptogram {
             File cryptogramDirectory = new File(pathsToCryptoString);
             String[] fileNames = cryptogramDirectory.list();
 
-            if(fileNames.length == 0) {
+            if(fileNames.length == 0) { //Error, the file is empty
                 System.out.println("Folder is empty, no saved cryptograms.");
                 return null;
             }
@@ -455,12 +455,12 @@ public class Cryptogram {
             int hasCryptoSaved = 0;
             for (String file : cryptogramDirectory.list()) {
                 if(file.contains(player.getUsername())){
-                    pathToUsersCryptogram = file;
+                    pathToUsersCryptogram = pathToCryptograms + "\\" + file;
                     hasCryptoSaved++;
                 }
             }
 
-            if(hasCryptoSaved == 0) {
+            if(hasCryptoSaved == 0) { //Error, they have no saved cryptogram
                 System.out.println("You do not have a cryptogram saved.");
                 return null;
             }
@@ -481,13 +481,13 @@ public class Cryptogram {
 
             //Create the object depending on its type
             Cryptogram loadedCryptogram;
-            if(numberMapping){
+            if(numberMapping){ //If the cryptogram is number mapping
                 loadedCryptogram = new NumberCryptogram(
                         cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
                 );
             }
             else
-            {
+            { //If the cryptogram is letter mapping
                 loadedCryptogram = new LetterCryptogram(
                         cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
                 );
@@ -504,7 +504,7 @@ public class Cryptogram {
 
     private int[] parseArrayFromFile(String string) {
         String[] strings = string.replace("[", "").replace("]", "").split(", ");
-        int result[] = new int[strings.length];
+        int[] result = new int[strings.length];
         for (int i = 0; i < result.length; i++) {
             result[i] = Integer.parseInt(strings[i]);
         }
