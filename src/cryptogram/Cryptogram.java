@@ -119,12 +119,6 @@ public class Cryptogram {
         setLetterFrequency();
         getNumberOfLetters();
         System.out.println("Successfully created a new game...\n");
-        System.out.println(getPhrase() + "\n");
-
-
-        for (int i = 0; i < gameMapping.length; i++) {
-            System.out.println("index - " + i + " " + gameMapping[i]);
-        }
     }
 
     public Cryptogram(String cryptoPhrase, boolean numberMapping, int[] gameMapping, int[] letterFrequency, int[] playerMapping,
