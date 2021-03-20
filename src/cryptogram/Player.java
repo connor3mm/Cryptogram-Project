@@ -2,6 +2,10 @@ package cryptogram;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.*;
 
 public class Player {
 
@@ -116,9 +120,40 @@ public class Player {
         cryptogramsPlayed = cryptogramsPlayed+1;
     }
 
-    public void savePlayersDetails(){
+    private boolean detailsFolderExists(Path pathToDetails) { return Files.exists(pathToDetails);}
+
+    private void createPlayersDetailsFolder(Path pathToDetails) throws Exception {
+        System.out.println("Folder to store player details does not exist. Creating one now...");
+        try{
+            Files.createDirectory(pathToDetails);
+            System.out.println("Folder has been successfully created.");
+        } catch (Exception e){
+            throw new Exception("Error when trying to create folder to store player details.");
+        }
+    }
+
+    public boolean savePlayersDetails(Player p){
        try {
-           PrintWriter out = new PrintWriter("PlayerDetails.txt");
+           //File variables to be used when saving.
+           File fileToSaveDetailsTo;
+           String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
+           Path pathToDetails = Paths.get(pathsToDetailsString);
+
+           //Creates the folder to save player details files if one doesn't already exist.
+           if(!detailsFolderExists(pathToDetails)){
+               try{
+                   createPlayersDetailsFolder(pathToDetails);
+               } catch (Exception e) {
+                   System.out.println(e.getMessage());
+                   return false;
+               }
+           }
+
+           //Creates a new file to save details to, if one doesn't already exist.
+           fileToSaveDetailsTo = new File(pathsToDetailsString + "\\" + p.getUsername() + "Details.txt");
+
+           //Prints players details to the text file.
+           PrintWriter out = new PrintWriter(fileToSaveDetailsTo);
            out.println(username);
            out.println((int) accuracy);
            out.println(correctGuesses);
@@ -126,11 +161,16 @@ public class Player {
            out.println(cryptogramsPlayed);
            out.println(cryptogramsCompleted);
            out.close();
+
+           //Message to tell the user their details have been saved successfully.
            System.out.println("Players details have been successfully saved to a file.");
+           return true;
        } catch (IOException e) {
            System.out.println("An error has occurred when trying to save players details to a file.");
            e.printStackTrace();
        }
+       return false;
     }
+
 
 }

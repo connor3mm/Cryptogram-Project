@@ -355,7 +355,7 @@ public class Cryptogram {
     }
 
     private void createCryptogramFolder(Path pathToCryptograms) throws Exception {
-        System.out.println("Folder to store cryptograms does not exists. Creating one...");
+        System.out.println("Folder to store cryptograms does not exist. Creating one...");
         try {
             Files.createDirectory(pathToCryptograms);
             System.out.println("Folder successfully created.");
@@ -367,6 +367,7 @@ public class Cryptogram {
     private boolean playerHasCryptoSaved(File fileToSaveCryptogramTo) {
         return Files.exists(fileToSaveCryptogramTo.toPath());
     }
+
 
     public boolean saveCryptogram(Player player) {
         try {

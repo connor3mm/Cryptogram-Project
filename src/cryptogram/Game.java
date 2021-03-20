@@ -126,7 +126,7 @@ public class Game {
     }
 
     public void savePlayer(){
-        currentPlayer.savePlayersDetails();
+        currentPlayer.savePlayersDetails(currentPlayer);
     }
 
     public void saveGame() {
