@@ -375,6 +375,7 @@ public class Cryptogram {
             //Set up variables to be used
             File fileToSaveCryptogramTo;
             BufferedWriter fileWriter;
+            BufferedReader fileReader;
             String pathsToCryptoString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms";
             Path pathToCryptograms = Paths.get(pathsToCryptoString);
 
@@ -392,13 +393,16 @@ public class Cryptogram {
             fileToSaveCryptogramTo = new File(pathToCryptograms + "\\" + player.getUsername() + ".txt");
 
             if(playerHasCryptoSaved(fileToSaveCryptogramTo)){ //If the player has a file saved, ask to overwrite
-                Scanner scan = new Scanner(System.in);
-                System.out.println("You already have a cryptogram saved, do you want to overwrite? (y/n)");
-                String sUserAnswer = scan.next();
-                char answer = sUserAnswer.charAt(0);
+                fileReader = new BufferedReader(new FileReader(fileToSaveCryptogramTo));
+                if(!fileReader.readLine().equals(getPhrase())){
+                    Scanner scan = new Scanner(System.in);
+                    System.out.println("You already have a cryptogram saved, do you want to overwrite? (y/n)");
+                    String sUserAnswer = scan.next();
+                    char answer = sUserAnswer.charAt(0);
 
-                if(answer == 'n') {
-                    return false;
+                    if(answer == 'n') {
+                        return false;
+                    }
                 }
             }
 
