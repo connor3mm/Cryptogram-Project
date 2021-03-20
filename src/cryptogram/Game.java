@@ -35,7 +35,6 @@ public class Game {
         this.cryptType = rand;
     }
 
-
     /**
      * Generating number or letter cryptogram
      */

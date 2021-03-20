@@ -30,6 +30,11 @@ class LetterCryptogram extends Cryptogram {
         this.playerMapping = playerMapping;
         this.numberOfLettersInPhrase = numberOfLettersInPhrase;
         this.newPhrase = newPhrase;
+
+        System.out.println(getPhrase() + "\n");
+        for (int i = 0; i < gameMapping.length; i++) {
+            System.out.println("index - " + i + " " + gameMapping[i]);
+        }
     }
 
     /**
