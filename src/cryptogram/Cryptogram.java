@@ -128,7 +128,7 @@ public class Cryptogram {
     }
 
     public Cryptogram(String cryptoPhrase, boolean numberMapping, int[] gameMapping, int[] letterFrequency, int[] playerMapping,
-                      int numberOfLettersInPhrase, String newPhrase)
+                      int numberOfLettersInPhrase, String newPhrase) //COULD POSSIBLY BE REMOVED.
     {
         this.cryptoPhrase = cryptoPhrase;
         this.numberMapping = numberMapping;
@@ -411,7 +411,7 @@ public class Cryptogram {
             fileWriter.write(this.numberOfLettersInPhrase + "\n");
             fileWriter.write(this.newPhrase);
 
-            //All info is stored at this point, close the reader
+            //All info is stored at this point, close the writer
             fileWriter.close();
 
             //File was saved successfully
@@ -453,7 +453,7 @@ public class Cryptogram {
             int hasCryptoSaved = 0;
             for (String file : cryptogramDirectory.list()) {
                 if(file.contains(player.getUsername())){
-                    pathToUsersCryptogram = file;
+                    pathToUsersCryptogram = pathToCryptograms + "\\" + file;
                     hasCryptoSaved++;
                 }
             }
