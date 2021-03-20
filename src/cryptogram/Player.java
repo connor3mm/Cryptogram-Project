@@ -120,8 +120,10 @@ public class Player {
         cryptogramsPlayed = cryptogramsPlayed+1;
     }
 
+    //Checks if folder to hold players details already exists, if so returns true.
     private boolean detailsFolderExists(Path pathToDetails) { return Files.exists(pathToDetails);}
 
+    //Creates folder to hold players details.
     private void createPlayersDetailsFolder(Path pathToDetails) throws Exception {
         System.out.println("Folder to store player details does not exist. Creating one now...");
         try{
@@ -132,6 +134,7 @@ public class Player {
         }
     }
 
+    //Saves the players details to a text file.
     public boolean savePlayersDetails(Player p){
        try {
            //File variables to be used when saving.
@@ -154,18 +157,19 @@ public class Player {
 
            //Prints players details to the text file.
            PrintWriter out = new PrintWriter(fileToSaveDetailsTo);
-           out.println(username);
-           out.println((int) accuracy);
-           out.println(correctGuesses);
-           out.println(totalGuesses);
-           out.println(cryptogramsPlayed);
-           out.println(cryptogramsCompleted);
+           out.println("Username - " + username);
+           out.println("Accuracy - " + (int) accuracy);
+           out.println("Correct Guesses - " + correctGuesses);
+           out.println("Total Guesses - " + totalGuesses);
+           out.println("Cryptograms Played - " + cryptogramsPlayed);
+           out.println("Cryptograms Completed - " + cryptogramsCompleted);
            out.close();
 
            //Message to tell the user their details have been saved successfully.
            System.out.println("Players details have been successfully saved to a file.");
            return true;
        } catch (IOException e) {
+           //Error message to say that an error has occurred while printing to the file.
            System.out.println("An error has occurred when trying to save players details to a file.");
            e.printStackTrace();
        }
