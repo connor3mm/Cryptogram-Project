@@ -67,37 +67,25 @@ public class Game {
             String result = scan.next();
             char charResult = result.charAt(0);
             guess = currentGame.getPlainLetter(charResult);
-            currentGame.showMappedLetters();
-            currentPlayer.updateAccuracy(guess);
-            completed = currentGame.checkIfGameCompleted();
-            win = currentGame.gameSuccess();
-            if (completed && win) {
-                System.out.println("Game has been Completed and WON");
-                currentPlayer.incrementCryptogramCompleted();
-                System.exit(1);
-            } else if (completed && !win) {
-                System.out.println("Game has been Completed and NOT WON, try again");
-            } else
-                System.out.println("Game had not been completed");
 
 
         } else {
             System.out.println("Enter a number to map (1-25): ");
             int result = scan.nextInt();
             guess = currentGame.getPlainNumber(result);
-            currentGame.showMappedLetters();
-            currentPlayer.updateAccuracy(guess);
-            completed = currentGame.checkIfGameCompleted();
-            win = currentGame.gameSuccess();
-            if (completed && win) {
-                System.out.println("Game has been Completed and WON");
-                currentPlayer.incrementCryptogramCompleted();
-                System.exit(1);
-            } else if (completed && !win) {
-                System.out.println("Game has been Completed and NOT WON, try again");
-            } else
-                System.out.println("Game had not been completed");
         }
+        currentGame.showMappedLetters();
+        currentPlayer.updateAccuracy(guess);
+        completed = currentGame.checkIfGameCompleted();
+        win = currentGame.gameSuccess();
+        if (completed && win) {
+            System.out.println("Game has been Completed and WON");
+            currentPlayer.incrementCryptogramCompleted();
+            System.exit(1);
+        } else if (completed && !win) {
+            System.out.println("Game has been Completed and NOT WON, try again");
+        } else
+            System.out.println("Game had not been completed");
     }
 
     public void undoLetter() {
