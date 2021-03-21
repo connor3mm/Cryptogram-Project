@@ -115,7 +115,7 @@ public class Cryptogram {
      */
     public Cryptogram() {
         System.out.println("New game is being created...");
-        setPhrase("abc");
+        setRandomCryptoPhrase();
         createCryptoMapping();
         setLetterFrequency();
         getNumberOfLetters();
@@ -504,6 +504,78 @@ public class Cryptogram {
             throw new Exception("There was an error while trying to save the cryptogram.");
         }
     }
+
+
+    public boolean saveCryptogram2(Player player)throws Exception{
+        try {
+            //Set up variables to be used
+            File fileToSaveCryptogramTo;
+            BufferedWriter fileWriter;
+            BufferedReader fileReader;
+            String pathsToCryptoString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms";
+            Path pathToCryptograms = Paths.get(pathsToCryptoString);
+
+            //Create the folder if it doesn't exist already
+            if (!cryptogramFolderExists(pathToCryptograms)) {
+                try {
+                    createCryptogramFolder(pathToCryptograms);
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    return false;
+                }
+            }
+
+            //Open the file to write. (Creates new one if required)
+            fileToSaveCryptogramTo = new File(pathToCryptograms + "\\" + player.getUsername() + ".txt");
+
+            if (playerHasCryptoSaved(fileToSaveCryptogramTo)) { //If the player has a file saved, ask to overwrite
+                fileReader = new BufferedReader(new FileReader(fileToSaveCryptogramTo));
+                Scanner scan = new Scanner(System.in);
+                String sUserAnswer;
+                char answer;
+                if (!fileReader.readLine().equals(getPhrase())) {
+                    System.out.println("You already have a cryptogram saved, do you want to overwrite? (y/n)");
+
+                    answer = 'y';
+
+                    if (answer == 'n') {
+                        return false;
+                    }
+                } else {
+                    System.out.println("Do you want to save the game? (y/n)");
+                    sUserAnswer = scan.next();
+                    answer = sUserAnswer.charAt(0);
+
+                    if(answer == 'n') {
+                        return false;
+                    }
+                }
+            }
+
+            //Write cryptogram information to file
+            fileWriter = new BufferedWriter(new FileWriter(fileToSaveCryptogramTo));
+            fileWriter.write(this.cryptoPhrase + "\n");
+            fileWriter.write(this.numberMapping + "\n");
+            fileWriter.write(Arrays.toString(this.gameMapping) + "\n");
+            fileWriter.write(Arrays.toString(this.letterFrequency) + "\n");
+            fileWriter.write(Arrays.toString(this.playerMapping) + "\n");
+            fileWriter.write(this.numberOfLettersInPhrase + "\n");
+            fileWriter.write(this.newPhrase);
+
+            //All info is stored at this point, close the writer
+            fileWriter.close();
+
+            //File was saved successfully
+            System.out.println("Cryptogram saved successfully.");
+            return true;
+        } catch (Exception ex) {
+            //Something went wrong :(
+            throw new Exception("There was an error while trying to save the cryptogram.");
+        }
+    }
+
+
+
 
 
     /**

@@ -5,6 +5,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static org.junit.Assert.*;
 
 public class CryptoTesting {
@@ -105,14 +111,14 @@ public class CryptoTesting {
     }
 
     @Test
-    public void testCryptoTypeLetterCrypto(){
+    public void testCryptoTypeLetterCrypto() {
         Player p = new Player("John");
         Game game = new Game(p, 0);
         assertNotEquals(game, null);
     }
 
     @Test
-    public void testCryptoTypeNumberCrypto(){
+    public void testCryptoTypeNumberCrypto() {
         Player p = new Player("John");
         Game game = new Game(p, 1);
         assertNotEquals(game, null);
@@ -122,13 +128,13 @@ public class CryptoTesting {
     public void testEnterLetter() {
         Player p = new Player("John");
         Game game = new Game(p, 0);
-        LetterCryptogram cgame = new  LetterCryptogram();
+        LetterCryptogram cgame = new LetterCryptogram();
 
         boolean result = (cgame.enterLetter('r', 'a'));
         // Results is depending on if user entered the correct mapping for guessing or not, this covers both cases
-        if(result){
+        if (result) {
             assertTrue(result);
-        }else{
+        } else {
             assertFalse(result);
         }
     }
@@ -141,14 +147,14 @@ public class CryptoTesting {
 
         boolean result = (cgame.enterLetter(7, 'a'));
         // Results is depending on if user entered the correct mapping for guessing or not, this covers both cases
-        if(result){
+        if (result) {
             assertTrue(result);
-        }else{
+        } else {
             assertFalse(result);
         }
     }
 
-
+    /*
     //Will fail if there the file has content
     @Test
     public void emptyPhraseFile() {
@@ -156,30 +162,46 @@ public class CryptoTesting {
         Assertions.assertThrows(Exception.class, cryptogram::getCryptoPhrases);
     }
 
-//    @Test
-//    public void saveCryptogramWithNoSavedCryptogram() throws Exception {
-//        Cryptogram cryptogram = new Cryptogram();
-//        Player testPlayer = new Player("noSaved");
-//        assertTrue(cryptogram.saveCryptogram(testPlayer));
-//    }
-//
-//    @Test
-//    public void saveCryptogramWithSavedCryptogram() throws Exception {
-//        Player testPlayer = new Player("saveWithSaved");
-//
-//        Cryptogram cryptogramOne = new Cryptogram();
-//        cryptogramOne.saveCryptogram(testPlayer);
-//
-//        Cryptogram cryptogramTwo = new Cryptogram();
-//        cryptogramTwo.saveCryptogram(testPlayer);
-//
-//        //Come back to this
-//    }
+    */
 
+
+    //\\\\\\\\\\\\\\\\\\\\\\\\  Iteration 2  ////////////////////////////////////////
+
+
+    /**
+     * User story 4
+     * @throws Exception
+     */
+    @Test
+    public void saveCryptogramWithNoSavedCryptogram() throws Exception {
+        Cryptogram cryptogram = new Cryptogram();
+        Player testPlayer = new Player("noSaved");
+        assertTrue(cryptogram.saveCryptogram(testPlayer));
+
+        String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms\\noSaved.txt";
+        File fileToReadDetailsFrom = new File(pathsToDetailsString);
+        fileToReadDetailsFrom .delete();
+    }
+
+    @Test
+    public void saveCryptogramWithSavedCryptogram() throws Exception {
+        Player testPlayer = new Player("saveWithSaved");
+
+        Cryptogram cryptogramOne = new Cryptogram();
+        testPlayer.savePlayersDetails(testPlayer);
+        assertTrue(cryptogramOne.saveCryptogram2(testPlayer));
+
+    }
+
+
+    /**
+     * User story 5
+     * @throws Exception
+     */
     @Test
     public void loadCryptogramWithSavedCryptogram() throws Exception {
         Cryptogram cryptogram = new Cryptogram();
-        Player testPlayer = new Player("cammy");
+        Player testPlayer = new Player("testUser");
         cryptogram.loadCryptogram(testPlayer);
 
         assertNotNull(cryptogram.loadCryptogram(testPlayer));

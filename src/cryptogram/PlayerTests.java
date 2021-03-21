@@ -3,12 +3,12 @@ package cryptogram;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class PlayerTests {
-
 
 
     /**
@@ -49,7 +49,7 @@ public class PlayerTests {
     public void testPlayerMade() {
         Player p = new Player("John");
         assertEquals("John", p.getUsername());
-        assertTrue( 0.0 == p.getAccuracy());
+        assertTrue(0.0 == p.getAccuracy());
         assertEquals(0, p.getTotalGuesses());
         assertEquals(0, p.getCryptogramsPlayed());
         assertEquals(0, p.getCryptogramsCompleted());
@@ -57,6 +57,20 @@ public class PlayerTests {
 
 
     //\\\\\\\\\\\\\\\\\\\\\\\\  Iteration 2  ////////////////////////////////////////
+    /**
+     * User story 9
+     * Test that when a crypto is complete, increment happens
+     */
+    @Test
+    public void testGamesCompletedIncrement() {
+        //Test for letter crypto
+        Player p = new Player("John");
+        p.incrementCryptogramCompleted();
+        assertEquals(1, p.getCryptogramsCompleted());
+    }
+
+
+
     /**
      * User story 10
      * Test that when a crypto is generated, games played gets incremented
@@ -129,7 +143,7 @@ public class PlayerTests {
 
 
     /**
-     *  User story 12 and 8
+     * User story 12 and 8
      */
     @Test
     public void testLoadPlayer() {
@@ -141,9 +155,11 @@ public class PlayerTests {
         p.setAccuracy(50.0);
         p.setCryptogramsCompleted(3);
         p.setCryptogramsPlayed(2);
-        game.savePlayer();
 
-        //test for number crypto
+        //User story 8
+        assertTrue(p.savePlayersDetails(p));
+
+        //User story 12
         game.loadGame();
         assertEquals(49, p.getCorrectGuesses());
         assertEquals(99, p.getTotalGuesses());
@@ -152,5 +168,16 @@ public class PlayerTests {
         assertEquals(2, p.getNumCryptogramsPlayed());
     }
 
+
+    @Test
+    public void testPlayaDontExist() throws Exception {
+        Player p = new Player().loadPlayersDetails("Unknown");
+        Assertions.assertNull(p);
+    }
+
+    @Test
+    public void testPlaya() throws Exception {
+        Assertions.assertThrows(Exception.class, () -> new Player().loadPlayersDetails("testCor"));
+    }
 
 }
