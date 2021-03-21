@@ -114,6 +114,7 @@ public class Player {
         this.cryptogramsCompleted = cryptogramsCompleted;
     }
 
+
     //methods
     /**
      * Increments cryptos complete
@@ -203,7 +204,7 @@ public class Player {
             out.close();
 
             //Message to tell the user their details have been saved successfully.
-            System.out.println("Players details have been successfully saved to a file.");
+            System.out.println("\nPlayers details have been successfully saved to a file.");
             return true;
         } catch (IOException e) {
             //Error message to say that an error has occurred while printing to the file.

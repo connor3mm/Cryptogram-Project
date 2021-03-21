@@ -147,15 +147,15 @@ public class Game {
         win = currentGame.gameSuccess();
 
         if (completed && win) {
-            System.out.println("Game has been Completed and WON");
+            System.out.println("\nGame has been Completed and WON");
             currentPlayer.incrementCryptogramCompleted();
             System.exit(1);
 
         } else if (completed && !win) {
-            System.out.println("Game has been Completed and NOT WON, try again");
+            System.out.println("\nGame has been Completed and NOT WON, try again");
 
         } else
-            System.out.println("Game had not been completed");
+            System.out.println("\nGame had not been completed");
     }
 
 

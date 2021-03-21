@@ -251,12 +251,12 @@ public class Cryptogram {
             if (playerMapping[i] == letterAsciiValue && validUndoCheck(Letter)) {
                 playerMapping[i] = -1;
 
-                System.out.println("Letter has been successfully undone.");
+                System.out.println("\nLetter has been successfully undone.");
                 return worked = true;
             }
         }
         if (worked == false) {
-            System.out.println("Not a valid undo request");
+            System.out.println("\nNot a valid undo request");
             return worked = false;
         }
         return false;

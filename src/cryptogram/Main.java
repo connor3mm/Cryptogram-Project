@@ -18,6 +18,7 @@ public class Main {
                 int detailsChoice;
                 int loadChoice;
 
+
                 System.out.println("Enter 0 if you have already created an account.");
                 System.out.println("Enter 1 if you would like to create an account.");
                 detailsChoice = scan.nextInt();
@@ -26,25 +27,30 @@ public class Main {
                     System.out.println("The value must be between 0 and 1.");
                 }
 
+
                 if (detailsChoice == 0) {
                     System.out.println("Please enter your username");
+
                     name = scan.next();
                     Player loadedPlayer = new Player();
                     loadedPlayer = loadedPlayer.loadPlayersDetails(name);
+
 
                     if(loadedPlayer == null){
                         System.out.println("This username does not exist. Create a new account.");
                         continue;
                     }
 
-
                     System.out.println("Enter 0 if you would like to load your cryptogram.");
                     System.out.println("Enter 1 if you would like to start a new cryptogram.");
                     loadChoice = scan.nextInt();
+
                     if (loadChoice == 0) {
                         game = new Game(loadedPlayer, 0);
                         game.loadGame();
                         break; //Go to the game options
+
+
                     } else if (loadChoice == 1) {
                         //displays the menu
                         System.out.println(
@@ -52,6 +58,7 @@ public class Main {
                                         + "Enter 0 for letter Cryptogram \n"
                                         + "Enter 1 for Number Cryptogram\n"
                         );
+
 
                         choice = scan.nextInt();
                         //checks the input value is a valid option

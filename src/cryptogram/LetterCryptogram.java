@@ -120,7 +120,7 @@ class LetterCryptogram extends Cryptogram {
             return enterLetter(letter, letterToReplace);
 
         } else {
-            System.out.println("Invalid guess. This value is already mapped.");
+            System.out.println("\nInvalid guess. This value is already mapped.\n");
             System.out.println(newPhrase);
             return false;
         }
