@@ -45,19 +45,6 @@ public class Game {
 
 
     //Methods
-    /**
-     * Saves current player
-     */
-    public void savePlayer() {
-        currentPlayer.savePlayersDetails(currentPlayer);
-    }
-
-    /**
-     * Saves current game
-     */
-    public void saveGame() {
-        currentGame.saveCryptogram(currentPlayer);
-    }
 
 
     /**
@@ -65,6 +52,22 @@ public class Game {
      */
     public void gamesPlayedInc() {
         currentPlayer.incrementCryptogramPlayed();
+    }
+
+
+    /**
+     * Saves current player
+     */
+    public void savePlayer() {
+        currentPlayer.savePlayersDetails(currentPlayer);
+    }
+
+
+    /**
+     * Saves current game
+     */
+    public void saveGame() {
+        currentGame.saveCryptogram(currentPlayer);
     }
 
 
@@ -77,6 +80,8 @@ public class Game {
         printVariables();
         currentGame.showMappedLetters();
     }
+
+
 
 
     /**
@@ -129,6 +134,9 @@ public class Game {
         String result = scan.next();
         char charResult = result.charAt(0);
         currentGame.undoGivenLetter(charResult);
+
+        System.out.println(currentGame.newPhrase);
+        currentGame.showMappedLetters();
     }
 
 
@@ -176,9 +184,6 @@ public class Game {
 
     }
 
-    public void loadPlayer() {
-
-    }
 
     public void viewFrequencies() {
 
