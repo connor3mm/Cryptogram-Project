@@ -83,8 +83,6 @@ public class Game {
     }
 
 
-
-
     /**
      * Generating number or letter cryptogram
      */
@@ -157,6 +155,8 @@ public class Game {
         if (completed && win) {
             System.out.println("\nGame has been Completed and WON");
             currentPlayer.incrementCryptogramCompleted();
+            savePlayer();
+            saveGame();
             System.exit(1);
 
         } else if (completed && !win) {

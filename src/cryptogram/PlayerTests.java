@@ -57,8 +57,8 @@ public class PlayerTests {
 
 
     //\\\\\\\\\\\\\\\\\\\\\\\\  Iteration 2  ////////////////////////////////////////
-
     /**
+     * User story 10
      * Test that when a crypto is generated, games played gets incremented
      */
     @Test
@@ -75,18 +75,41 @@ public class PlayerTests {
         assertEquals(2, p.getCryptogramsPlayed());
     }
 
+
+    @Test
+    public void testGamesPlayedByload() {
+        //Test for letter crypto
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        game.generateCryptogram();
+        assertEquals(1, p.getCryptogramsPlayed());
+        game.savePlayer();
+
+        //test for number crypto
+        game.loadGame();
+        assertEquals(1, p.getCryptogramsPlayed());
+    }
+
+
+
+    /**
+     * User story 11
+     */
     @Test
     public void testUpdateAccuracyTrue() {
         //Test for letter crypto
         Player p = new Player("John");
         Game game = new Game(p, 0);
         game.generateCryptogram();
+
         p.setCorrectGuesses(49);
         p.setTotalGuesses(99);
+
         p.updateAccuracy(true);
         System.out.println(p.getAccuracy());
         assertTrue(50.0 == p.getAccuracy());
     }
+
 
     @Test
     public void testUpdateAccuracyFalse() {
@@ -94,11 +117,40 @@ public class PlayerTests {
         Player p = new Player("John");
         Game game = new Game(p, 0);
         game.generateCryptogram();
+
         p.setCorrectGuesses(50);
         p.setTotalGuesses(49);
+
         p.updateAccuracy(false);
         System.out.println(p.getAccuracy());
         assertTrue(100.0 == p.getAccuracy());
     }
+
+
+
+    /**
+     *  User story 12 and 8
+     */
+    @Test
+    public void testLoadPlayer() {
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        game.generateCryptogram();
+        p.setCorrectGuesses(49);
+        p.setTotalGuesses(99);
+        p.setAccuracy(50.0);
+        p.setCryptogramsCompleted(3);
+        p.setCryptogramsPlayed(2);
+        game.savePlayer();
+
+        //test for number crypto
+        game.loadGame();
+        assertEquals(49, p.getCorrectGuesses());
+        assertEquals(99, p.getTotalGuesses());
+        assertTrue(50 == p.getAccuracy());
+        assertEquals(3, p.getCryptogramsCompleted());
+        assertEquals(2, p.getNumCryptogramsPlayed());
+    }
+
 
 }
