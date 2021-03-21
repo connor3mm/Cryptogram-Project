@@ -67,7 +67,11 @@ public class Game {
      * Saves current game
      */
     public void saveGame() {
-        currentGame.saveCryptogram(currentPlayer);
+        try {
+            currentGame.saveCryptogram(currentPlayer);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
 
@@ -76,7 +80,11 @@ public class Game {
      */
     public void loadGame() {
         currentGame = new Cryptogram(currentPlayer);
-        currentGame = currentGame.loadCryptogram(currentPlayer);
+        try {
+            currentGame = currentGame.loadCryptogram(currentPlayer);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         if(currentGame == null) return;
         printVariables();
         currentGame.showMappedLetters();

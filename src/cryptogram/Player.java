@@ -218,7 +218,7 @@ public class Player {
     /**
      * Load player details from file
      */
-    public Player loadPlayersDetails(String username) {
+    public Player loadPlayersDetails(String username) throws Exception {
         try {
             //File variables to be used when saving.
             File fileToReadDetailsFrom;
@@ -275,11 +275,9 @@ public class Player {
             return new Player(
                     playerUsername, accuracy, correctGuesses, totalGuesses, cryptogramsPlayed, cryptogramsCompleted
             );
-        } catch (IOException e) {
+        } catch (Exception e) {
             //Error message to say that an error has occurred while printing to the file.
-            System.out.println("An error has occurred when trying to save players details to a file.");
-            e.printStackTrace();
+            throw new Exception("An error has occurred when trying to load players details from a file.");
         }
-        return null;
     }
 }

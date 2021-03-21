@@ -437,7 +437,7 @@ public class Cryptogram {
      * @param player
      * @return
      */
-    public boolean saveCryptogram(Player player) {
+    public boolean saveCryptogram(Player player) throws Exception {
         try {
             //Set up variables to be used
             File fileToSaveCryptogramTo;
@@ -501,10 +501,8 @@ public class Cryptogram {
             return true;
         } catch (Exception ex) {
             //Something went wrong :(
-            System.out.println("There was an error while trying to write to the file.");
-            System.out.println("Cryptogram was not saved successfully.");
+            throw new Exception("There was an error while trying to save the cryptogram.");
         }
-        return false;
     }
 
 
@@ -514,7 +512,7 @@ public class Cryptogram {
      * @param player
      * @return
      */
-    public Cryptogram loadCryptogram(Player player) {
+    public Cryptogram loadCryptogram(Player player) throws Exception {
         try {
             //Set up variables to be used
             File fileToReadCryptogramFrom;
@@ -581,10 +579,8 @@ public class Cryptogram {
             return loadedCryptogram;
         } catch (Exception ex) {
             //Something went wrong :(
-            System.out.println("There was an error while trying to read from the file.");
-            System.out.println("Cryptogram was not loaded successfully.");
+            throw new Exception("There was an error trying to load the cryptogram.");
         }
-        return null;
     }
 
 

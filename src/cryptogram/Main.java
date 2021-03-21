@@ -33,7 +33,11 @@ public class Main {
 
                     name = scan.next();
                     Player loadedPlayer = new Player();
-                    loadedPlayer = loadedPlayer.loadPlayersDetails(name);
+                    try {
+                        loadedPlayer = loadedPlayer.loadPlayersDetails(name);
+                    } catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
 
 
                     if(loadedPlayer == null){

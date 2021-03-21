@@ -155,5 +155,50 @@ public class CryptoTesting {
         Cryptogram cryptogram = new Cryptogram();
         Assertions.assertThrows(Exception.class, cryptogram::getCryptoPhrases);
     }
+
+//    @Test
+//    public void saveCryptogramWithNoSavedCryptogram() throws Exception {
+//        Cryptogram cryptogram = new Cryptogram();
+//        Player testPlayer = new Player("noSaved");
+//        assertTrue(cryptogram.saveCryptogram(testPlayer));
+//    }
+//
+//    @Test
+//    public void saveCryptogramWithSavedCryptogram() throws Exception {
+//        Player testPlayer = new Player("saveWithSaved");
+//
+//        Cryptogram cryptogramOne = new Cryptogram();
+//        cryptogramOne.saveCryptogram(testPlayer);
+//
+//        Cryptogram cryptogramTwo = new Cryptogram();
+//        cryptogramTwo.saveCryptogram(testPlayer);
+//
+//        //Come back to this
+//    }
+
+    @Test
+    public void loadCryptogramWithSavedCryptogram() throws Exception {
+        Cryptogram cryptogram = new Cryptogram();
+        Player testPlayer = new Player("cammy");
+        cryptogram.loadCryptogram(testPlayer);
+
+        assertNotNull(cryptogram.loadCryptogram(testPlayer));
+    }
+
+    @Test
+    public void loadCryptogramWithNoSavedCryptogram() throws Exception {
+        Cryptogram cryptogram = new Cryptogram();
+        Player testPlayer = new Player("loadWithNoSaved");
+
+        assertNull(cryptogram.loadCryptogram(testPlayer));
+    }
+
+    @Test
+    public void loadCryptogramCorruptedFile() throws Exception {
+        Player testPlayer = new Player().loadPlayersDetails("corrupt");
+        Cryptogram cryptogram = new Cryptogram(testPlayer);
+
+        Assertions.assertThrows(Exception.class, () -> cryptogram.loadCryptogram(testPlayer));
+    }
 }
 
