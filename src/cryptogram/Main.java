@@ -48,9 +48,8 @@ public class Main {
                     if (loadChoice == 0) {
                         game = new Game(loadedPlayer, 0);
                         game.loadGame();
+                        if(game.currentGame == null) continue;
                         break; //Go to the game options
-
-
                     } else if (loadChoice == 1) {
                         //displays the menu
                         System.out.println(

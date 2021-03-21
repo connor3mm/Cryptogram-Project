@@ -77,6 +77,7 @@ public class Game {
     public void loadGame() {
         currentGame = new Cryptogram(currentPlayer);
         currentGame = currentGame.loadCryptogram(currentPlayer);
+        if(currentGame == null) return;
         printVariables();
         currentGame.showMappedLetters();
     }

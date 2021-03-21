@@ -461,13 +461,23 @@ public class Cryptogram {
 
             if (playerHasCryptoSaved(fileToSaveCryptogramTo)) { //If the player has a file saved, ask to overwrite
                 fileReader = new BufferedReader(new FileReader(fileToSaveCryptogramTo));
+                Scanner scan = new Scanner(System.in);
+                String sUserAnswer;
+                char answer;
                 if (!fileReader.readLine().equals(getPhrase())) {
-                    Scanner scan = new Scanner(System.in);
                     System.out.println("You already have a cryptogram saved, do you want to overwrite? (y/n)");
-                    String sUserAnswer = scan.next();
-                    char answer = sUserAnswer.charAt(0);
+                    sUserAnswer = scan.next();
+                    answer = sUserAnswer.charAt(0);
 
                     if (answer == 'n') {
+                        return false;
+                    }
+                } else {
+                    System.out.println("Do you want to save the game? (y/n)");
+                    sUserAnswer = scan.next();
+                    answer = sUserAnswer.charAt(0);
+
+                    if(answer == 'n') {
                         return false;
                     }
                 }
