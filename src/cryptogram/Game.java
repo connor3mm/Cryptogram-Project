@@ -35,7 +35,6 @@ public class Game {
 
     /**
      * Constructor x2 parameter
-     *
      * @param p         - Player
      * @param cryptType - letter or number
      */
@@ -181,10 +180,6 @@ public class Game {
 
     }
 
-    public void playGame() {
-
-    }
-
     public void viewFrequencies() {
 
     }
@@ -192,7 +187,6 @@ public class Game {
     public void showSolution() {
 
     }
-
 
 }
 
