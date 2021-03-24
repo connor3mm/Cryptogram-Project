@@ -94,8 +94,8 @@ public class Main {
                     name = scan.next();
                     Player p = new Player(name);
                     if (ps.findPlayer(p)) {
-                        System.out.println("A player with this username has already been created.");
-                        System.exit(0);
+                        System.out.println("A player with this username has already been created.\n");
+                        continue;
                     }
                     ps.addPlayer(p);
 

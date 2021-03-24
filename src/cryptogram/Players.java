@@ -48,8 +48,8 @@ public class Players extends Player{
      * @return true if player exists, false if not
      */
     public boolean findPlayer(Player p) {
-        for (int i = 0; i < allPlayers.size(); i++) {
-            if (allPlayers.contains(p)) {
+        for (Player allPlayer : allPlayers) {
+            if (allPlayer.getUsername().equals(p.getUsername())) {
                 return true;
             }
         }
@@ -93,7 +93,7 @@ public class Players extends Player{
                 System.out.printf("An error occurred when trying to load %s (Possibly corrupt)\n", username);
             }
         }
-        System.out.printf("%d player(s) loaded successfully.%n", playersSuccessfullyLoaded);
+        System.out.printf("%d player(s) loaded successfully.%n%n", playersSuccessfullyLoaded);
     }
 
     private List<String> getUsernames() {
