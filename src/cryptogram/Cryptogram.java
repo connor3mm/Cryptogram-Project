@@ -12,7 +12,6 @@ public class Cryptogram {
      * Variables
      */
     public String cryptoPhrase;
-    private String cryptogramAlphabet;
     public boolean numberMapping;
     public int[] gameMapping = new int[26];
     public int[] letterFrequency;
@@ -24,7 +23,7 @@ public class Cryptogram {
     /**
      * Getters and setters
      *
-     * @return
+     * @return the new phrase
      */
     public String getNewPhrase() {
         return newPhrase;
@@ -38,9 +37,7 @@ public class Cryptogram {
         this.newPhrase = newPhrase;
     }
 
-    public int[] getPlayerMapping() {
-        return playerMapping;
-    }
+
 
     public boolean getPlainLetter(char letter) {
         return true;
@@ -66,62 +63,14 @@ public class Cryptogram {
         this.cryptoPhrase = phrase;
     }
 
-    public String getCryptogramAlphabet() {
-        return cryptogramAlphabet;
-    }
-
-    public void setCryptogramAlphabet(String cryptogramAlphabet) {
-        this.cryptogramAlphabet = cryptogramAlphabet;
-    }
-
-    public boolean isNumberMapping() {
-        return numberMapping;
-    }
-
-    public String getCryptoPhrase() {
-        return cryptoPhrase;
-    }
-
-    public void setCryptoPhrase(String cryptoPhrase) {
-        this.cryptoPhrase = cryptoPhrase;
-    }
-
-    public void setGameMapping(int[] gameMapping) {
-        this.gameMapping = gameMapping;
-    }
-
-    public void setPlayerMapping(int[] playerMapping) {
-        this.playerMapping = playerMapping;
-    }
-
-    public int getNumberOfLettersInPhrase() {
-        return numberOfLettersInPhrase;
-    }
-
-    public void setNumberOfLettersInPhrase(int numberOfLettersInPhrase) {
-        this.numberOfLettersInPhrase = numberOfLettersInPhrase;
-    }
-
-    public void setNumberMapping(boolean numberMapping) {
-        this.numberMapping = numberMapping;
-    }
-
-    public int[] getLetterFrequency() {
-        return letterFrequency;
-    }
-
-    public void setLetterFrequency(int[] letterFrequency) {
-        this.letterFrequency = letterFrequency;
-    }
-
 
     /**
      * Cryptogram Constructor
      */
     public Cryptogram() {
         System.out.println("New game is being created...");
-        //setPhrase("abc");
-        setRandomCryptoPhrase();
+        setPhrase("abc");
+        //setRandomCryptoPhrase();
         createCryptoMapping();
         setLetterFrequency();
         getNumberOfLetters();
@@ -139,15 +88,15 @@ public class Cryptogram {
 
 
     /**
-     * Used to set varibales from a file, potentially not needed
+     * Used to set variables from a file, potentially not needed
      *
-     * @param cryptoPhrase
-     * @param numberMapping
-     * @param gameMapping
-     * @param letterFrequency
-     * @param playerMapping
-     * @param numberOfLettersInPhrase
-     * @param newPhrase
+     * @param cryptoPhrase cryptoPhrase
+     * @param numberMapping numberMapping
+     * @param gameMapping gameMapping
+     * @param letterFrequency letterFrequency
+     * @param playerMapping playerMapping
+     * @param numberOfLettersInPhrase numberOfLettersInPhrase
+     * @param newPhrase newPhrase
      */
     public Cryptogram(String cryptoPhrase, boolean numberMapping, int[] gameMapping, int[] letterFrequency, int[] playerMapping,
                       int numberOfLettersInPhrase, String newPhrase) //COULD POSSIBLY BE REMOVED.
@@ -272,7 +221,7 @@ public class Cryptogram {
     /**
      * Checks if the input letter exists for an undo
      *
-     * @param Letter
+     * @param Letter Letter
      * @return true if value can be undo, false if non existent
      */
     public boolean validUndoCheck(char Letter) {
@@ -292,7 +241,7 @@ public class Cryptogram {
     /**
      * Checks if the game has been completed
      *
-     * @return
+     * @return True if game complete else false
      */
     public boolean checkIfGameCompleted() {
         int count = 0;
@@ -301,10 +250,7 @@ public class Cryptogram {
                 count++;
             }
         }
-        if (count == numberOfLettersInPhrase) {
-            return true;
-        }
-        return false;
+        return count == numberOfLettersInPhrase;
     }
 
 
@@ -325,15 +271,15 @@ public class Cryptogram {
 
     public void printLetterFrequency() {
 
-        String phrase = "";
+        StringBuilder phrase = new StringBuilder();
         for (int i = 0; i < letterFrequency.length; i++) {
 
             if (letterFrequency[i] > 0) {
-                phrase += String.format("%c - %d", (char) gameMapping[i] + 97, letterFrequency[i]) + " - " +  (letterFrequency[i] * 100 ) / cryptoPhrase.length() + "%\n";
+                phrase.append(String.format("%c - %d", (char) gameMapping[i] + 97, letterFrequency[i])).append(" - ").append((letterFrequency[i] * 100) / cryptoPhrase.length()).append("%\n");
             }
         }
         System.out.println(phrase);
-        System.out.println("A:8  B:1.5  C:3  D:4  E:13  F:2  G:2  H:6  I:7  J:0.2  K:1  L:4  M:2.5  N:7  O:8  P:2  Q:1  R:6  S:6  T:9  U:3  V:1  W:2.5  X:0.2  Y:2  Z:0.01 ");
+        System.out.println("A:8  B:1.5  C:3  D:4  E:13  F:2  G:2  H:6  I:7  J:0.2  K:1  L:4  M:2.5  N:7  O:8  P:2  Q:1  R:6  S:6  T:9  U:3  V:1  W:2.5  X:0.2  Y:2  Z:0.01 \n");
 
     }
 
@@ -377,10 +323,7 @@ public class Cryptogram {
      */
     public boolean guessIsValid(char guess) {
         if (guess >= 97 && guess <= 122) {
-            if (checkIfGuessMapped(guess))
-                return false;
-            else
-                return true;
+            return !checkIfGuessMapped(guess);
         }
         return false;
     }
@@ -421,7 +364,7 @@ public class Cryptogram {
     /**
      * Checks if crypto folder exists
      *
-     * @param pathToCryptograms
+     * @param pathToCryptograms pathToCryptograms
      * @return file path
      */
     private boolean cryptogramFolderExists(Path pathToCryptograms) {
@@ -432,8 +375,8 @@ public class Cryptogram {
     /**
      * Create a cryptogram folder to save files
      *
-     * @param pathToCryptograms
-     * @throws Exception
+     * @param pathToCryptograms pathToCryptograms
+     * @throws Exception error
      */
     private void createCryptogramFolder(Path pathToCryptograms) throws Exception {
         System.out.println("Folder to store cryptograms does not exist. Creating one...");
@@ -449,7 +392,7 @@ public class Cryptogram {
     /**
      * Checks if player already had crypto
      *
-     * @param fileToSaveCryptogramTo
+     * @param fileToSaveCryptogramTo fileToSaveCryptogramTo
      * @return File path
      */
     private boolean playerHasCryptoSaved(File fileToSaveCryptogramTo) {
@@ -460,8 +403,8 @@ public class Cryptogram {
     /**
      * Saves the players cryptogram
      *
-     * @param player
-     * @return
+     * @param player player
+     * @return False if fails, true if succeeds
      */
     public boolean saveCryptogram(Player player) throws Exception {
         try {
@@ -645,7 +588,7 @@ public class Cryptogram {
     /**
      * Parsing file
      *
-     * @param string
+     * @param string string
      * @return result of parse
      */
     private int[] parseArrayFromFile(String string) {

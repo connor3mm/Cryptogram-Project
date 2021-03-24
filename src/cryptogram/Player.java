@@ -1,12 +1,12 @@
 package cryptogram;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.*;
 import java.util.Objects;
+
 
 public class Player {
 
@@ -147,7 +147,6 @@ public class Player {
         }
         totalGuesses++;
         accuracy = Math.round(((double) correctGuesses / (double) totalGuesses) * 100);
-
     }
 
 
@@ -249,6 +248,7 @@ public class Player {
         }
     }
 
+
     /**
      *
      * @param pathToUsersDetails - path to the file the details are stored in
@@ -276,6 +276,7 @@ public class Player {
                 playerUsername, accuracy, correctGuesses, totalGuesses, cryptogramsPlayed, cryptogramsCompleted
         );
     }
+
 
     /**
      *

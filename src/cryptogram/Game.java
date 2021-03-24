@@ -83,11 +83,13 @@ public class Game {
      */
     public void loadGame() throws Exception {
         currentGame = new Cryptogram(currentPlayer);
+
         try {
             currentGame = currentGame.loadCryptogram(currentPlayer);
         } catch (Exception e) {
             throw new Exception("There was an error loading the cryptogram.");
         }
+
         if (currentGame == null) return;
         printVariables();
         currentGame.showMappedLetters();
@@ -145,8 +147,7 @@ public class Game {
         char charResult = result.charAt(0);
         currentGame.undoGivenLetter(charResult);
 
-        System.out.println(currentGame.newPhrase);
-        currentGame.showMappedLetters();
+        printPhraseAndUserInput();
     }
 
 
@@ -188,16 +189,7 @@ public class Game {
             System.out.println("index - " + i + " " + currentGame.gameMapping[i]);
         }
 
-        System.out.println(currentGame.newPhrase);
-    }
-
-
-    public void showSolution() {
-        currentGame.showSolution();
-        System.out.println(currentGame.getPhrase());
-        System.out.println(currentGame.getNewPhrase());
-        currentGame.showMappedLetters();
-        deleteCryptoFile();
+        System.out.println("\n" + currentGame.newPhrase);
     }
 
 
@@ -207,16 +199,26 @@ public class Game {
         fileToReadDetailsFrom.delete();
     }
 
+
+    //Iteration 3
+
+    public void showSolution() {
+        currentGame.showSolution();
+        System.out.println(currentGame.getPhrase());
+        printPhraseAndUserInput();
+        currentPlayer.savePlayersDetails(currentPlayer);
+        deleteCryptoFile();
+    }
+
+
     public void showFrequencies() {
         currentGame.printLetterFrequency();
+        printPhraseAndUserInput();
     }
 
 
     public void getHint() {
         Scanner scan = new Scanner(System.in);
-
-
-
 
         if (currentGame.getClass().getName().equals(LetterCryptogram.class.getName())) {
             System.out.println("Enter a letter to reveal: ");
@@ -232,6 +234,10 @@ public class Game {
             cryptoChecks(guess);
         }
 
+        printPhraseAndUserInput();
+    }
+
+    public void printPhraseAndUserInput(){
         System.out.println(currentGame.getNewPhrase());
         currentGame.showMappedLetters();
     }

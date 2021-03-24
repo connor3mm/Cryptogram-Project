@@ -1,5 +1,4 @@
 package cryptogram;
-
 import javax.swing.*;
 import java.util.List;
 import java.util.Scanner;
@@ -7,19 +6,20 @@ import java.util.Scanner;
 public class Main {
 
     //Test
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Game game = null;
 
+        Players ps = new Players();
+        ps.loadAllPlayers();
+
         Scanner scan = new Scanner(System.in);
-        String name = "";
+        String name;
         int choice = -1;
         do {
             try {
 
                 int detailsChoice;
                 int loadChoice;
-                Players ps = new Players();
-                ps.loadAllPlayers();
 
                 System.out.println("Enter 0 if you have already created an account.");
                 System.out.println("Enter 1 if you would like to create an account.");
@@ -56,7 +56,7 @@ public class Main {
                         game = new Game(loadedPlayer, 0);
                         try {
                             game.loadGame();
-                        } catch (Exception ex){
+                        } catch (Exception ex) {
                             System.out.println(ex.getMessage());
                             continue;
                         }
@@ -121,18 +121,19 @@ public class Main {
                     }
                 }
 
-                if(detailsChoice == 2) {
+                if (detailsChoice == 2) {
                     if (ps.getAllPlayers().size() == 0) {
-                        System.out.println("There are no loaded players. Cannot diplay top ten");
+                        System.out.println("There are no loaded players. Cannot display top ten\n");
                     } else {
                         System.out.printf("Total players: %d\n", ps.getAllPlayers().size());
                         List<Player> topTenScores = ps.getTopTenScores();
                         int position = 1;
 
-                        for(int i = topTenScores.size() - 1; i >= 0; --i) {
+                        for (int i = topTenScores.size() - 1; i >= 0; --i) {
                             System.out.printf("Position: %d, %s, score: %d\n", position, topTenScores.get(i).getUsername(), topTenScores.get(i).getCryptogramsCompleted());
                             position++;
                         }
+                        System.out.println("\n");
                     }
                 }
             } catch (NumberFormatException e) {
@@ -208,6 +209,5 @@ public class Main {
                 System.exit(0);
             }
         } while (choice == -1);
-
     }
 }

@@ -3,11 +3,6 @@ package cryptogram;
 import java.util.Scanner;
 
 class NumberCryptogram extends Cryptogram {
-    /**
-     * Variable
-     */
-    private String cryptogramAlphabet;
-
 
     /**
      * Constructor
@@ -19,6 +14,7 @@ class NumberCryptogram extends Cryptogram {
 
     /**
      * Constructor to map a crypto from a file
+     *
      * @param cryptoPhrase
      * @param numberMapping
      * @param gameMapping
@@ -139,6 +135,7 @@ class NumberCryptogram extends Cryptogram {
 
     /**
      * Enters input to the mapping
+     *
      * @param numberInput
      * @param guessInput
      * @return true if letter is mapped. false if not
@@ -159,6 +156,7 @@ class NumberCryptogram extends Cryptogram {
 
     /**
      * Checks if the input char is mapped
+     *
      * @param input
      * @return true if value is mapped, false if not
      */
@@ -176,14 +174,28 @@ class NumberCryptogram extends Cryptogram {
         return true;
     }
 
+
     public boolean getNumberHint(int number) {
 
-        for(int i =0; i <gameMapping.length; i++){
-            if(gameMapping[i] == number)
+        for (int i = 0; i < gameMapping.length; i++) {
+            if (gameMapping[i] == number) {
+
+                for (int j = 0; j < playerMapping.length; j++) {
+                    if (playerMapping[j] == i) {
+                        playerMapping[j] = -1;
+
+                    }
+                }
                 playerMapping[i] = i;
+                break;
+            }
+
         }
 
 
         return true;
     }
 }
+
+
+

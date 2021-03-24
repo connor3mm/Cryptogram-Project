@@ -22,6 +22,7 @@ class LetterCryptogram extends Cryptogram {
 
     /**
      * Constructor to map a crypto from a file
+     *
      * @param cryptoPhrase
      * @param numberMapping
      * @param gameMapping
@@ -129,6 +130,7 @@ class LetterCryptogram extends Cryptogram {
 
     /**
      * Enters input to the mapping
+     *
      * @param letterInput
      * @param guessInput
      * @return true if letter is mapped. false if not
@@ -149,6 +151,7 @@ class LetterCryptogram extends Cryptogram {
 
     /**
      * Checks if the input char is mapped
+     *
      * @param input
      * @return true if value is mapped, false if not
      */
@@ -171,12 +174,20 @@ class LetterCryptogram extends Cryptogram {
 
         int letterInputAscii = letter - 97;
 
-        for(int i =0; i <gameMapping.length; i++){
-            if(gameMapping[i] == letterInputAscii)
+        for (int i = 0; i < gameMapping.length; i++) {
+            if (gameMapping[i] == letterInputAscii) {
+
+                for (int j = 0; j < playerMapping.length; j++) {
+                    if (playerMapping[j] == i) {
+                        playerMapping[j] = -1;
+
+                    }
+                }
                 playerMapping[i] = i;
+                break;
             }
 
-
+        }
         return true;
     }
 

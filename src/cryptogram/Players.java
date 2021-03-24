@@ -1,23 +1,20 @@
 package cryptogram;
 
-import javax.management.MalformedObjectNameException;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.io.IOException;
-import java.io.PrintWriter;
+
 
 
 public class Players extends Player{
 
     private List<Player> allPlayers = new ArrayList<>();
-    private File playersFile;
-
 
     public List<Player> getAllPlayers() {
         return this.allPlayers;
     }
+
 
     /**
      * Constructor
@@ -25,20 +22,6 @@ public class Players extends Player{
      */
     public void addPlayer(Player p) {
         allPlayers.add(p);
-    }
-
-
-    /**
-     *
-     */
-    public void savePlayers() {
-        try {
-            PrintWriter out = new PrintWriter("playersFile.txt");
-            out.println(allPlayers);
-        } catch (IOException e) {
-            System.out.println("An error has occurred when trying to save players details to a file.");
-            e.printStackTrace();
-        }
     }
 
 
@@ -57,22 +40,9 @@ public class Players extends Player{
     }
 
 
-    public void loadPlayer() {
-
-    }
-
-
-    public void getAllPlayersAccuracies() {
-
-    }
-
-    public void getAllPlayersCryptogramsPlayed() {
-
-    }
-
-    public void getAllPlayersCompletedCryptos() {
-    }
-
+    /**
+     * Loads all players in the system
+     */
     public void loadAllPlayers(){
         String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
         Path pathToDetails = Paths.get(pathsToDetailsString);
@@ -96,6 +66,11 @@ public class Players extends Player{
         System.out.printf("%d player(s) loaded successfully.%n%n", playersSuccessfullyLoaded);
     }
 
+
+    /**
+     * Gets usernames
+     * @return usernames
+     */
     private List<String> getUsernames() {
         String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
         File playersDirectory = new File(pathsToDetailsString);
@@ -106,6 +81,11 @@ public class Players extends Player{
         return usernames;
     }
 
+
+    /**
+     * Genereate top 10 scores based on games completed
+     * @return The players and their scores in order
+     */
     public List<Player> getTopTenScores() {
         this.allPlayers.sort(new SortByScore());
 
@@ -115,6 +95,10 @@ public class Players extends Player{
         return this.allPlayers.subList(this.allPlayers.size() - 10, this.allPlayers.size());
     }
 
+
+    /**
+     * Comparator class between two scores
+     */
     public static class SortByScore implements Comparator<Player> {
         public int compare(Player one, Player two) {
             Integer scoreOne = one.getCryptogramsCompleted();
