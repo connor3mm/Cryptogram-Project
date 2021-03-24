@@ -132,7 +132,7 @@ public class Player {
     /**
      * Checks if folder to hold players details already exists, if so returns true.
      */
-    private boolean detailsFolderExists(Path pathToDetails) {
+    public boolean detailsFolderExists(Path pathToDetails) {
         return Files.exists(pathToDetails);
     }
 

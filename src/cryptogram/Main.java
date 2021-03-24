@@ -1,6 +1,7 @@
 package cryptogram;
 
 import javax.swing.*;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -17,14 +18,16 @@ public class Main {
 
                 int detailsChoice;
                 int loadChoice;
-
+                Players ps = new Players();
+                ps.loadAllPlayers();
 
                 System.out.println("Enter 0 if you have already created an account.");
                 System.out.println("Enter 1 if you would like to create an account.");
+                System.out.println("Enter 2 if you would like to see the top 10 scores.");
                 detailsChoice = scan.nextInt();
 
-                if (detailsChoice < 0 || detailsChoice > 1) {
-                    System.out.println("The value must be between 0 and 1.");
+                if (detailsChoice < 0 || detailsChoice > 2) {
+                    System.out.println("The value must be between 0 and 2.");
                 }
 
 
@@ -85,7 +88,6 @@ public class Main {
                     System.out.println("Please enter your desired username.");
                     name = scan.next();
                     Player p = new Player(name);
-                    Players ps = new Players();
                     if (ps.findPlayer(p)) {
                         System.out.println("A player with this username has already been created.");
                         System.exit(0);
@@ -113,8 +115,25 @@ public class Main {
                         game.generateCryptogram();
                     }
                 }
+
+                if(detailsChoice == 2) {
+                    if (ps.getAllPlayers().size() == 0) {
+                        System.out.println("There are no loaded players. Cannot diplay top ten");
+                    } else {
+                        System.out.printf("Total players: %d\n", ps.getAllPlayers().size());
+                        List<Player> topTenScores = ps.getTopTenScores();
+                        int position = 1;
+
+                        for(int i = topTenScores.size() - 1; i >= 0; --i) {
+                            System.out.printf("Position: %d, %s, score: %d\n", position, topTenScores.get(i).getUsername(), topTenScores.get(i).getCryptogramsCompleted());
+                            position++;
+                        }
+                    }
+                }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "The value entered is not an option.");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
         while (choice == -1);
