@@ -1,5 +1,7 @@
 package cryptogram;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -165,6 +167,7 @@ public class Game {
             currentPlayer.incrementCryptogramCompleted();
             savePlayer();
             saveGame();
+            deleteCryptoFile();
             System.exit(1);
 
         } else if (completed && !win) {
@@ -186,6 +189,23 @@ public class Game {
         }
 
         System.out.println(currentGame.newPhrase);
+        //viewFrequencies();
+    }
+
+
+    public void showSolution() {
+        currentGame.showSolution();
+        System.out.println(currentGame.getPhrase());
+        System.out.println(currentGame.getNewPhrase());
+        currentGame.showMappedLetters();
+        deleteCryptoFile();
+    }
+
+
+    public void deleteCryptoFile(){
+        String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms" + "\\"+ currentPlayer.getUsername() +".txt";
+        File fileToReadDetailsFrom = new File(pathsToDetailsString);
+        fileToReadDetailsFrom.delete();
     }
 
 
@@ -195,11 +215,7 @@ public class Game {
 
 
     public void viewFrequencies() {
-
-    }
-
-    public void showSolution() {
-
+        currentGame.printLetterFrequency();
     }
 
 }

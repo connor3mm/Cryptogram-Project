@@ -65,7 +65,6 @@ public class Players {
     }
 
     public void getAllPlayersCompletedCryptos() {
-
     }
 
 }

@@ -5,6 +5,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -39,6 +42,11 @@ public class PlayerTests {
      */
     @After
     public void tearDown() {
+        String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails\\John.txt";
+        File fileToReadDetailsFrom = new File(pathsToDetailsString);
+        fileToReadDetailsFrom .delete();
+
+
     }
 
 

@@ -128,12 +128,13 @@ public class Main {
                         "\nPlease choose from the following options.\n"
                                 + "Enter 1 to enter a letter \n"
                                 + "Enter 2 to undo a letter \n"
-                                + "Enter 3 to exit the game \n"
+                                + "Enter 3 to show solution \n"
+                                + "Enter 4 to exit the game \n"
                 );
                 choice = scan.nextInt();
                 //checks the input value is a valid option
-                if (choice < 1 || choice > 3) {
-                    System.out.println("The value must be between 1-3.");
+                if (choice < 1 || choice > 4) {
+                    System.out.println("The value must be between 1-4.");
                     choice = -1;
                 }
                 //checks the input value is of a valid format
@@ -151,6 +152,11 @@ public class Main {
                 choice = -1;
 
             } else if (choice == 3) {
+
+                game.showSolution();
+                choice = 0;
+
+            } else if (choice == 4) {
                 game.savePlayer();
                 game.saveGame();
                 System.exit(0);

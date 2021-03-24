@@ -112,10 +112,12 @@ public class Cryptogram {
      */
     public Cryptogram() {
         System.out.println("New game is being created...");
+        //setPhrase("abc");
         setRandomCryptoPhrase();
         createCryptoMapping();
         setLetterFrequency();
         getNumberOfLetters();
+        //printLetterFrequency();
         System.out.println("Successfully created a new game...\n");
     }
 
@@ -302,7 +304,7 @@ public class Cryptogram {
     /**
      * Puts letter Frequency into array
      */
-    private void setLetterFrequency() {
+    public void setLetterFrequency() {
         int CurrLetter;
         letterFrequency = new int[26];
 
@@ -314,11 +316,26 @@ public class Cryptogram {
         }
     }
 
+    public void printLetterFrequency() {
+
+        String phrase = "";
+        for (int i = 0; i < letterFrequency.length; i++) {
+
+            if (letterFrequency[i] <= 0) {
+                phrase += " ";
+            } else {
+
+                phrase += letterFrequency[i];
+            }
+        }
+        System.out.println(phrase);
+    }
+
 
     /**
      * Calculates the letter frequency of letters
      */
-    private void getNumberOfLetters() {
+    public void getNumberOfLetters() {
         int count = 0;
         for (int i = 0; i < letterFrequency.length; i++) {
             if (letterFrequency[i] > 0) {
@@ -388,6 +405,13 @@ public class Cryptogram {
         return false;
     }
 
+
+    public void showSolution(){
+
+        for (int i=0; i<gameMapping.length; i++){
+            playerMapping[i] = i;
+        }
+    }
 
     /**
      * Checks if crypto folder exists

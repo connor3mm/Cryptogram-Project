@@ -43,6 +43,18 @@ public class CryptoTesting {
      */
     @After
     public void tearDown() {
+        String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms\\noSaved.txt";
+        File fileToReadDetailsFrom = new File(pathsToDetailsString);
+        fileToReadDetailsFrom.delete();
+
+        String pathsToDetailsString2 = Paths.get("").toAbsolutePath().toString() + "\\cryptograms\\saveWithSaved.txt";
+        File fileToReadDetailsFrom2 = new File(pathsToDetailsString2);
+        fileToReadDetailsFrom2.delete();
+
+        String pathsToDetailsString3 = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails\\saveWithSaved.txt";
+        File fileToReadDetailsFrom3 = new File(pathsToDetailsString3);
+        fileToReadDetailsFrom3.delete();
+
     }
 
 
@@ -177,10 +189,6 @@ public class CryptoTesting {
         Cryptogram cryptogram = new Cryptogram();
         Player testPlayer = new Player("noSaved");
         assertTrue(cryptogram.saveCryptogram(testPlayer));
-
-        String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms\\noSaved.txt";
-        File fileToReadDetailsFrom = new File(pathsToDetailsString);
-        fileToReadDetailsFrom .delete();
     }
 
 //    @Test
