@@ -4,10 +4,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Cryptogram {
 
@@ -441,8 +438,6 @@ public class Cryptogram {
         try {
             //Set up variables to be used
             File fileToSaveCryptogramTo;
-            BufferedWriter fileWriter;
-            BufferedReader fileReader;
             String pathsToCryptoString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms";
             Path pathToCryptograms = Paths.get(pathsToCryptoString);
 
@@ -459,42 +454,9 @@ public class Cryptogram {
             //Open the file to write. (Creates new one if required)
             fileToSaveCryptogramTo = new File(pathToCryptograms + "\\" + player.getUsername() + ".txt");
 
-            if (playerHasCryptoSaved(fileToSaveCryptogramTo)) { //If the player has a file saved, ask to overwrite
-                fileReader = new BufferedReader(new FileReader(fileToSaveCryptogramTo));
-                Scanner scan = new Scanner(System.in);
-                String sUserAnswer;
-                char answer;
-                if (!fileReader.readLine().equals(getPhrase())) {
-                    System.out.println("You already have a cryptogram saved, do you want to overwrite? (y/n)");
-                    sUserAnswer = scan.next();
-                    answer = sUserAnswer.charAt(0);
+            if (userChoosesNotToOverwriteOrSave(fileToSaveCryptogramTo)) return false;
 
-                    if (answer == 'n') {
-                        return false;
-                    }
-                } else {
-                    System.out.println("Do you want to save the game? (y/n)");
-                    sUserAnswer = scan.next();
-                    answer = sUserAnswer.charAt(0);
-
-                    if(answer == 'n') {
-                        return false;
-                    }
-                }
-            }
-
-            //Write cryptogram information to file
-            fileWriter = new BufferedWriter(new FileWriter(fileToSaveCryptogramTo));
-            fileWriter.write(this.cryptoPhrase + "\n");
-            fileWriter.write(this.numberMapping + "\n");
-            fileWriter.write(Arrays.toString(this.gameMapping) + "\n");
-            fileWriter.write(Arrays.toString(this.letterFrequency) + "\n");
-            fileWriter.write(Arrays.toString(this.playerMapping) + "\n");
-            fileWriter.write(this.numberOfLettersInPhrase + "\n");
-            fileWriter.write(this.newPhrase);
-
-            //All info is stored at this point, close the writer
-            fileWriter.close();
+            saveCryptogramToFile(fileToSaveCryptogramTo);
 
             //File was saved successfully
             System.out.println("Cryptogram saved successfully.");
@@ -505,90 +467,64 @@ public class Cryptogram {
         }
     }
 
+    /**
+     *
+     * @param fileToSaveCryptogramTo - File which crypto will be saved to
+     * @throws Exception - Error saving the crypto
+     */
+    private void saveCryptogramToFile(File fileToSaveCryptogramTo) throws Exception {
+        BufferedWriter fileWriter;
+        //Write cryptogram information to file
+        fileWriter = new BufferedWriter(new FileWriter(fileToSaveCryptogramTo));
+        fileWriter.write(this.cryptoPhrase + "\n");
+        fileWriter.write(this.numberMapping + "\n");
+        fileWriter.write(Arrays.toString(this.gameMapping) + "\n");
+        fileWriter.write(Arrays.toString(this.letterFrequency) + "\n");
+        fileWriter.write(Arrays.toString(this.playerMapping) + "\n");
+        fileWriter.write(this.numberOfLettersInPhrase + "\n");
+        fileWriter.write(this.newPhrase);
 
-    public boolean saveCryptogram2(Player player)throws Exception{
-        try {
-            //Set up variables to be used
-            File fileToSaveCryptogramTo;
-            BufferedWriter fileWriter;
-            BufferedReader fileReader;
-            String pathsToCryptoString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms";
-            Path pathToCryptograms = Paths.get(pathsToCryptoString);
-
-            //Create the folder if it doesn't exist already
-            if (!cryptogramFolderExists(pathToCryptograms)) {
-                try {
-                    createCryptogramFolder(pathToCryptograms);
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                    return false;
-                }
-            }
-
-            //Open the file to write. (Creates new one if required)
-            fileToSaveCryptogramTo = new File(pathToCryptograms + "\\" + player.getUsername() + ".txt");
-
-            if (playerHasCryptoSaved(fileToSaveCryptogramTo)) { //If the player has a file saved, ask to overwrite
-                fileReader = new BufferedReader(new FileReader(fileToSaveCryptogramTo));
-                Scanner scan = new Scanner(System.in);
-                String sUserAnswer;
-                char answer;
-                if (!fileReader.readLine().equals(getPhrase())) {
-                    System.out.println("You already have a cryptogram saved, do you want to overwrite? (y/n)");
-
-                    answer = 'y';
-
-                    if (answer == 'n') {
-                        return false;
-                    }
-                } else {
-                    System.out.println("Do you want to save the game? (y/n)");
-                    sUserAnswer = scan.next();
-                    answer = sUserAnswer.charAt(0);
-
-                    if(answer == 'n') {
-                        return false;
-                    }
-                }
-            }
-
-            //Write cryptogram information to file
-            fileWriter = new BufferedWriter(new FileWriter(fileToSaveCryptogramTo));
-            fileWriter.write(this.cryptoPhrase + "\n");
-            fileWriter.write(this.numberMapping + "\n");
-            fileWriter.write(Arrays.toString(this.gameMapping) + "\n");
-            fileWriter.write(Arrays.toString(this.letterFrequency) + "\n");
-            fileWriter.write(Arrays.toString(this.playerMapping) + "\n");
-            fileWriter.write(this.numberOfLettersInPhrase + "\n");
-            fileWriter.write(this.newPhrase);
-
-            //All info is stored at this point, close the writer
-            fileWriter.close();
-
-            //File was saved successfully
-            System.out.println("Cryptogram saved successfully.");
-            return true;
-        } catch (Exception ex) {
-            //Something went wrong :(
-            throw new Exception("There was an error while trying to save the cryptogram.");
-        }
+        //All info is stored at this point, close the writer
+        fileWriter.close();
     }
 
+    /**
+     *
+     * @param fileToSaveCryptogramTo - File which cryptogram is being saved
+     * @return - If user chose to overwrite or save (true/false)
+     * @throws IOException - Error with input
+     */
+    private boolean userChoosesNotToOverwriteOrSave(File fileToSaveCryptogramTo) throws IOException {
+        BufferedReader fileReader;
+        if (playerHasCryptoSaved(fileToSaveCryptogramTo)) { //If the player has a file saved, ask to overwrite
+            fileReader = new BufferedReader(new FileReader(fileToSaveCryptogramTo));
+            Scanner scan = new Scanner(System.in);
+            String sUserAnswer;
+            char answer;
+            if (!fileReader.readLine().equals(getPhrase())) {
+                System.out.println("You already have a cryptogram saved, do you want to overwrite? (y/n)");
 
+            } else {
+                System.out.println("Do you want to save the game? (y/n)");
 
+            }
+            sUserAnswer = scan.next();
+            answer = sUserAnswer.charAt(0);
+            return answer == 'n';
+        }
+        return false;
+    }
 
 
     /**
-     * Loading a players cryptogram from a file
      *
-     * @param player
-     * @return
+     * @param player - Player object
+     * @return - Loaded cryptogram object
+     * @throws Exception - Problem loading the cryptogram
      */
     public Cryptogram loadCryptogram(Player player) throws Exception {
         try {
             //Set up variables to be used
-            File fileToReadCryptogramFrom;
-            BufferedReader fileReader;
             String pathsToCryptoString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms";
             Path pathToCryptograms = Paths.get(pathsToCryptoString);
 
@@ -598,61 +534,87 @@ public class Cryptogram {
                 return null;
             }
 
-            //Folder exists, check if it contains files
-            String pathToUsersCryptogram = "";
-            File cryptogramDirectory = new File(pathsToCryptoString);
-            String[] fileNames = cryptogramDirectory.list();
+            String pathToUsersCryptogram = getPathToUsersCryptogram(player, pathsToCryptoString, pathToCryptograms);
+            if (pathToUsersCryptogram == null) return null;
 
-            if (fileNames.length == 0) { //Error, the file is empty
-                System.out.println("Folder is empty, no saved cryptograms.");
-                return null;
-            }
-
-            //Folder contains files, check if user has a saved cryptogram
-            int hasCryptoSaved = 0;
-            for (String file : cryptogramDirectory.list()) {
-                if (file.contains(player.getUsername())) {
-                    pathToUsersCryptogram = pathToCryptograms + "\\" + file;
-                    hasCryptoSaved++;
-                }
-            }
-
-            if (hasCryptoSaved == 0) { //Error, they have no saved cryptogram
-                System.out.println("You do not have a cryptogram saved.");
-                return null;
-            }
-
-            //User has a saved cryptogram, read the file
-            fileToReadCryptogramFrom = new File(pathToUsersCryptogram);
-            fileReader = new BufferedReader(new FileReader(fileToReadCryptogramFrom));
-            String cryptoPhrase = fileReader.readLine();
-            boolean numberMapping = Boolean.parseBoolean(fileReader.readLine());
-            int[] gameMapping = parseArrayFromFile(fileReader.readLine());
-            int[] letterFrequency = parseArrayFromFile(fileReader.readLine());
-            int[] playerMapping = parseArrayFromFile(fileReader.readLine());
-            int numberOfLettersInPhrase = Integer.parseInt(fileReader.readLine());
-            String newPhrase = fileReader.readLine();
-
-            //Information read at this point, close the reader
-            fileReader.close();
-
-            //Create the object depending on its type
-            Cryptogram loadedCryptogram;
-            if (numberMapping) { //If the cryptogram is number mapping
-                loadedCryptogram = new NumberCryptogram(
-                        cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
-                );
-            } else { //If the cryptogram is letter mapping
-                loadedCryptogram = new LetterCryptogram(
-                        cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
-                );
-            }
-
-            return loadedCryptogram;
+            return loadCryptogram(pathToUsersCryptogram);
         } catch (Exception ex) {
             //Something went wrong :(
             throw new Exception("There was an error trying to load the cryptogram.");
         }
+    }
+
+    /**
+     *
+     * @param pathToUsersCryptogram - Path to the users cryptogram file
+     * @return - Players saved cryptogram
+     * @throws IOException - Problem with file
+     */
+    private Cryptogram loadCryptogram(String pathToUsersCryptogram) throws IOException {
+        File fileToReadCryptogramFrom;
+        BufferedReader fileReader;
+        //User has a saved cryptogram, read the file
+        fileToReadCryptogramFrom = new File(pathToUsersCryptogram);
+        fileReader = new BufferedReader(new FileReader(fileToReadCryptogramFrom));
+        String cryptoPhrase = fileReader.readLine();
+        boolean numberMapping = Boolean.parseBoolean(fileReader.readLine());
+        int[] gameMapping = parseArrayFromFile(fileReader.readLine());
+        int[] letterFrequency = parseArrayFromFile(fileReader.readLine());
+        int[] playerMapping = parseArrayFromFile(fileReader.readLine());
+        int numberOfLettersInPhrase = Integer.parseInt(fileReader.readLine());
+        String newPhrase = fileReader.readLine();
+
+        //Information read at this point, close the reader
+        fileReader.close();
+
+        //Create the object depending on its type
+        Cryptogram loadedCryptogram;
+        if (numberMapping) { //If the cryptogram is number mapping
+            loadedCryptogram = new NumberCryptogram(
+                    cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
+            );
+        } else { //If the cryptogram is letter mapping
+            loadedCryptogram = new LetterCryptogram(
+                    cryptoPhrase, numberMapping, gameMapping, letterFrequency, playerMapping, numberOfLettersInPhrase, newPhrase
+            );
+        }
+        return loadedCryptogram;
+    }
+
+    /**
+     *
+     * @param player - Player object
+     * @param pathsToCryptoString - String representation of the path to the cryptogram folder
+     * @param pathToCryptograms - Path to the cryptogram folder
+     * @return - Path to users cryptogram file
+     */
+    private String getPathToUsersCryptogram(Player player, String pathsToCryptoString, Path pathToCryptograms) {
+        //Folder exists, check if it contains files
+        String pathToUsersCryptogram = "";
+        File cryptogramDirectory = new File(pathsToCryptoString);
+        String[] fileNames = cryptogramDirectory.list();
+
+        if(fileNames == null) return null;
+
+        if (fileNames.length == 0) { //Error, the file is empty
+            System.out.println("Folder is empty, no saved cryptograms.");
+            return null;
+        }
+
+        //Folder contains files, check if user has a saved cryptogram
+        int hasCryptoSaved = 0;
+        for (String file : Objects.requireNonNull(cryptogramDirectory.list())) {
+            if (file.contains(player.getUsername())) {
+                pathToUsersCryptogram = pathToCryptograms + "\\" + file;
+                hasCryptoSaved++;
+            }
+        }
+
+        if (hasCryptoSaved == 0) { //Error, they have no saved cryptogram
+            System.out.println("You do not have a cryptogram saved.");
+            return null;
+        }
+        return pathToUsersCryptogram;
     }
 
 
