@@ -159,10 +159,18 @@ public class Main {
                 choice = -1;
 
             } else if (choice == 4) {
+                int yes;
+                System.out.println("Are you sure you want to show solution ? The Cryptogram with finish as unsuccessful.\nEnter 0 to show solution \nEnter 1 To keep trying");
+                yes = scan.nextInt();
+                if (yes == 0) {
+                    game.showSolution();
+                    choice = 0;
 
-                game.showSolution();
-                choice = 0;
-
+                } else {
+                    System.out.println(game.currentGame.newPhrase);
+                    game.currentGame.showMappedLetters();
+                    choice = -1;
+                }
 
             } else if (choice == 5) {
                 game.savePlayer();

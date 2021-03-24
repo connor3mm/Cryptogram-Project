@@ -112,8 +112,8 @@ public class Cryptogram {
      */
     public Cryptogram() {
         System.out.println("New game is being created...");
-        setPhrase("accddd");
-        //setRandomCryptoPhrase();
+        //setPhrase("abc");
+        setRandomCryptoPhrase();
         createCryptoMapping();
         setLetterFrequency();
         getNumberOfLetters();

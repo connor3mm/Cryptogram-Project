@@ -207,19 +207,14 @@ public class Game {
         fileToReadDetailsFrom.delete();
     }
 
-
-    public void viewFrequencies() {
+    public void showFrequencies(){
         currentGame.printLetterFrequency();
     }
-
 
 
     public void getHint() {
 
     }
 
-    public void showFrequencies(){
-        currentGame.printLetterFrequency();
-    }
 }
 
