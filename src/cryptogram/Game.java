@@ -123,6 +123,7 @@ public class Game {
             String result = scan.next();
             char charResult = result.charAt(0);
             guess = currentGame.getPlainLetter(charResult);
+            currentGame.showMappedLetters();
             cryptoChecks(guess);
 
         } else {
@@ -130,6 +131,7 @@ public class Game {
 
             int result = scan.nextInt();
             guess = currentGame.getPlainNumber(result);
+            currentGame.showMappedLetters();
             cryptoChecks(guess);
         }
     }
@@ -158,7 +160,6 @@ public class Game {
         boolean completed;
         boolean win;
 
-        currentGame.showMappedLetters();
         currentPlayer.updateAccuracy(guess);
         completed = currentGame.checkIfGameCompleted();
         win = currentGame.gameSuccess();
@@ -215,22 +216,26 @@ public class Game {
 
     public void getHint() {
         Scanner scan = new Scanner(System.in);
-            System.out.println("Enter a letter to reveal: ");
-            String result = scan.next();
+
+
 
 
         if (currentGame.getClass().getName().equals(LetterCryptogram.class.getName())) {
+            System.out.println("Enter a letter to reveal: ");
+            String result = scan.next();
             char charResult = result.charAt(0);
             boolean guess = currentGame.getLetterHint(charResult);
             cryptoChecks(guess);
-        }else {
-            char charResult = result.charAt(0);
-            boolean guess = currentGame.getNumberHint(charResult);
+
+        } else {
+            System.out.println("Enter a number to map (1-25): ");
+            int result = scan.nextInt();
+            boolean guess = currentGame.getNumberHint(result);
             cryptoChecks(guess);
         }
-            System.out.println(currentGame.getNewPhrase());
-            currentGame.showMappedLetters();
 
-        }
+        System.out.println(currentGame.getNewPhrase());
+        currentGame.showMappedLetters();
     }
+}
 

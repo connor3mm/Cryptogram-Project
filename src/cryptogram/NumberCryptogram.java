@@ -177,6 +177,13 @@ class NumberCryptogram extends Cryptogram {
     }
 
     public boolean getNumberHint(int number) {
+
+        for(int i =0; i <gameMapping.length; i++){
+            if(gameMapping[i] == number)
+                playerMapping[i] = i;
+        }
+
+
         return true;
     }
 }
