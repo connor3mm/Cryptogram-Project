@@ -168,6 +168,10 @@ public class PlayerTests {
         assertEquals(2, p.getNumCryptogramsPlayed());
     }
 
+    @Test
+    public void corruptPlayerDetails() {
+        Assertions.assertThrows(Exception.class, () -> new Player().loadPlayersDetails("testCor"));
+    }
 
     @Test
     public void testPlayaDontExist() throws Exception {

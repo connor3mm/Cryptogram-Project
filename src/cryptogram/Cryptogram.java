@@ -456,7 +456,7 @@ public class Cryptogram {
 
             if (userChoosesNotToOverwriteOrSave(fileToSaveCryptogramTo)) return false;
 
-            saveCryptogramToFile(fileToSaveCryptogramTo);
+            saveCryptogram(fileToSaveCryptogramTo);
 
             //File was saved successfully
             System.out.println("Cryptogram saved successfully.");
@@ -472,7 +472,7 @@ public class Cryptogram {
      * @param fileToSaveCryptogramTo - File which crypto will be saved to
      * @throws Exception - Error saving the crypto
      */
-    private void saveCryptogramToFile(File fileToSaveCryptogramTo) throws Exception {
+    private void saveCryptogram(File fileToSaveCryptogramTo) throws Exception {
         BufferedWriter fileWriter;
         //Write cryptogram information to file
         fileWriter = new BufferedWriter(new FileWriter(fileToSaveCryptogramTo));

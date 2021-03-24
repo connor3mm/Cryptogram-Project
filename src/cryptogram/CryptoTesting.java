@@ -183,15 +183,15 @@ public class CryptoTesting {
         fileToReadDetailsFrom .delete();
     }
 
-    @Test
-    public void saveCryptogramWithSavedCryptogram() throws Exception {
-        Player testPlayer = new Player("saveWithSaved");
-
-        Cryptogram cryptogramOne = new Cryptogram();
-        testPlayer.savePlayersDetails(testPlayer);
-        assertTrue(cryptogramOne.saveCryptogram2(testPlayer));
-
-    }
+//    @Test
+//    public void saveCryptogramWithSavedCryptogram() throws Exception {
+//        Player testPlayer = new Player("saveWithSaved");
+//
+//        Cryptogram cryptogramOne = new Cryptogram();
+//        testPlayer.savePlayersDetails(testPlayer);
+//        assertTrue(cryptogramOne.saveCryptogram2(testPlayer));
+//
+//    }
 
 
     /**
