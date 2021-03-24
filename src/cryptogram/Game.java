@@ -123,17 +123,15 @@ public class Game {
             String result = scan.next();
             char charResult = result.charAt(0);
             guess = currentGame.getPlainLetter(charResult);
-            currentGame.showMappedLetters();
-            cryptoChecks(guess);
 
         } else {
             System.out.println("Enter a number to map (1-25): ");
 
             int result = scan.nextInt();
             guess = currentGame.getPlainNumber(result);
-            currentGame.showMappedLetters();
-            cryptoChecks(guess);
         }
+        currentGame.showMappedLetters();
+        cryptoChecks(guess);
     }
 
 
