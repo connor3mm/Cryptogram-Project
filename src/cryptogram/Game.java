@@ -37,6 +37,7 @@ public class Game {
 
     /**
      * Constructor x2 parameter
+     *
      * @param p         - Player
      * @param cryptType - letter or number
      */
@@ -71,7 +72,7 @@ public class Game {
     public void saveGame() {
         try {
             currentGame.saveCryptogram(currentPlayer);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
@@ -84,10 +85,10 @@ public class Game {
         currentGame = new Cryptogram(currentPlayer);
         try {
             currentGame = currentGame.loadCryptogram(currentPlayer);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        if(currentGame == null) return;
+        if (currentGame == null) return;
         printVariables();
         currentGame.showMappedLetters();
     }
@@ -201,20 +202,35 @@ public class Game {
     }
 
 
-    public void deleteCryptoFile(){
-        String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms" + "\\"+ currentPlayer.getUsername() +".txt";
+    public void deleteCryptoFile() {
+        String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\cryptograms" + "\\" + currentPlayer.getUsername() + ".txt";
         File fileToReadDetailsFrom = new File(pathsToDetailsString);
         fileToReadDetailsFrom.delete();
     }
 
-    public void showFrequencies(){
+    public void showFrequencies() {
         currentGame.printLetterFrequency();
     }
 
 
     public void getHint() {
+        Scanner scan = new Scanner(System.in);
+            System.out.println("Enter a letter to reveal: ");
+            String result = scan.next();
 
+
+        if (currentGame.getClass().getName().equals(LetterCryptogram.class.getName())) {
+            char charResult = result.charAt(0);
+            boolean guess = currentGame.getLetterHint(charResult);
+            cryptoChecks(guess);
+        }else {
+            char charResult = result.charAt(0);
+            boolean guess = currentGame.getNumberHint(charResult);
+            cryptoChecks(guess);
+        }
+            System.out.println(currentGame.getNewPhrase());
+            currentGame.showMappedLetters();
+
+        }
     }
-
-}
 

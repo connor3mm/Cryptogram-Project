@@ -148,12 +148,13 @@ public class Main {
                                 + "Enter 1 to enter a letter \n"
                                 + "Enter 2 to undo a letter \n"
                                 + "Enter 3 to show phrase frequencies \n"
-                                + "Enter 4 to show solution \n"
-                                + "Enter 5 to exit the game \n"
+                                + "Enter 4 to get a hint \n"
+                                + "Enter 5 to show solution \n"
+                                + "Enter 6 to exit the game \n"
                 );
                 choice = scan.nextInt();
                 //checks the input value is a valid option
-                if (choice < 1 || choice > 5) {
+                if (choice < 1 || choice > 6) {
                     System.out.println("The value must be between 1-4.");
                     choice = -1;
                 }
@@ -178,6 +179,11 @@ public class Main {
                 choice = -1;
 
             } else if (choice == 4) {
+
+                game.getHint();
+                choice = -1;
+
+            } else if (choice == 5) {
                 int yes;
                 System.out.println("Are you sure you want to show solution ? The Cryptogram with finish as unsuccessful.\nEnter 0 to show solution \nEnter 1 To keep trying");
                 yes = scan.nextInt();
@@ -191,7 +197,7 @@ public class Main {
                     choice = -1;
                 }
 
-            } else if (choice == 5) {
+            } else if (choice == 6) {
                 game.savePlayer();
                 game.saveGame();
                 System.exit(0);

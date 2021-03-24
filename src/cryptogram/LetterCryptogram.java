@@ -165,4 +165,20 @@ class LetterCryptogram extends Cryptogram {
         }
         return true;
     }
+
+
+    public boolean getLetterHint(char letter) {
+
+        int letterInputAscii = letter - 97;
+
+        for(int i =0; i <gameMapping.length; i++){
+            if(gameMapping[i] == letterInputAscii)
+                playerMapping[i] = i;
+            }
+
+
+        return true;
+    }
+
+
 }

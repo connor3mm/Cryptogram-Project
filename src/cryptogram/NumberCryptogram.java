@@ -175,4 +175,8 @@ class NumberCryptogram extends Cryptogram {
         }
         return true;
     }
+
+    public boolean getNumberHint(int number) {
+        return true;
+    }
 }

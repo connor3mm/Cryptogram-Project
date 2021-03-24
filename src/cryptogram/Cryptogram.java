@@ -46,6 +46,14 @@ public class Cryptogram {
         return true;
     }
 
+    public boolean getLetterHint(char letter) {
+        return true;
+    }
+
+    public boolean getNumberHint(int number) {
+        return true;
+    }
+
     public boolean getPlainNumber(int number) {
         return true;
     }
