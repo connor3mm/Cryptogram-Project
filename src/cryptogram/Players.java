@@ -73,7 +73,7 @@ public class Players extends Player{
     public void getAllPlayersCompletedCryptos() {
     }
 
-    public void loadAllPlayers() throws Exception {
+    public void loadAllPlayers(){
         String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
         Path pathToDetails = Paths.get(pathsToDetailsString);
         if (!detailsFolderExists(pathToDetails)) {

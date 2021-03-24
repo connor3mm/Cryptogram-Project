@@ -54,7 +54,12 @@ public class Main {
 
                     if (loadChoice == 0) {
                         game = new Game(loadedPlayer, 0);
-                        game.loadGame();
+                        try {
+                            game.loadGame();
+                        } catch (Exception ex){
+                            System.out.println(ex.getMessage());
+                            continue;
+                        }
                         if (game.currentGame == null) continue;
                         break; //Go to the game options
                     } else if (loadChoice == 1) {

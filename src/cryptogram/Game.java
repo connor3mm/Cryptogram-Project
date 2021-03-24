@@ -81,12 +81,12 @@ public class Game {
     /**
      * Loads game from a file depending on player
      */
-    public void loadGame() {
+    public void loadGame() throws Exception {
         currentGame = new Cryptogram(currentPlayer);
         try {
             currentGame = currentGame.loadCryptogram(currentPlayer);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            throw new Exception("There was an error loading the cryptogram.");
         }
         if (currentGame == null) return;
         printVariables();

@@ -99,7 +99,7 @@ public class PlayerTests {
 
 
     @Test
-    public void testGamesPlayedByload() {
+    public void testGamesPlayedByload() throws Exception {
         //Test for letter crypto
         Player p = new Player("John");
         Game game = new Game(p, 0);
@@ -154,7 +154,7 @@ public class PlayerTests {
      * User story 12 and 8
      */
     @Test
-    public void testLoadPlayer() {
+    public void testLoadPlayer() throws Exception {
         Player p = new Player("John");
         Game game = new Game(p, 0);
         game.generateCryptogram();
