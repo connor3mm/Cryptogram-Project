@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-public class Players {
+public class Players{
 
     private List<Player> allPlayers = new ArrayList<>();
     private File playersFile;

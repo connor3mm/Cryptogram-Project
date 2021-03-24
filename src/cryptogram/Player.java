@@ -58,10 +58,6 @@ public class Player {
         return cryptogramsPlayed;
     }
 
-    public int getNumCryptogramsCompleted() {
-        return cryptogramsCompleted;
-    }
-
     public int getTotalGuesses() {
         return totalGuesses;
     }

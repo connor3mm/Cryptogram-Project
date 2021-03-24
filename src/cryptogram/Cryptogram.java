@@ -112,12 +112,12 @@ public class Cryptogram {
      */
     public Cryptogram() {
         System.out.println("New game is being created...");
-        //setPhrase("abc");
-        setRandomCryptoPhrase();
+        setPhrase("acasdasdfdvxaxcd");
+        //setRandomCryptoPhrase();
         createCryptoMapping();
         setLetterFrequency();
         getNumberOfLetters();
-        //printLetterFrequency();
+        printLetterFrequency();
         System.out.println("Successfully created a new game...\n");
     }
 
@@ -321,16 +321,14 @@ public class Cryptogram {
         String phrase = "";
         for (int i = 0; i < letterFrequency.length; i++) {
 
-            if (letterFrequency[i] <= 0) {
-                phrase += " ";
-            } else {
-
-                phrase += letterFrequency[i];
+            if (letterFrequency[i] > 0) {
+                phrase += String.format("%c - %d", (char) gameMapping[i] + 97, letterFrequency[i]) + " " +  (letterFrequency[i] * 100 ) / cryptoPhrase.length() + "\n";
             }
         }
         System.out.println(phrase);
-    }
+        System.out.println("");
 
+    }
 
     /**
      * Calculates the letter frequency of letters
@@ -406,9 +404,9 @@ public class Cryptogram {
     }
 
 
-    public void showSolution(){
+    public void showSolution() {
 
-        for (int i=0; i<gameMapping.length; i++){
+        for (int i = 0; i < gameMapping.length; i++) {
             playerMapping[i] = i;
         }
     }
@@ -492,7 +490,6 @@ public class Cryptogram {
     }
 
     /**
-     *
      * @param fileToSaveCryptogramTo - File which crypto will be saved to
      * @throws Exception - Error saving the crypto
      */
@@ -513,7 +510,6 @@ public class Cryptogram {
     }
 
     /**
-     *
      * @param fileToSaveCryptogramTo - File which cryptogram is being saved
      * @return - If user chose to overwrite or save (true/false)
      * @throws IOException - Error with input
@@ -541,7 +537,6 @@ public class Cryptogram {
 
 
     /**
-     *
      * @param player - Player object
      * @return - Loaded cryptogram object
      * @throws Exception - Problem loading the cryptogram
@@ -569,7 +564,6 @@ public class Cryptogram {
     }
 
     /**
-     *
      * @param pathToUsersCryptogram - Path to the users cryptogram file
      * @return - Players saved cryptogram
      * @throws IOException - Problem with file
@@ -606,10 +600,9 @@ public class Cryptogram {
     }
 
     /**
-     *
-     * @param player - Player object
+     * @param player              - Player object
      * @param pathsToCryptoString - String representation of the path to the cryptogram folder
-     * @param pathToCryptograms - Path to the cryptogram folder
+     * @param pathToCryptograms   - Path to the cryptogram folder
      * @return - Path to users cryptogram file
      */
     private String getPathToUsersCryptogram(Player player, String pathsToCryptoString, Path pathToCryptograms) {
@@ -618,7 +611,7 @@ public class Cryptogram {
         File cryptogramDirectory = new File(pathsToCryptoString);
         String[] fileNames = cryptogramDirectory.list();
 
-        if(fileNames == null) return null;
+        if (fileNames == null) return null;
 
         if (fileNames.length == 0) { //Error, the file is empty
             System.out.println("Folder is empty, no saved cryptograms.");
@@ -644,6 +637,7 @@ public class Cryptogram {
 
     /**
      * Parsing file
+     *
      * @param string
      * @return result of parse
      */

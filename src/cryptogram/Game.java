@@ -209,14 +209,14 @@ public class Game {
     }
 
 
-    public void getHint() {
-
-    }
-
-
     public void viewFrequencies() {
         currentGame.printLetterFrequency();
     }
 
+
+
+    public void getHint() {
+
+    }
 }
 
