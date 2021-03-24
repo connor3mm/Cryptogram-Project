@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.*;
+import java.util.Objects;
 
 public class Player {
 
@@ -188,25 +189,12 @@ public class Player {
                 }
             }
 
-            //Creates a new file to save details to, if one doesn't already exist.
-            fileToSaveDetailsTo = new File(pathsToDetailsString + "\\" + p.getUsername() + ".txt");
-
-            //Prints players details to the text file.
-            PrintWriter out = new PrintWriter(fileToSaveDetailsTo);
-            out.println(username);
-            out.println((int) accuracy);
-            out.println(correctGuesses);
-            out.println(totalGuesses);
-            out.println(cryptogramsPlayed);
-            out.print(cryptogramsCompleted);
-
-            //Information has been written at this point, writer can be closed.
-            out.close();
+            savePlayerDetails(p, pathsToDetailsString);
 
             //Message to tell the user their details have been saved successfully.
             System.out.println("\nPlayers details have been successfully saved to a file.");
             return true;
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
             //Error message to say that an error has occurred while printing to the file.
             System.out.println("An error has occurred when trying to save players details to a file.");
             e.printStackTrace();
@@ -214,70 +202,105 @@ public class Player {
         return false;
     }
 
+    private void savePlayerDetails(Player p, String pathsToDetailsString) throws FileNotFoundException {
+        File fileToSaveDetailsTo;
+        //Creates a new file to save details to, if one doesn't already exist.
+        fileToSaveDetailsTo = new File(pathsToDetailsString + "\\" + p.getUsername() + ".txt");
+
+        //Prints players details to the text file.
+        PrintWriter out = new PrintWriter(fileToSaveDetailsTo);
+        out.println(username);
+        out.println((int) accuracy);
+        out.println(correctGuesses);
+        out.println(totalGuesses);
+        out.println(cryptogramsPlayed);
+        out.print(cryptogramsCompleted);
+
+        //Information has been written at this point, writer can be closed.
+        out.close();
+    }
+
 
     /**
-     * Load player details from file
+     *
+     * @param username - players username
+     * @return - player object of player with a given username
+     * @throws Exception - Problem reading from the file
      */
     public Player loadPlayersDetails(String username) throws Exception {
         try {
             //File variables to be used when saving.
-            File fileToReadDetailsFrom;
-            BufferedReader fileReader;
             String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
             Path pathToDetails = Paths.get(pathsToDetailsString);
 
-            //Check if the user details folder exists
-            if (!detailsFolderExists(pathToDetails)) {
-//                System.out.println("Folder does not exist, no saved usernames.");
-                return null;
-            }
+            if (!detailsFolderExists(pathToDetails)) return null;
 
+            String pathToUsersDetails = getPathToUsersDetails(username, pathsToDetailsString, pathToDetails);
+            if (pathToUsersDetails == null) return null;
 
-            //Folder exists, check if it contains files
-            String pathToUsersDetails = "";
-            File cryptogramDirectory = new File(pathsToDetailsString);
-            String[] fileNames = cryptogramDirectory.list();
-
-            if (fileNames.length == 0) { //Error, the file is empty
-//                System.out.println("Folder is empty, no saved cryptograms.");
-                return null;
-            }
-
-            //The folder contains files, check if the user has a saved details file
-            int hasDetailsSaved = 0;
-            for (String file : cryptogramDirectory.list()) {
-                if (file.contains(username)) {
-                    pathToUsersDetails = pathToDetails + "\\" + file;
-                    hasDetailsSaved++;
-                }
-            }
-
-            if (hasDetailsSaved == 0) { //Error, they have no saved details
-//                System.out.println("You do not have a saved details file.");
-                return null;
-            }
-
-
-            //User has a saved details file, read it.
-            fileToReadDetailsFrom = new File(pathToUsersDetails);
-            fileReader = new BufferedReader(new FileReader(fileToReadDetailsFrom));
-            String playerUsername = fileReader.readLine();
-            double accuracy = Double.parseDouble(fileReader.readLine());
-            int correctGuesses = Integer.parseInt(fileReader.readLine());
-            int totalGuesses = Integer.parseInt(fileReader.readLine());
-            int cryptogramsPlayed = Integer.parseInt(fileReader.readLine());
-            int cryptogramsCompleted = Integer.parseInt(fileReader.readLine());
-
-            //Information has been written at this point, reader can be closed.
-            fileReader.close();
-
-            //Create player object
-            return new Player(
-                    playerUsername, accuracy, correctGuesses, totalGuesses, cryptogramsPlayed, cryptogramsCompleted
-            );
+            return loadPlayer(pathToUsersDetails);
         } catch (Exception e) {
             //Error message to say that an error has occurred while printing to the file.
             throw new Exception("An error has occurred when trying to load players details from a file.");
         }
+    }
+
+    /**
+     *
+     * @param pathToUsersDetails - path to the file the details are stored in
+     * @return player object of given player
+     * @throws Exception - If there is a problem reading the file an error is returned
+     */
+    private Player loadPlayer(String pathToUsersDetails) throws Exception {
+        File fileToReadDetailsFrom;
+        BufferedReader fileReader;
+        //User has a saved details file, read it.
+        fileToReadDetailsFrom = new File(pathToUsersDetails);
+        fileReader = new BufferedReader(new FileReader(fileToReadDetailsFrom));
+        String playerUsername = fileReader.readLine();
+        double accuracy = Double.parseDouble(fileReader.readLine());
+        int correctGuesses = Integer.parseInt(fileReader.readLine());
+        int totalGuesses = Integer.parseInt(fileReader.readLine());
+        int cryptogramsPlayed = Integer.parseInt(fileReader.readLine());
+        int cryptogramsCompleted = Integer.parseInt(fileReader.readLine());
+
+        //Information has been written at this point, reader can be closed.
+        fileReader.close();
+
+        //Create player object
+        return new Player(
+                playerUsername, accuracy, correctGuesses, totalGuesses, cryptogramsPlayed, cryptogramsCompleted
+        );
+    }
+
+    /**
+     *
+     * @param username - players username
+     * @param pathsToDetailsString - string path to the details folder
+     * @param pathToDetails - path object with the details to the folder
+     * @return - Path to the orders detail file
+     */
+    private String getPathToUsersDetails(String username, String pathsToDetailsString, Path pathToDetails) {
+        //Folder exists, check if it contains files
+        String pathToUsersDetails = "";
+        File cryptogramDirectory = new File(pathsToDetailsString);
+
+        String[] fileNames = cryptogramDirectory.list();
+
+        if(fileNames == null) return null;
+        if (fileNames.length == 0) return null;
+
+        //The folder contains files, check if the user has a saved details file
+        int hasDetailsSaved = 0;
+        for (String file : Objects.requireNonNull(cryptogramDirectory.list())) {
+            if (file.contains(username)) {
+                pathToUsersDetails = pathToDetails + "\\" + file;
+                hasDetailsSaved++;
+            }
+        }
+
+        if (hasDetailsSaved == 0) return null;
+
+        return pathToUsersDetails;
     }
 }
