@@ -35,12 +35,12 @@ public class Main {
                     Player loadedPlayer = new Player();
                     try {
                         loadedPlayer = loadedPlayer.loadPlayersDetails(name);
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
 
 
-                    if(loadedPlayer == null){
+                    if (loadedPlayer == null) {
                         System.out.println("This username does not exist. Create a new account.");
                         continue;
                     }
@@ -52,7 +52,7 @@ public class Main {
                     if (loadChoice == 0) {
                         game = new Game(loadedPlayer, 0);
                         game.loadGame();
-                        if(game.currentGame == null) continue;
+                        if (game.currentGame == null) continue;
                         break; //Go to the game options
                     } else if (loadChoice == 1) {
                         //displays the menu
@@ -128,12 +128,13 @@ public class Main {
                         "\nPlease choose from the following options.\n"
                                 + "Enter 1 to enter a letter \n"
                                 + "Enter 2 to undo a letter \n"
-                                + "Enter 3 to show solution \n"
-                                + "Enter 4 to exit the game \n"
+                                + "Enter 3 to show phrase frequencies \n"
+                                + "Enter 4 to show solution \n"
+                                + "Enter 5 to exit the game \n"
                 );
                 choice = scan.nextInt();
                 //checks the input value is a valid option
-                if (choice < 1 || choice > 4) {
+                if (choice < 1 || choice > 5) {
                     System.out.println("The value must be between 1-4.");
                     choice = -1;
                 }
@@ -151,12 +152,19 @@ public class Main {
                 game.undoLetter();
                 choice = -1;
 
+
             } else if (choice == 3) {
+
+                game.showFrequencies();
+                choice = -1;
+
+            } else if (choice == 4) {
 
                 game.showSolution();
                 choice = 0;
 
-            } else if (choice == 4) {
+
+            } else if (choice == 5) {
                 game.savePlayer();
                 game.saveGame();
                 System.exit(0);

@@ -189,7 +189,6 @@ public class Game {
         }
 
         System.out.println(currentGame.newPhrase);
-        //viewFrequencies();
     }
 
 
@@ -217,6 +216,10 @@ public class Game {
 
     public void getHint() {
 
+    }
+
+    public void showFrequencies(){
+        currentGame.printLetterFrequency();
     }
 }
 
