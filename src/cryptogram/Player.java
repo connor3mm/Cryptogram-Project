@@ -170,7 +170,9 @@ public class Player {
 
 
     /**
-     * Saves the players details to a text file.
+     *
+     * @param p - Player object
+     * @return - Result of saving the details (true/false)
      */
     public boolean savePlayersDetails(Player p) {
         try {
@@ -202,6 +204,12 @@ public class Player {
         return false;
     }
 
+    /**
+     *
+     * @param p - Player object
+     * @param pathsToDetailsString - Path to the details folder
+     * @throws FileNotFoundException - The file doesn't exist
+     */
     private void savePlayerDetails(Player p, String pathsToDetailsString) throws FileNotFoundException {
         File fileToSaveDetailsTo;
         //Creates a new file to save details to, if one doesn't already exist.
