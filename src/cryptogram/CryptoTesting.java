@@ -238,6 +238,9 @@ public class CryptoTesting {
     //\\\\\\\\\\\\\\\\\\\\\\\\  Iteration 3  ////////////////////////////////////////
 
 
+    /**
+     * User story 6 tests
+     */
     @Test
     public void showSolutionTestLetter() {
         Player p = new Player("John");
@@ -252,7 +255,6 @@ public class CryptoTesting {
         assertEquals('a', cgame.playerMapping[0] + 97);
         assertEquals('b', cgame.playerMapping[1] + 97);
         assertEquals('c', cgame.playerMapping[2] + 97);
-
     }
 
     @Test
@@ -272,6 +274,11 @@ public class CryptoTesting {
     }
 
 
+
+
+    /**
+     * User story 7 tests
+     */
     @Test
     public void showFrequencyLetter() {
         Player p = new Player("John");
@@ -311,17 +318,94 @@ public class CryptoTesting {
         assertEquals(50, (cgame.letterFrequency[2] * 100) / cgame.cryptoPhrase.length());
     }
 
+
+
+    /**
+     * User story 14 tests
+     */
+    @Test
+    public void showHintTest() {
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        Cryptogram cgame = new LetterCryptogram();
+        cgame.setPhrase("abc");
+
+        cgame.getLetterHint(cgame.getNewPhrase().charAt(0));
+        assertEquals('a', cgame.playerMapping[0] + 97);
+
+
+        cgame.getLetterHint(cgame.getNewPhrase().charAt(5));
+        assertEquals('b', cgame.playerMapping[1] + 97);
+
+
+        cgame.getLetterHint(cgame.getNewPhrase().charAt(10));
+        assertEquals('c', cgame.playerMapping[2] + 97);
+    }
+
+
+    @Test
+    public void showHintWithMappedLetterTest() {
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        Cryptogram cgame = new LetterCryptogram();
+        cgame.setPhrase("abc");
+
+        cgame.playerMapping[0] = 4;
+        assertEquals('e', (char) cgame.playerMapping[0]+97);
+
+        cgame.getLetterHint(cgame.getNewPhrase().charAt(0));
+        assertEquals('a', cgame.playerMapping[0] + 97);
+    }
+
+    @Test
+    public void showHintWithCorrectLetterTest() {
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        Cryptogram cgame = new LetterCryptogram();
+        cgame.setPhrase("abc");
+
+        cgame.playerMapping[0] = 0;
+        assertEquals('a', (char) cgame.playerMapping[0]+97);
+
+        cgame.getLetterHint(cgame.getNewPhrase().charAt(0));
+        assertEquals('a', cgame.playerMapping[0] + 97);
+    }
+
+
+    @Test
+    public void showHintWithCorrectNumberTest() {
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        Cryptogram cgame = new NumberCryptogram();
+        cgame.setPhrase("abc");
+
+        cgame.playerMapping[0] = 0;
+        assertEquals('a', (char) cgame.playerMapping[0]+97);
+
+        cgame.getLetterHint(cgame.getNewPhrase().charAt(0));
+        assertEquals('a', cgame.playerMapping[0] + 97);
+    }
+
+
+
+
+
+    /**
+     * User story 13 tests
+     */
     @Test
     public void LoadPlayersWhenNoPlayersSaved() {
         Players players = new Players();
         Assertions.assertThrows(Exception.class, players::loadAllPlayers);
     }
 
+
     @Test
     public void DisplayTopTenScoresWhenNoScores() {
         Players players = new Players();
         assertEquals(0, players.getTopTenScores().size());
     }
+
 
     @Test
     public void DisplayTopTenScoresWhenLessThan10Scores (){
@@ -336,6 +420,7 @@ public class CryptoTesting {
         assertEquals(3, players.getAllPlayers().get(1).getCryptogramsCompleted());
         assertEquals(1, players.getAllPlayers().get(0).getCryptogramsCompleted());
     }
+
 
     @Test
     public void DisplayTopTenScoresWhenEqualAndGreaterThan10Scores() {

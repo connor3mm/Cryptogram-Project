@@ -175,6 +175,7 @@ class LetterCryptogram extends Cryptogram {
                     }
                 }
                 playerMapping[i] = i;
+                System.out.println("\nThe letter " + (char) (playerMapping[i] + 97)  + " has been mapped to " + letter + "\n");
                 break;
             }
         }

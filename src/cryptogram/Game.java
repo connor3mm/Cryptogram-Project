@@ -225,16 +225,19 @@ public class Game {
             String result = scan.next();
             char charResult = result.charAt(0);
             boolean guess = currentGame.getLetterHint(charResult);
+            printPhraseAndUserInput();
             cryptoChecks(guess);
 
         } else {
             System.out.println("Enter a number to map (1-25): ");
             int result = scan.nextInt();
             boolean guess = currentGame.getNumberHint(result);
+            printPhraseAndUserInput();
             cryptoChecks(guess);
         }
 
-        printPhraseAndUserInput();
+
+
     }
 
     public void printPhraseAndUserInput(){

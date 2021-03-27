@@ -192,13 +192,4 @@ public class PlayerTests {
         Assertions.assertThrows(Exception.class, () -> new Player().loadPlayersDetails("testCor"));
     }
 
-
-    //\\\\\\\\\\\\\\\\\\\\\\\\  Iteration 3  ////////////////////////////////////////
-
-
-    @Test
-    public void test()  {
-
-    }
-
 }
