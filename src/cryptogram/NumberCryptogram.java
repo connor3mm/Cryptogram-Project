@@ -87,10 +87,10 @@ class NumberCryptogram extends Cryptogram {
                 if (gameMapping[j] == letterToBeChecked) {
 
                     if (playerMapping[j] == -1) {
-                        userPhrase += " ";
+                        userPhrase += "";
 
                     } else {
-                        userPhrase = userPhrase + ((char) (playerMapping[j] + 97) + " ");
+                        userPhrase = userPhrase + ((char) (playerMapping[j] + 97));
                     }
                 }
             }
