@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -208,14 +209,14 @@ public class CryptoTesting {
      *
      * @throws Exception
      */
-    @Test
-    public void loadCryptogramWithSavedCryptogram() throws Exception {
-        Cryptogram cryptogram = new Cryptogram();
-        Player testPlayer = new Player("testUser");
-        cryptogram.loadCryptogram(testPlayer);
-
-        assertNotNull(cryptogram.loadCryptogram(testPlayer));
-    }
+//    @Test
+//    public void loadCryptogramWithSavedCryptogram() throws Exception {
+//        Cryptogram cryptogram = new Cryptogram();
+//        Player testPlayer = new Player("testUser");
+//        cryptogram.loadCryptogram(testPlayer);
+//
+//        assertNotNull(cryptogram.loadCryptogram(testPlayer));
+//    }
 
     @Test
     public void loadCryptogramWithNoSavedCryptogram() throws Exception {
@@ -310,9 +311,63 @@ public class CryptoTesting {
         assertEquals(50, (cgame.letterFrequency[2] * 100) / cgame.cryptoPhrase.length());
     }
 
+    @Test
+    public void LoadPlayersWhenNoPlayersSaved() {
+        Players players = new Players();
+        Assertions.assertThrows(Exception.class, players::loadAllPlayers);
+    }
 
+    @Test
+    public void DisplayTopTenScoresWhenNoScores() {
+        Players players = new Players();
+        assertEquals(0, players.getTopTenScores().size());
+    }
 
+    @Test
+    public void DisplayTopTenScoresWhenLessThan10Scores (){
+        Players players = new Players();
 
+        players.addPlayer(new Player("Cameron", 0, 0, 0, 0, 5));
+        players.addPlayer(new Player("Connor", 0, 0, 0, 0, 3));
+        players.addPlayer(new Player("Stewart", 0, 0, 0, 0, 1));
 
+        List<Player> playerList = players.getTopTenScores();
+        assertEquals(5, players.getAllPlayers().get(2).getCryptogramsCompleted());
+        assertEquals(3, players.getAllPlayers().get(1).getCryptogramsCompleted());
+        assertEquals(1, players.getAllPlayers().get(0).getCryptogramsCompleted());
+    }
 
+    @Test
+    public void DisplayTopTenScoresWhenEqualAndGreaterThan10Scores() {
+        Players players = new Players();
+
+        players.addPlayer(new Player("Cameron", 0, 0, 0, 0, 5));
+        players.addPlayer(new Player("Connor", 0, 0, 0, 0, 3));
+        players.addPlayer(new Player("Stewart", 0, 0, 0, 0, 1));
+        players.addPlayer(new Player("Owen", 0, 0, 0, 0, 7));
+        players.addPlayer(new Player("John", 0, 0, 0, 0, 2));
+        players.addPlayer(new Player("Steven", 0, 0, 0, 0, 4));
+        players.addPlayer(new Player("Thomas", 0, 0, 0, 0, 8));
+        players.addPlayer(new Player("Bob", 0, 0, 0, 0, 9));
+        players.addPlayer(new Player("Aiden", 0, 0, 0, 0, 10));
+        players.addPlayer(new Player("Matthew", 0, 0, 0, 0, 6));
+
+        List<Player> playerList = players.getTopTenScores();
+
+        assertEquals(10, playerList.get(9).getCryptogramsCompleted());
+        assertEquals(9, playerList.get(8).getCryptogramsCompleted());
+        assertEquals(8, playerList.get(7).getCryptogramsCompleted());
+        assertEquals(7, playerList.get(6).getCryptogramsCompleted());
+        assertEquals(6, playerList.get(5).getCryptogramsCompleted());
+        assertEquals(5, playerList.get(4).getCryptogramsCompleted());
+        assertEquals(4, playerList.get(3).getCryptogramsCompleted());
+        assertEquals(3, playerList.get(2).getCryptogramsCompleted());
+        assertEquals(2, playerList.get(1).getCryptogramsCompleted());
+        assertEquals(1, playerList.get(0).getCryptogramsCompleted());
+
+        //Test with 11 people
+        players.addPlayer(new Player("Number11", 0, 0, 0, 0, 11));
+        playerList = players.getTopTenScores();
+        assertEquals(11, playerList.get(9).getCryptogramsCompleted());
+    }
 }

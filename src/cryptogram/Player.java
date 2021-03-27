@@ -172,7 +172,6 @@ public class Player {
     public boolean savePlayersDetails(Player p) {
         try {
             //File variables to be used when saving.
-            File fileToSaveDetailsTo;
             String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
             Path pathToDetails = Paths.get(pathsToDetailsString);
 

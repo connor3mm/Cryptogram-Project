@@ -10,7 +10,11 @@ public class Main {
         Game game = null;
 
         Players ps = new Players();
-        ps.loadAllPlayers();
+        try {
+            ps.loadAllPlayers();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
 
         Scanner scan = new Scanner(System.in);
         String name;

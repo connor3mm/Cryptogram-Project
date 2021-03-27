@@ -43,7 +43,7 @@ public class Players extends Player{
     /**
      * Loads all players in the system
      */
-    public void loadAllPlayers(){
+    public void loadAllPlayers() throws Exception {
         String pathsToDetailsString = Paths.get("").toAbsolutePath().toString() + "\\PlayerDetails";
         Path pathToDetails = Paths.get(pathsToDetailsString);
         if (!detailsFolderExists(pathToDetails)) {
@@ -52,7 +52,8 @@ public class Players extends Player{
         }
 
         List<String> usernames = getUsernames();
-        if(usernames.size() == 0) return;
+        if(usernames.size() == 0)
+            throw new Exception("No players were loaded.");
 
         int playersSuccessfullyLoaded = 0;
         for (String username : usernames) {
