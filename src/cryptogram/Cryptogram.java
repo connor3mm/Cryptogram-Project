@@ -69,8 +69,8 @@ public class Cryptogram {
      */
     public Cryptogram() {
         System.out.println("New game is being created...");
-        setPhrase("abc");
-        //setRandomCryptoPhrase();
+        //setPhrase("abc");
+        setRandomCryptoPhrase();
         createCryptoMapping();
         setLetterFrequency();
         getNumberOfLetters();
