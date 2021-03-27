@@ -183,16 +183,12 @@ class NumberCryptogram extends Cryptogram {
                 for (int j = 0; j < playerMapping.length; j++) {
                     if (playerMapping[j] == i) {
                         playerMapping[j] = -1;
-
                     }
                 }
                 playerMapping[i] = i;
                 break;
             }
-
         }
-
-
         return true;
     }
 }

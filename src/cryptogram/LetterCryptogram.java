@@ -1,16 +1,8 @@
 package cryptogram;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 class LetterCryptogram extends Cryptogram {
-
-    /**
-     * variables
-     */
-    private String cryptogramAlphabet;
-    // public String newPhrase = getNewPhrase();
-
 
     /**
      * constructor
@@ -180,13 +172,11 @@ class LetterCryptogram extends Cryptogram {
                 for (int j = 0; j < playerMapping.length; j++) {
                     if (playerMapping[j] == i) {
                         playerMapping[j] = -1;
-
                     }
                 }
                 playerMapping[i] = i;
                 break;
             }
-
         }
         return true;
     }

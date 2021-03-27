@@ -182,6 +182,7 @@ public class CryptoTesting {
 
     /**
      * User story 4
+     *
      * @throws Exception
      */
     @Test
@@ -204,6 +205,7 @@ public class CryptoTesting {
 
     /**
      * User story 5
+     *
      * @throws Exception
      */
     @Test
@@ -230,5 +232,87 @@ public class CryptoTesting {
 
         Assertions.assertThrows(Exception.class, () -> cryptogram.loadCryptogram(testPlayer));
     }
-}
 
+
+    //\\\\\\\\\\\\\\\\\\\\\\\\  Iteration 3  ////////////////////////////////////////
+
+
+    @Test
+    public void showSolutionTestLetter() {
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        Cryptogram cgame = new LetterCryptogram();
+        cgame.setPhrase("abc");
+
+        assertFalse(cgame.checkIfGameCompleted());
+
+        cgame.showSolution();
+
+        assertEquals('a', cgame.playerMapping[0] + 97);
+        assertEquals('b', cgame.playerMapping[1] + 97);
+        assertEquals('c', cgame.playerMapping[2] + 97);
+
+    }
+
+    @Test
+    public void showSolutionTestNumber() {
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        Cryptogram cgame = new NumberCryptogram();
+        cgame.setPhrase("abc");
+
+        assertFalse(cgame.checkIfGameCompleted());
+
+        cgame.showSolution();
+
+        assertEquals('a', cgame.playerMapping[0] + 97);
+        assertEquals('b', cgame.playerMapping[1] + 97);
+        assertEquals('c', cgame.playerMapping[2] + 97);
+    }
+
+
+    @Test
+    public void showFrequencyLetter() {
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        Cryptogram cgame = new LetterCryptogram();
+        cgame.setPhrase("abbccc");
+        cgame.setLetterFrequency();
+        cgame.getNumberOfLetters();
+
+        assertEquals(1, cgame.letterFrequency[0]);
+        assertEquals(2, cgame.letterFrequency[1]);
+        assertEquals(3, cgame.letterFrequency[2]);
+
+        //Percentages
+        assertEquals(16, (cgame.letterFrequency[0] * 100) / cgame.cryptoPhrase.length());
+        assertEquals(33, (cgame.letterFrequency[1] * 100) / cgame.cryptoPhrase.length());
+        assertEquals(50, (cgame.letterFrequency[2] * 100) / cgame.cryptoPhrase.length());
+    }
+
+
+    @Test
+    public void showFrequencyNumber() {
+        Player p = new Player("John");
+        Game game = new Game(p, 0);
+        Cryptogram cgame = new NumberCryptogram();
+        cgame.setPhrase("abbccc");
+        cgame.setLetterFrequency();
+        cgame.getNumberOfLetters();
+
+        assertEquals(1, cgame.letterFrequency[0]);
+        assertEquals(2, cgame.letterFrequency[1]);
+        assertEquals(3, cgame.letterFrequency[2]);
+
+        //Percentages
+        assertEquals(16, (cgame.letterFrequency[0] * 100) / cgame.cryptoPhrase.length());
+        assertEquals(33, (cgame.letterFrequency[1] * 100) / cgame.cryptoPhrase.length());
+        assertEquals(50, (cgame.letterFrequency[2] * 100) / cgame.cryptoPhrase.length());
+    }
+
+
+
+
+
+
+}
