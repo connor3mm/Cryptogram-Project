@@ -169,11 +169,17 @@ class LetterCryptogram extends Cryptogram {
         for (int i = 0; i < gameMapping.length; i++) {
             if (gameMapping[i] == letterInputAscii) {
 
+                if(playerMapping[i] == i){
+                    System.out.println("\nThe letter " + (char) (playerMapping[i] + 97)  + " has already been mapped to " + letter + " correctly.\n");
+                    return false;
+                }
+
                 for (int j = 0; j < playerMapping.length; j++) {
                     if (playerMapping[j] == i) {
                         playerMapping[j] = -1;
                     }
                 }
+
                 playerMapping[i] = i;
                 System.out.println("\nThe letter " + (char) (playerMapping[i] + 97)  + " has been mapped to " + letter + "\n");
                 break;
@@ -182,5 +188,18 @@ class LetterCryptogram extends Cryptogram {
         return true;
     }
 
+    public void printLetterFrequency() {
+
+        StringBuilder phrase = new StringBuilder();
+        for (int i = 0; i < letterFrequency.length; i++) {
+
+            if (letterFrequency[i] > 0) {
+                phrase.append(String.format("%c - %d", (char) gameMapping[i] + 97, letterFrequency[i])).append(" - ").append((letterFrequency[i] * 100) / cryptoPhrase.length()).append("%\n");
+            }
+        }
+        System.out.println(phrase);
+        System.out.println("A:8  B:1.5  C:3  D:4  E:13  F:2  G:2  H:6  I:7  J:0.2  K:1  L:4  M:2.5  N:7  O:8  P:2  Q:1  R:6  S:6  T:9  U:3  V:1  W:2.5  X:0.2  Y:2  Z:0.01 \n");
+
+    }
 
 }

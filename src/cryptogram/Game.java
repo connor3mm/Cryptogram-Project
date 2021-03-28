@@ -226,14 +226,22 @@ public class Game {
             char charResult = result.charAt(0);
             boolean guess = currentGame.getLetterHint(charResult);
             printPhraseAndUserInput();
-            cryptoChecks(guess);
+            if(guess == false){
+                return;
+            }else {
+                cryptoChecks(guess);
+            }
 
         } else {
             System.out.println("Enter a number to map (1-25): ");
             int result = scan.nextInt();
             boolean guess = currentGame.getNumberHint(result);
             printPhraseAndUserInput();
-            cryptoChecks(guess);
+            if(guess == false){
+                return;
+            }else {
+                cryptoChecks(guess);
+            }
         }
 
 

@@ -36,7 +36,7 @@ public class Main {
 
 
                 if (detailsChoice == 0) {
-                    System.out.println("Please enter your username");
+                    System.out.println("\nPlease enter your username");
 
                     name = scan.next();
                     Player loadedPlayer = new Player();
@@ -48,7 +48,7 @@ public class Main {
 
 
                     if (loadedPlayer == null) {
-                        System.out.println("This username does not exist. Create a new account.");
+                        System.out.println("\nThis username does not exist. Create a new account.\n");
                         continue;
                     }
 
@@ -94,7 +94,7 @@ public class Main {
                 }
 
                 if (detailsChoice == 1) {
-                    System.out.println("Please enter your desired username.");
+                    System.out.println("\nPlease enter your desired username.\n");
                     name = scan.next();
                     Player p = new Player(name);
                     if (ps.findPlayer(p)) {
@@ -105,7 +105,7 @@ public class Main {
 
                     //displays the menu
                     System.out.println(
-                            "Please choose from the following options.\n"
+                            "\nPlease choose from the following options.\n"
                                     + "Enter 0 for letter Cryptogram \n"
                                     + "Enter 1 for Number Cryptogram\n"
                     );

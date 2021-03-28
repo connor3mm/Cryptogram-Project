@@ -69,8 +69,8 @@ public class Cryptogram {
      */
     public Cryptogram() {
         System.out.println("New game is being created...");
-        //setPhrase("abc");
-        setRandomCryptoPhrase();
+        setPhrase("abc");
+        //setRandomCryptoPhrase();
         createCryptoMapping();
         setLetterFrequency();
         getNumberOfLetters();
@@ -270,17 +270,6 @@ public class Cryptogram {
     }
 
     public void printLetterFrequency() {
-
-        StringBuilder phrase = new StringBuilder();
-        for (int i = 0; i < letterFrequency.length; i++) {
-
-            if (letterFrequency[i] > 0) {
-                phrase.append(String.format("%c - %d", (char) gameMapping[i] + 97, letterFrequency[i])).append(" - ").append((letterFrequency[i] * 100) / cryptoPhrase.length()).append("%\n");
-            }
-        }
-        System.out.println(phrase);
-        System.out.println("A:8  B:1.5  C:3  D:4  E:13  F:2  G:2  H:6  I:7  J:0.2  K:1  L:4  M:2.5  N:7  O:8  P:2  Q:1  R:6  S:6  T:9  U:3  V:1  W:2.5  X:0.2  Y:2  Z:0.01 \n");
-
     }
 
     /**
