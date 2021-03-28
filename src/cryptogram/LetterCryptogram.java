@@ -162,6 +162,11 @@ class LetterCryptogram extends Cryptogram {
     }
 
 
+    /**
+     * Gets a letter hint for the user
+     * @param letter Input char
+     * @return false if already mapped, true if not
+     */
     public boolean getLetterHint(char letter) {
 
         int letterInputAscii = letter - 97;
@@ -188,6 +193,9 @@ class LetterCryptogram extends Cryptogram {
         return true;
     }
 
+    /**
+     * Prints out the letter frequency and the percentage
+     */
     public void printLetterFrequency() {
 
         StringBuilder phrase = new StringBuilder();

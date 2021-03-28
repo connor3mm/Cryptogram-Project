@@ -175,6 +175,11 @@ class NumberCryptogram extends Cryptogram {
     }
 
 
+    /**
+     * Gets a letter hint for the user
+     * @param number Input char
+     * @return false if already mapped, true if not
+     */
     public boolean getNumberHint(int number) {
 
         for (int i = 0; i < gameMapping.length; i++) {
@@ -198,6 +203,10 @@ class NumberCryptogram extends Cryptogram {
         return true;
     }
 
+
+    /**
+     * Prints out the letter frequency and the percentage
+     */
     public void printLetterFrequency() {
 
         StringBuilder phrase = new StringBuilder();

@@ -269,8 +269,10 @@ public class Cryptogram {
         }
     }
 
+
     public void printLetterFrequency() {
     }
+
 
     /**
      * Calculates the letter frequency of letters

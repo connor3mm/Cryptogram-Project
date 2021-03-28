@@ -226,9 +226,9 @@ public class Game {
             char charResult = result.charAt(0);
             boolean guess = currentGame.getLetterHint(charResult);
             printPhraseAndUserInput();
-            if(guess == false){
+            if (guess == false) {
                 return;
-            }else {
+            } else {
                 cryptoChecks(guess);
             }
 
@@ -237,18 +237,17 @@ public class Game {
             int result = scan.nextInt();
             boolean guess = currentGame.getNumberHint(result);
             printPhraseAndUserInput();
-            if(guess == false){
+            if (guess == false) {
                 return;
-            }else {
+            } else {
                 cryptoChecks(guess);
             }
         }
 
 
-
     }
 
-    public void printPhraseAndUserInput(){
+    public void printPhraseAndUserInput() {
         System.out.println(currentGame.getNewPhrase());
         currentGame.showMappedLetters();
     }
